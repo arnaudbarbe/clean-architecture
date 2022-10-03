@@ -1,3 +1,1 @@
 # clean-architecture
-
-test
