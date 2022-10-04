@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import fr.arnaud.cleanarchitecture.core.exception.DomainException;
@@ -44,7 +43,7 @@ public class Order {
 
     private OrderItem getOrderItem(final UUID id) {
         return this.orderItems.stream()
-            .filter(orderItem -> orderItem.getProductId()
+            .filter(orderItem -> orderItem.getProduct().getId()
                 .equals(id))
             .findFirst()
             .orElseThrow(() -> new DomainException("Product with " + id + " doesn't exist."));
@@ -78,21 +77,43 @@ public class Order {
         return Collections.unmodifiableList(this.orderItems);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.orderItems, this.price, this.status);
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		result = prime * result + ((this.orderItems == null) ? 0 : this.orderItems.hashCode());
+		result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
+		result = prime * result + ((this.status == null) ? 0 : this.status.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Order))
-            return false;
-        Order other = (Order) obj;
-        return Objects.equals(this.id, other.id) && Objects.equals(this.orderItems, other.orderItems) && Objects.equals(this.price, other.price) && this.status == other.status;
-    }
-
-    private Order() {
-    }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (this.id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!this.id.equals(other.id))
+			return false;
+		if (this.orderItems == null) {
+			if (other.orderItems != null)
+				return false;
+		} else if (!this.orderItems.equals(other.orderItems))
+			return false;
+		if (this.price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!this.price.equals(other.price))
+			return false;
+		if (this.status != other.status)
+			return false;
+		return true;
+	}
 }

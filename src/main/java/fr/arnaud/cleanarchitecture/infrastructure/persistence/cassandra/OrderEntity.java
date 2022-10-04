@@ -37,16 +37,16 @@ public class OrderEntity {
         this.orderItemEntities = order.getOrderItems()
             .stream()
             .map(OrderItemEntity::new)
-            .collect(Collectors.toList());
+            .toList();
 
     }
 
     public Order toOrder() {
         List<OrderItem> orderItems = this.orderItemEntities.stream()
             .map(OrderItemEntity::toOrderItem)
-            .collect(Collectors.toList());
+            .toList();
         List<Product> namelessProducts = orderItems.stream()
-            .map(orderItem -> new Product(orderItem.getProductId(), orderItem.getPrice(), ""))
+            .map(OrderItem::getProduct)
             .collect(Collectors.toList());
         Order order = new Order(this.id, namelessProducts.remove(0));
         namelessProducts.forEach(product -> order.addOrder(product));

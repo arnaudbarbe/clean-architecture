@@ -1,7 +1,6 @@
 package fr.arnaud.cleanarchitecture.core.model;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -31,16 +30,40 @@ public class Product {
         return this.id;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(this.id, product.id) && Objects.equals(this.price, product.price) && Objects.equals(this.name, product.name);
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime * result + ((this.price == null) ? 0 : this.price.hashCode());
+		return result;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.price, this.name);
-    }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (this.id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!this.id.equals(other.id))
+			return false;
+		if (this.name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!this.name.equals(other.name))
+			return false;
+		if (this.price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!this.price.equals(other.price))
+			return false;
+		return true;
+	}
 }

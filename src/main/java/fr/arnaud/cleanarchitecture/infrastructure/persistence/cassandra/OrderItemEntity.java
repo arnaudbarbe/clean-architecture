@@ -18,7 +18,7 @@ public class OrderItemEntity {
     }
 
     public OrderItemEntity(final OrderItem orderItem) {
-        this.productId = orderItem.getProductId();
+        this.productId = orderItem.getProduct().getId();
         this.price = orderItem.getPrice();
     }
 
