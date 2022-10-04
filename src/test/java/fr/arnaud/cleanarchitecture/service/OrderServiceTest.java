@@ -16,7 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import fr.arnaud.cleanarchitecture.core.model.Order;
 import fr.arnaud.cleanarchitecture.core.model.Product;
 import fr.arnaud.cleanarchitecture.core.repository.OrderRepository;
-import fr.arnaud.cleanarchitecture.core.service.OrderService;
+import fr.arnaud.cleanarchitecture.core.service.order.OrderService;
 
 @SpringBootTest
 @AutoConfigureMockMvc

@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.core.model.Order;
 import fr.arnaud.cleanarchitecture.core.model.Product;
-import fr.arnaud.cleanarchitecture.core.service.OrderService;
+import fr.arnaud.cleanarchitecture.core.service.order.OrderService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -52,7 +52,7 @@ public class OrderControllerTest {
         		.content(json)
         		.contentType(MediaType.APPLICATION_JSON)
         		.accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
     
     @Test
