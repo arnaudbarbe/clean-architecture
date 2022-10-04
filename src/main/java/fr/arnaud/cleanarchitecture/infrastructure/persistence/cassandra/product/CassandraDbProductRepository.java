@@ -41,6 +41,6 @@ public class CassandraDbProductRepository implements ProductRepository {
 
 		return this.productRepository.findAll()
 		.stream()
-		.map(productEntity -> productEntity.toProduct()).toList();
+		.map(ProductEntity::toProduct).toList();
 	}
 }

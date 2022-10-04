@@ -49,7 +49,7 @@ public class OrderEntity {
             .map(OrderItem::getProduct)
             .collect(Collectors.toList());
         Order order = new Order(this.id, namelessProducts.remove(0));
-        namelessProducts.forEach(product -> order.addOrder(product));
+        namelessProducts.forEach(order::addOrder);
         if (this.status == OrderStatus.COMPLETED) {
             order.complete();
         }

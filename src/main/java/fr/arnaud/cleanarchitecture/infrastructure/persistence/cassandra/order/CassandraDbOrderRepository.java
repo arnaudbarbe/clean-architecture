@@ -41,6 +41,6 @@ public class CassandraDbOrderRepository implements OrderRepository {
 
 		return this.orderRepository.findAll()
 		.stream()
-		.map(orderEntity -> orderEntity.toOrder()).toList();
+		.map(OrderEntity::toOrder).toList();
 	}
 }
