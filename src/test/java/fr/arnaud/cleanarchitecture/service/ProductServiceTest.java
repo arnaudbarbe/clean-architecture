@@ -40,4 +40,14 @@ public class ProductServiceTest {
         List<Product> returnProducts = this.productService.getProducts();
         Assertions.assertThat(returnProducts).hasSize(1);
     }
+
+    @Test
+    public void createProduct() throws Exception {
+    	
+    	UUID productUuid = UUID.randomUUID();
+    	Product product = new Product(productUuid, new BigDecimal(12.3d), "parpaing");
+    		
+        UUID productId = this.productService.createProduct(product);
+        Assertions.assertThat(productId).isNotNull();
+    }
 }

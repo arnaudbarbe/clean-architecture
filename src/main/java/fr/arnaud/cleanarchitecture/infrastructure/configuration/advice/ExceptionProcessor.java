@@ -1,7 +1,5 @@
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.advice;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,6 +18,7 @@ import fr.arnaud.cleanarchitecture.core.exception.BadParameterException;
 import fr.arnaud.cleanarchitecture.core.exception.BadUuidException;
 import fr.arnaud.cleanarchitecture.core.exception.DomainException;
 import fr.arnaud.cleanarchitecture.core.exception.EntityAlreadyExistException;
+import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.exception.ForbiddenException;
 import fr.arnaud.cleanarchitecture.core.exception.NotAllowedException;
 import fr.arnaud.cleanarchitecture.core.exception.ValidationException;
