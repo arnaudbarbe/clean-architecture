@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.order;
 
 import java.util.UUID;
 

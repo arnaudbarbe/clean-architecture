@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.core.service;
+package fr.arnaud.cleanarchitecture.core.service.order;
 
 import java.util.List;
 import java.util.UUID;

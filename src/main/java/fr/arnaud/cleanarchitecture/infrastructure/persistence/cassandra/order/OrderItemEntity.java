@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.order;
 
 import java.math.BigDecimal;
 import java.util.UUID;

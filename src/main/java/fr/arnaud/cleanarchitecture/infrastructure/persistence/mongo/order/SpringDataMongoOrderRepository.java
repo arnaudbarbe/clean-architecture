@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.mongo;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence.mongo.order;
 
 import java.util.UUID;
 
