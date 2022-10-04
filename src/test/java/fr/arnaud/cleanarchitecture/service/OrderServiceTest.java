@@ -29,7 +29,7 @@ public class OrderServiceTest {
     private OrderRepository orderRepository;
 
     @Test
-    public void getCustomers() throws Exception {
+    public void getOrders() throws Exception {
     	
     	UUID productUuid = UUID.randomUUID();
     	Product product = new Product(productUuid, new BigDecimal(12.3d), "parpaing");

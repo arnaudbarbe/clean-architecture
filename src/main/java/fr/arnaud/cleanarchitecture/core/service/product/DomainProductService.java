@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.core.service.product;
 
+import java.util.List;
 import java.util.UUID;
 
 import fr.arnaud.cleanarchitecture.core.model.Product;
@@ -19,4 +20,9 @@ public class DomainProductService implements ProductService {
 
         return product.getId();
     }
+
+	@Override
+	public List<Product> getProducts() {
+		return this.productRepository.findAll();
+	}
 }
