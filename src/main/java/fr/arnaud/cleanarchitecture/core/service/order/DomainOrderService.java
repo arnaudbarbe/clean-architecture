@@ -40,7 +40,7 @@ public class DomainOrderService implements OrderService {
     }
 
     @Override
-    public void deleteProduct(final UUID id, final UUID productId) {
+    public void removeProduct(final UUID id, final UUID productId) {
         final Order order = getOrder(id);
         order.removeOrder(productId);
 

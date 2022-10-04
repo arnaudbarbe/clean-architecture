@@ -73,7 +73,7 @@ public class OrderController {
     public CreateOrderResponse createOrder(@RequestBody final CreateOrderRequest createOrderRequest) {
         final UUID id = this.orderService.createOrder(createOrderRequest.getProduct());
 
-        return new CreateOrderResponse(id);
+        return CreateOrderResponse.builder().id(id).build();
     }
 
 	
@@ -129,8 +129,8 @@ public class OrderController {
 
 	@Tags({ 
 		@Tag(name="Order")})
-    public void deleteProduct(@PathVariable final UUID orderId, @PathVariable final UUID productId) {
-        this.orderService.deleteProduct(orderId, productId);
+    public void removeProduct(@PathVariable final UUID orderId, @PathVariable final UUID productId) {
+        this.orderService.removeProduct(orderId, productId);
     }
 
 	
@@ -183,6 +183,6 @@ public class OrderController {
 	
     @GetMapping()
     public GetOrdersResponse getOrders() {
-        return new GetOrdersResponse(this.orderService.getOrders());
+        return GetOrdersResponse.builder().build().addOrders(this.orderService.getOrders());
     }
 }

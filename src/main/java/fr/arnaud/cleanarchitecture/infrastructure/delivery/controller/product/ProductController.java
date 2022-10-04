@@ -68,6 +68,6 @@ public class ProductController {
     public CreateProductResponse createProduct(@RequestBody final CreateProductRequest createProductRequest) {
         final UUID id = this.productService.createProduct(createProductRequest.getProduct());
 
-        return new CreateProductResponse(id);
+        return CreateProductResponse.builder().id(id).build();
     }
 }

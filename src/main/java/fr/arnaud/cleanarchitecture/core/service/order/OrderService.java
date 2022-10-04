@@ -13,7 +13,7 @@ public interface OrderService {
 
     void completeOrder(UUID id);
 
-    void deleteProduct(UUID id, UUID productId);
+    void removeProduct(UUID id, UUID productId);
     
     List<Order> getOrders();
 }

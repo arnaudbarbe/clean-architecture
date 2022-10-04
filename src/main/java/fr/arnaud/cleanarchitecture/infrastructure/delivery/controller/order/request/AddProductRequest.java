@@ -2,21 +2,25 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.order.req
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import fr.arnaud.cleanarchitecture.core.model.Product;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level=AccessLevel.PRIVATE)
+@Getter
+@EqualsAndHashCode(of= {"product"})
+@ToString(of= {"product"})
+@Builder
 public class AddProductRequest {
-    @NotNull 
-    private Product product;
+	@NotNull 
+    Product product;
 
-    @JsonCreator
-    public AddProductRequest(@JsonProperty("product") final Product product) {
-        this.product = product;
-    }
-
-    public Product getProduct() {
-        return this.product;
-    }
 }
