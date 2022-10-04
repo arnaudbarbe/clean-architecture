@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.configuration;
+package fr.arnaud.cleanarchitecture.infrastructure.configuration.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.configuration;
+package fr.arnaud.cleanarchitecture.infrastructure.configuration.cors;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
