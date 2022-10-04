@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class ProductServiceTest {
     @Autowired
     private ProductService productService;
 
-    @MockBean
+    @MockBean(name = "PostgresDbProductRepository")
     private ProductRepository productRepository;
 
     @Test
@@ -31,7 +32,7 @@ public class ProductServiceTest {
     	
     	List<Product> products = new ArrayList<>();
     	UUID productUuid = UUID.randomUUID();
-    	Product product = new Product(productUuid, 12.3d, "parpaing");
+    	Product product = new Product(productUuid, 12.3d, "parpaing", LocalDateTime.now());
     	products.add(product);
     		
         Mockito.when(this.productRepository.findAll()).thenReturn(products);
@@ -44,7 +45,7 @@ public class ProductServiceTest {
     public void createProduct() throws Exception {
     	
     	UUID productUuid = UUID.randomUUID();
-    	Product product = new Product(productUuid, 12.3d, "parpaing");
+    	Product product = new Product(productUuid, 12.3d, "parpaing", LocalDateTime.now());
     		
         UUID productId = this.productService.createProduct(product);
         Assertions.assertThat(productId).isNotNull();

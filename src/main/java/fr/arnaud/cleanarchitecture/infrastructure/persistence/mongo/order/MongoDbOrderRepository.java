@@ -5,14 +5,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.model.Order;
 import fr.arnaud.cleanarchitecture.core.repository.OrderRepository;
 
-@Component
-@Primary
+@Component("MongoDbOrderRepository")
 public class MongoDbOrderRepository implements OrderRepository {
 
     private final SpringDataMongoOrderRepository orderRepository;

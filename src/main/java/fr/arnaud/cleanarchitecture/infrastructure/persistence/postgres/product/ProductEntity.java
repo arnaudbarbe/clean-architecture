@@ -1,23 +1,19 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.product;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.product;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-
 import fr.arnaud.cleanarchitecture.core.model.Product;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level=AccessLevel.PRIVATE)
-@Getter
+@Entity
 @Table
 public class ProductEntity {
 
-	@PrimaryKey
+	@Id
 	UUID id;
 	Double price;
 	String name;

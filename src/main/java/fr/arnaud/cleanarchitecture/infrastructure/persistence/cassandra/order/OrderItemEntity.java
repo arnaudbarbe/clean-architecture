@@ -22,7 +22,7 @@ public class OrderItemEntity {
     }
 
     public OrderItem toOrderItem() {
-        return new OrderItem(new Product(this.productId, this.price, ""));
+        return new OrderItem(new Product(this.productId, this.price));
     }
 
     public UUID getProductId() {

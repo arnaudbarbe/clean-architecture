@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.core.service.product;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,5 +25,11 @@ public class DomainProductService implements ProductService {
 	@Override
 	public List<Product> getProducts() {
 		return this.productRepository.findAll();
+	}
+
+	@Override
+	public void deleteByCreationDateLessThan(final LocalDateTime localDateTime) {
+		this.productRepository.deleteByCreationDateLessThan(localDateTime);
+		
 	}
 }

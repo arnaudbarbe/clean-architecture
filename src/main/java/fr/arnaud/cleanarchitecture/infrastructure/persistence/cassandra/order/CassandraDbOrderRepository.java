@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import fr.arnaud.cleanarchitecture.core.model.Order;
 import fr.arnaud.cleanarchitecture.core.repository.OrderRepository;
 
-@Component
+@Component("CassandraDbOrderRepository")
 public class CassandraDbOrderRepository implements OrderRepository {
 
     private final SpringDataCassandraOrderRepository orderRepository;

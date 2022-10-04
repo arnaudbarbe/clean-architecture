@@ -4,20 +4,28 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.persistence.Table;
+
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 
 import fr.arnaud.cleanarchitecture.core.model.Order;
 import fr.arnaud.cleanarchitecture.core.model.OrderItem;
 import fr.arnaud.cleanarchitecture.core.model.OrderStatus;
 import fr.arnaud.cleanarchitecture.core.model.Product;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(level=AccessLevel.PRIVATE)
+@Getter
+@Table
 public class OrderEntity {
 
     @PrimaryKey
-    private UUID id;
-    private OrderStatus status;
-    private List<OrderItemEntity> orderItemEntities;
-    private Double price;
+    UUID id;
+    OrderStatus status;
+    List<OrderItemEntity> orderItemEntities;
+    Double price;
 
     public OrderEntity(final UUID id, final OrderStatus status, final List<OrderItemEntity> orderItemEntities, final Double price) {
         this.id = id;
@@ -53,21 +61,5 @@ public class OrderEntity {
             order.complete();
         }
         return order;
-    }
-
-    public UUID getId() {
-        return this.id;
-    }
-
-    public OrderStatus getStatus() {
-        return this.status;
-    }
-
-    public List<OrderItemEntity> getOrderItems() {
-        return this.orderItemEntities;
-    }
-
-    public Double getPrice() {
-        return this.price;
     }
 }

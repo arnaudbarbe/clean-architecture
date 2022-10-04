@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,12 +18,12 @@ import fr.arnaud.cleanarchitecture.core.service.product.ProductService;
 public class BeanConfiguration {
 
     @Bean
-    OrderService orderService(final OrderRepository orderRepository) {
+    OrderService orderService(@Qualifier("CassandraDbOrderRepository") final OrderRepository orderRepository) {
         return new DomainOrderService(orderRepository);
     }
     
     @Bean
-    ProductService productService(final ProductRepository productRepository) {
+    ProductService productService(@Qualifier("PostgresDbProductRepository") final ProductRepository productRepository) {
         return new DomainProductService(productRepository);
     }
 }

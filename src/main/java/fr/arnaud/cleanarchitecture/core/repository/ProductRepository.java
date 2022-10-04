@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.core.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -12,4 +13,6 @@ public interface ProductRepository {
     void save(Product product);
     
     List<Product> findAll();
+
+	void deleteByCreationDateLessThan(LocalDateTime localDateTime);
 }

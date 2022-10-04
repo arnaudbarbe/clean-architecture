@@ -1,9 +1,10 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.product;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.product;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,13 +12,13 @@ import org.springframework.stereotype.Component;
 import fr.arnaud.cleanarchitecture.core.model.Product;
 import fr.arnaud.cleanarchitecture.core.repository.ProductRepository;
 
-@Component("CassandraDbProductRepository")
-public class CassandraDbProductRepository implements ProductRepository {
+@Component("PostgresDbProductRepository")
+public class PostgresDbProductRepository implements ProductRepository {
 
-    private final SpringDataCassandraProductRepository productRepository;
+    private final SpringDataPostgresProductRepository productRepository;
 
     @Autowired
-    public CassandraDbProductRepository(final SpringDataCassandraProductRepository productRepository) {
+    public PostgresDbProductRepository(final SpringDataPostgresProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -40,8 +41,7 @@ public class CassandraDbProductRepository implements ProductRepository {
 	@Override
 	public List<Product> findAll() {
 
-		return this.productRepository.findAll()
-		.stream()
+		return StreamSupport.stream(this.productRepository.findAll().spliterator(), false)
 		.map(ProductEntity::toProduct).toList();
 	}
 

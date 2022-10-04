@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,14 +25,14 @@ public class OrderServiceTest {
     @Autowired
     private OrderService orderService;
 
-    @MockBean
+    @MockBean(name = "CassandraDbOrderRepository")
     private OrderRepository orderRepository;
 
     @Test
     public void getOrders() throws Exception {
     	
     	UUID productUuid = UUID.randomUUID();
-    	Product product = new Product(productUuid, 12.3d, "parpaing");
+    	Product product = new Product(productUuid, 12.3d, "parpaing", LocalDateTime.now());
     	UUID order1Uuid = UUID.randomUUID();
         Order order1 = new Order(order1Uuid, product);
     	UUID order2Uuid = UUID.randomUUID();

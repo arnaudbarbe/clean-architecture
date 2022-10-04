@@ -22,5 +22,4 @@ import lombok.experimental.FieldDefaults;
 public class AddProductRequest {
 	@NotNull 
     Product product;
-
 }
