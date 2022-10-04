@@ -1,6 +1,5 @@
 package fr.arnaud.cleanarchitecture.controller;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,7 @@ public class ProductControllerTest {
     public void createProduct() throws Exception {
     	
     	UUID uuid = UUID.randomUUID();
-        Product product = new Product(uuid, new BigDecimal(12.3d), "parpaing");
+        Product product = new Product(uuid, 12.3d, "parpaing");
         
         String json = this.mapper.writeValueAsString(product);
         

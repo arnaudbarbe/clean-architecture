@@ -1,10 +1,8 @@
 package fr.arnaud.cleanarchitecture.core.model;
 
-import java.math.BigDecimal;
-
 public class OrderItem {
     private Product product;
-    private BigDecimal price;
+    private Double price;
 
     public OrderItem(final Product product) {
         this.product = product;
@@ -15,7 +13,7 @@ public class OrderItem {
         return this.product;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return this.price;
     }
 

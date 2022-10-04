@@ -1,6 +1,5 @@
 package fr.arnaud.cleanarchitecture.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +31,7 @@ public class ProductServiceTest {
     	
     	List<Product> products = new ArrayList<>();
     	UUID productUuid = UUID.randomUUID();
-    	Product product = new Product(productUuid, new BigDecimal(12.3d), "parpaing");
+    	Product product = new Product(productUuid, 12.3d, "parpaing");
     	products.add(product);
     		
         Mockito.when(this.productRepository.findAll()).thenReturn(products);
@@ -45,7 +44,7 @@ public class ProductServiceTest {
     public void createProduct() throws Exception {
     	
     	UUID productUuid = UUID.randomUUID();
-    	Product product = new Product(productUuid, new BigDecimal(12.3d), "parpaing");
+    	Product product = new Product(productUuid, 12.3d, "parpaing");
     		
         UUID productId = this.productService.createProduct(product);
         Assertions.assertThat(productId).isNotNull();

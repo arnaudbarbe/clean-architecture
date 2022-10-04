@@ -1,6 +1,5 @@
 package fr.arnaud.cleanarchitecture.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +31,7 @@ public class OrderServiceTest {
     public void getOrders() throws Exception {
     	
     	UUID productUuid = UUID.randomUUID();
-    	Product product = new Product(productUuid, new BigDecimal(12.3d), "parpaing");
+    	Product product = new Product(productUuid, 12.3d, "parpaing");
     	UUID order1Uuid = UUID.randomUUID();
         Order order1 = new Order(order1Uuid, product);
     	UUID order2Uuid = UUID.randomUUID();

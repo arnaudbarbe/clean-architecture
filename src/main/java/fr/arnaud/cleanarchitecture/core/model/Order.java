@@ -1,6 +1,5 @@
 package fr.arnaud.cleanarchitecture.core.model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +11,7 @@ public class Order {
     private UUID id;
     private OrderStatus status;
     private List<OrderItem> orderItems;
-    private BigDecimal price;
+    private Double price;
 
     public Order(final UUID id, final Product product) {
         this.id = id;
@@ -30,7 +29,7 @@ public class Order {
         validateState();
         validateProduct(product);
         this.orderItems.add(new OrderItem(product));
-        this.price = this.price.add(product.getPrice());
+        this.price = product.getPrice();
     }
 
     public void removeOrder(final UUID id) {
@@ -38,7 +37,7 @@ public class Order {
         final OrderItem orderItem = getOrderItem(id);
         this.orderItems.remove(orderItem);
 
-        this.price = this.price.subtract(orderItem.getPrice());
+        this.price = this.price - orderItem.getPrice();
     }
 
     private OrderItem getOrderItem(final UUID id) {
@@ -69,7 +68,7 @@ public class Order {
         return this.status;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return this.price;
     }
 

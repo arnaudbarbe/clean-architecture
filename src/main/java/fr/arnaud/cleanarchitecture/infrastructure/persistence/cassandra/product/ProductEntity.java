@@ -1,6 +1,5 @@
 package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.product;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -11,7 +10,7 @@ public class ProductEntity {
 
 	@PrimaryKey
 	private UUID id;
-	private BigDecimal price;
+	private Double price;
 	private String name;
 
 	public ProductEntity() {
@@ -31,7 +30,7 @@ public class ProductEntity {
 		return this.id;
 	}
 
-	public BigDecimal getPrice() {
+	public Double getPrice() {
 		return this.price;
 	}
 

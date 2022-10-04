@@ -1,6 +1,5 @@
 package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.order;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -18,9 +17,9 @@ public class OrderEntity {
     private UUID id;
     private OrderStatus status;
     private List<OrderItemEntity> orderItemEntities;
-    private BigDecimal price;
+    private Double price;
 
-    public OrderEntity(final UUID id, final OrderStatus status, final List<OrderItemEntity> orderItemEntities, final BigDecimal price) {
+    public OrderEntity(final UUID id, final OrderStatus status, final List<OrderItemEntity> orderItemEntities, final Double price) {
         this.id = id;
         this.status = status;
         this.orderItemEntities = orderItemEntities;
@@ -68,7 +67,7 @@ public class OrderEntity {
         return this.orderItemEntities;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return this.price;
     }
 }

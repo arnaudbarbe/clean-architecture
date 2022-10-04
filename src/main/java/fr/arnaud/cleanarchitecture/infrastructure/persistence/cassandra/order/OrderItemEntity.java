@@ -1,6 +1,5 @@
 package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.order;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.springframework.data.cassandra.core.mapping.UserDefinedType;
@@ -12,7 +11,7 @@ import fr.arnaud.cleanarchitecture.core.model.Product;
 public class OrderItemEntity {
 
     private UUID productId;
-    private BigDecimal price;
+    private Double price;
 
     public OrderItemEntity() {
     }
@@ -34,11 +33,11 @@ public class OrderItemEntity {
         this.productId = productId;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return this.price;
     }
 
-    public void setPrice(final BigDecimal price) {
+    public void setPrice(final Double price) {
         this.price = price;
     }
 }
