@@ -38,4 +38,9 @@ public class DomainLeagueService implements LeagueService {
 	public List<League> getLeagues() {
 		return this.leagueRepository.findAll();
 	}
+
+    @Override
+    public League updateLeague(UUID id, League league) {
+        return this.leagueRepository.update(id, league);
+    }
 }

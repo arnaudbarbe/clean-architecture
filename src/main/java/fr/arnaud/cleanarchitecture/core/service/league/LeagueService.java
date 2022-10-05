@@ -14,4 +14,6 @@ public interface LeagueService {
     League getLeague(UUID id);
     
     List<League> getLeagues();
+
+    League updateLeague(UUID id, League league);
 }
