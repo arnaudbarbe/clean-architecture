@@ -9,33 +9,38 @@ import fr.arnaud.cleanarchitecture.core.repository.MatchRepository;
 
 public class DomainMatchService implements MatchService {
 
-    private final MatchRepository leagueRepository;
+    private final MatchRepository matchRepository;
 
-    public DomainMatchService(final MatchRepository leagueRepository) {
-        this.leagueRepository = leagueRepository;
+    public DomainMatchService(final MatchRepository matchRepository) {
+        this.matchRepository = matchRepository;
     }
 
     @Override
-    public UUID createMatch(final Match league) {
-        this.leagueRepository.save(league);
+    public UUID createMatch(final Match match) {
+        this.matchRepository.save(match);
 
-        return league.getId();
+        return match.getId();
     }
 
     @Override
     public void deleteMatch(final UUID id) {
-        this.leagueRepository.delete(id);
+        this.matchRepository.delete(id);
     }
 
     @Override
     public Match getMatch(final UUID id) {
-        return this.leagueRepository
+        return this.matchRepository
           .findById(id)
           .orElseThrow(() -> new EntityNotFoundException("Match with given id doesn't exist"));
     }
 
 	@Override
 	public List<Match> getMatchs() {
-		return this.leagueRepository.findAll();
+		return this.matchRepository.findAll();
 	}
+
+    @Override
+    public Match updateMatch(UUID id, Match match) {
+        return this.matchRepository.update(id, match);
+    }
 }

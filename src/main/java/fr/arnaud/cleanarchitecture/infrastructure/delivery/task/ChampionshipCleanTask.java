@@ -10,32 +10,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.arnaud.cleanarchitecture.core.service.product.ProductService;
+import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class ProductCleanTask {
+public class ChampionshipCleanTask {
 
 	@Autowired
-	private ProductService productService;
+	private ChampionshipService championshipService;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ProductCleanTask.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ChampionshipCleanTask.class);
 	
 	@Scheduled(cron = "0 0/2 * * * *")
-	public void cleanProducts() {
+	public void cleanChampionship() {
 		
 		if(LOGGER.isDebugEnabled()) {
-			LOGGER.debug("========================== begin task ProductCleanTask.cleanProducts ====================");
+			LOGGER.debug("========================== begin task ChampionshipCleanTask.cleanChampionship ====================");
 		}
 
 		LocalDateTime localDateTime = LocalDateTime.now();
 		localDateTime = localDateTime.minusMonths(1);
 		
 		
-		this.productService.deleteByCreationDateLessThan(localDateTime);
+		//this.championshipService.deleteByCreationDateLessThan(localDateTime);
 		
 		if(LOGGER.isDebugEnabled()) {
-			LOGGER.debug("========================== end task ProductCleanTask.cleanProducts ======================");
+			LOGGER.debug("========================== end task ChampionshipCleanTask.cleanChampionship ======================");
 		}
 
 	}
