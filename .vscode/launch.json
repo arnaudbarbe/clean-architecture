@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CleanArchitectureApplication<clean-architecture>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "fr.arnaud.cleanarchitecture.CleanArchitectureApplication",
+            "projectName": "clean-architecture",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

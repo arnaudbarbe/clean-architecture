@@ -15,4 +15,6 @@ public interface LeagueRepository {
     List<League> findAll();
     
     void delete(UUID id);
+
+    League update(UUID id, League league);
 }

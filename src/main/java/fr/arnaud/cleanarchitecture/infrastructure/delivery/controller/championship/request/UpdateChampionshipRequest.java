@@ -1,26 +1,22 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.order.response;
-
-import java.util.UUID;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request;
 
 import javax.validation.constraints.NotNull;
 
+import fr.arnaud.cleanarchitecture.core.model.Championship;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Getter
-@EqualsAndHashCode(of= {"id"})
-@ToString(of= {"id"})
-@Builder
-public class CreateOrderResponse {
-	@NotNull 
-	UUID id;
+@EqualsAndHashCode(of= {"championship"})
+public class UpdateChampionshipRequest {
+    @NotNull 
+    Championship championship;
+
 }

@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.order;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship;
 
 import java.util.UUID;
 
@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
 import fr.arnaud.cleanarchitecture.core.service.order.OrderService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.order.request.AddProductRequest;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.order.request.CreateOrderRequest;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.order.response.CreateOrderResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.order.response.GetOrdersResponse;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.AddProductRequest;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.CreateChampionshipRequest;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.CreateOrderRequest;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.UpdateChampionshipRequest;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.CreateChampionshipResponse;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.CreateOrderResponse;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.GetOrdersResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.product.response.CreateProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,14 +35,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/orders")
-public class OrderController {
+@RequestMapping("/championships")
+public class ChampionshipController {
 
-    private final OrderService orderService;
+    private final ChampionshipService championshipService;
 
     @Autowired
-    public OrderController(final OrderService orderService) {
-        this.orderService = orderService;
+    public ChampionshipController(final ChampionshipService championshipService) {
+        this.championshipService = championshipService;
     }
 
     
@@ -55,25 +59,25 @@ public class OrderController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 
 	@Operation(
-			summary = "Create an order", 
-			description = "Create an order bla bla")
+			summary = "Create a championship", 
+			description = "Create an championship bla bla")
 
     @ApiResponses(
     		value = {@ApiResponse(
     				responseCode = "201", 
     				description = "created",
     						content = @Content(
-    						        schema = @Schema(implementation = CreateProductResponse.class, example = "f67546f1-5a47-4e86-b7a9-dbae57fbbb57")
+    						        schema = @Schema(implementation = CreateChampionshipResponse.class, example = "f67546f1-5a47-4e86-b7a9-dbae57fbbb57")
     						)
     				)}
     		)
 
 	@Tags({ 
-		@Tag(name="Order")})
-    public CreateOrderResponse createOrder(@RequestBody final CreateOrderRequest createOrderRequest) {
-        final UUID id = this.orderService.createOrder(createOrderRequest.getProduct());
+		@Tag(name="Championship")})
+    public CreateChampionshipResponse createChampionship(@RequestBody final CreateChampionshipRequest createChampionshipRequest) {
+        final UUID id = this.championshipService.createChampionship(createChampionshipRequest.getChampionship());
 
-        return CreateOrderResponse.builder().id(id).build();
+        return CreateChampionshipResponse.builder().id(id).build();
     }
 
 	
@@ -85,14 +89,14 @@ public class OrderController {
 	
 	
 	@PutMapping(
-			value = "/{orderId}/products", 
+			value = "/{orderId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "add a product", 
-			description = "add a product to an order")
+			summary = "modify a Championship", 
+			description = "modify a Championship")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -100,9 +104,9 @@ public class OrderController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Order")})
-    public void addProduct(@PathVariable final UUID orderId, @RequestBody final AddProductRequest addProductRequest) {
-        this.orderService.addProduct(orderId, addProductRequest.getProduct());
+		@Tag(name="Championship")})
+    public void updateChampionship(@PathVariable final UUID championshipId, @RequestBody final UpdateChampionshipRequest updateChampionshipRequest) {
+        this.championshipService.updateChampionship(championshipId, updateChampionshipRequest.getChampionship());
     }
 
 	

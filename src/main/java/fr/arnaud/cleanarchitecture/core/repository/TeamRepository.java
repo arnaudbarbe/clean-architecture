@@ -15,4 +15,6 @@ public interface TeamRepository {
     List<Team> findAll();
 
     void delete(UUID id);
+
+    Team update(UUID id, Team team);
 }

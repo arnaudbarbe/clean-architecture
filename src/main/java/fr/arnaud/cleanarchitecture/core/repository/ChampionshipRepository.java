@@ -15,4 +15,6 @@ public interface ChampionshipRepository {
     List<Championship> findAll();
 
     void delete(UUID id);
+
+    Championship update(UUID id, Championship championship);
 }

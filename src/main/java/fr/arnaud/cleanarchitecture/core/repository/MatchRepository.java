@@ -15,4 +15,6 @@ public interface MatchRepository {
     List<Match> findAll();
 
     void delete(UUID id);
+
+    Match update(UUID id, Match match);
 }

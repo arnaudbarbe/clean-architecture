@@ -15,4 +15,6 @@ public interface SeasonRepository {
     List<Season> findAll();
 
     void delete(UUID id);
+
+    Season update(UUID id, Season season);
 }

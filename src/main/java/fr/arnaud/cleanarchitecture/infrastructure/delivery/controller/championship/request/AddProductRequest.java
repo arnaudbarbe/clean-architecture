@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.order.request;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request;
 
 import javax.validation.constraints.NotNull;
 

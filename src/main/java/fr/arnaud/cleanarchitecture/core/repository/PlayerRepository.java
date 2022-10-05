@@ -15,4 +15,6 @@ public interface PlayerRepository {
     List<Player> findAll();
 
     void delete(UUID id);
+
+    Player update(UUID id, Player player);
 }

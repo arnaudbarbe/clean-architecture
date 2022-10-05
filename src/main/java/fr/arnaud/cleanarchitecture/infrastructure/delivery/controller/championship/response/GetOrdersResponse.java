@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.order.response;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response;
 
 import java.util.ArrayList;
 import java.util.List;
