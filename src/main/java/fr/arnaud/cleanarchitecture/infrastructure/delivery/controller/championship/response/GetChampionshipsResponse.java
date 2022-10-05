@@ -3,17 +3,17 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.champions
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.arnaud.cleanarchitecture.core.model.Order;
+import fr.arnaud.cleanarchitecture.core.model.Championship;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Builder
-public class GetOrdersResponse extends ArrayList<Order> {
+public class GetChampionshipsResponse extends ArrayList<Championship> {
 
-	public GetOrdersResponse addOrders(final List<Order> orders) {
-		this.addAll(orders);
+	public GetChampionshipsResponse addOrders(final List<Championship> championships) {
+		this.addAll(championships);
 		return this;
 	}
 }

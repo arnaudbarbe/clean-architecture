@@ -15,22 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.arnaud.cleanarchitecture.core.model.Championship;
 import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
-import fr.arnaud.cleanarchitecture.core.service.order.OrderService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.AddProductRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.CreateChampionshipRequest;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.CreateOrderRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.UpdateChampionshipRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.CreateChampionshipResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.CreateOrderResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.GetOrdersResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.product.response.CreateProductResponse;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.GetChampionshipResponse;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.GetChampionshipsResponse;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.UpdateChampionshipResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
@@ -89,14 +86,14 @@ public class ChampionshipController {
 	
 	
 	@PutMapping(
-			value = "/{orderId}", 
+			value = "/{championshipId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "modify a Championship", 
-			description = "modify a Championship")
+			summary = "update a Championship", 
+			description = "update a Championship")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -105,8 +102,10 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public void updateChampionship(@PathVariable final UUID championshipId, @RequestBody final UpdateChampionshipRequest updateChampionshipRequest) {
-        this.championshipService.updateChampionship(championshipId, updateChampionshipRequest.getChampionship());
+    public UpdateChampionshipResponse updateChampionship(@PathVariable final UUID championshipId, @RequestBody final UpdateChampionshipRequest updateChampionshipRequest) {
+        Championship championship = this.championshipService.updateChampionship(championshipId, updateChampionshipRequest.getChampionship());
+
+		return UpdateChampionshipResponse.builder().championship(championship).build();
     }
 
 	
@@ -117,14 +116,13 @@ public class ChampionshipController {
 	
 	
 	@DeleteMapping(
-			value = "/{orderId}/products/{productId}")
+			value = "/{championshipId}")
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "Delete a device", 
-			description = "Delete a device by its identifier", 
-			security = { @SecurityRequirement(name = "bearerAuth") })
+			summary = "Delete a championship", 
+			description = "Delete a championship by its identifier")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -133,10 +131,11 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Order")})
-    public void removeProduct(@PathVariable final UUID orderId, @PathVariable final UUID productId) {
-        this.orderService.removeProduct(orderId, productId);
+    public void deleteChampionship(@PathVariable final UUID championshipId) {
+        this.championshipService.deleteChampionship(championshipId);
     }
 
+  
 	
 	
 	
@@ -144,40 +143,11 @@ public class ChampionshipController {
 	
 	
 	
-	
-	
-	
-	
-	
-	@PutMapping(
-			value = "/{orderId}/complete", 
-			consumes = MediaType.APPLICATION_JSON_VALUE)
-
-	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-
-	@Operation(
-			summary = "complete a product", 
-			description = "complete a product blabla")
-
-	@ApiResponses(
-			value = { @ApiResponse(
-					responseCode = "204", 
-					description = "no content") })
-
-	@Tags({ 
-		@Tag(name="Order")})
-    public void completeOrder(@PathVariable final UUID id) {
-        this.orderService.completeOrder(id);
-    }
-    
-	
-	
-	
-	
-	
-	
-	
-	
+    @GetMapping(
+		value = "/{championshipId}")
+    public GetChampionshipResponse getChampionship(@PathVariable final UUID championshipId) {
+        return GetChampionshipResponse.builder().championship(this.championshipService.getChampionship(championshipId)).build();
+    }	
 	
 	
 	
@@ -186,7 +156,7 @@ public class ChampionshipController {
 	
 	
     @GetMapping()
-    public GetOrdersResponse getOrders() {
-        return GetOrdersResponse.builder().build().addOrders(this.orderService.getOrders());
+    public GetChampionshipsResponse getChampionships() {
+        return GetChampionshipsResponse.builder().build().addOrders(this.championshipService.getChampionships());
     }
 }
