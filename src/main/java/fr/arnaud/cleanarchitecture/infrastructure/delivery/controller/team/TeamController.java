@@ -153,6 +153,6 @@ public class TeamController {
 	
     @GetMapping()
     public GetTeamsResponse getTeams() {
-        return GetTeamsResponse.builder().build().addOrders(this.teamService.getTeams());
+        return GetTeamsResponse.builder().build().addTeams(this.teamService.getTeams());
     }
 }

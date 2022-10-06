@@ -14,7 +14,7 @@ public class GetTeamsResponse extends ArrayList<Team> {
 
 	private static final long serialVersionUID = 4159659938198265637L;
 
-	public GetTeamsResponse addOrders(final List<Team> teams) {
+	public GetTeamsResponse addTeams(final List<Team> teams) {
 		this.addAll(teams);
 		return this;
 	}

@@ -24,7 +24,7 @@ public class TeamServiceTest {
     private TeamRepository teamRepository;
 
     @Test
-    public void createProduct() throws Exception {
+    public void createTeam() throws Exception {
     	
     	UUID uuid = UUID.randomUUID();
     	Team team = Team.builder().id(uuid).name("Poule").build();
