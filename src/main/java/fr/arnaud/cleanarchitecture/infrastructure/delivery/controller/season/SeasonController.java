@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.Season;
 import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.season.request.CreateSeasonRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.season.request.UpdateSeasonRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.season.response.CreateSeasonResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.season.response.GetSeasonResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.season.response.GetSeasonsResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.season.response.UpdateSeasonResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -102,10 +100,8 @@ public class SeasonController {
 
 	@Tags({ 
 		@Tag(name="Season")})
-    public UpdateSeasonResponse updateSeason(@PathVariable final UUID seasonId, @RequestBody final UpdateSeasonRequest updateSeasonRequest) {
-        Season season = this.seasonService.updateSeason(seasonId, updateSeasonRequest.getSeason());
-
-		return UpdateSeasonResponse.builder().season(season).build();
+    public void updateSeason(@PathVariable final UUID seasonId, @RequestBody final UpdateSeasonRequest updateSeasonRequest) {
+        this.seasonService.updateSeason(seasonId, updateSeasonRequest.getSeason());
     }
 
 	

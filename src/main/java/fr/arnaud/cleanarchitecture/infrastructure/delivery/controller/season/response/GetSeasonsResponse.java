@@ -12,6 +12,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class GetSeasonsResponse extends ArrayList<Season> {
 
+	private static final long serialVersionUID = 1197019700903831475L;
+
 	public GetSeasonsResponse addOrders(final List<Season> seasons) {
 		this.addAll(seasons);
 		return this;

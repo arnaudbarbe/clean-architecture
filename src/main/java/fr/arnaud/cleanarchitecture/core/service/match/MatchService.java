@@ -17,5 +17,5 @@ public interface MatchService {
     
     List<Match> getMatchs();
 
-    Match updateMatch(@NotNull UUID id, @NotNull Match match);
+    void updateMatch(@NotNull UUID id, @NotNull Match match);
 }

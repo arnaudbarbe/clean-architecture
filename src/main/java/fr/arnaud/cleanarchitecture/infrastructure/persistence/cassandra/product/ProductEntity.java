@@ -7,7 +7,6 @@ import javax.persistence.Table;
 
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 
-import fr.arnaud.cleanarchitecture.core.model.Product;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -26,7 +25,7 @@ public class ProductEntity {
 	public ProductEntity() {
 	}
 
-	public ProductEntity(final Product product) {
+/*	public ProductEntity(final Product product) {
 		this.id = product.getId();
 		this.price = product.getPrice();
 		this.name = product.getName();
@@ -35,5 +34,5 @@ public class ProductEntity {
 
 	public Product toProduct() {
 		return new Product(this.id, this.price, this.name, this.creationDate);
-	}
+	}*/
 }

@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.model.Match;
 import fr.arnaud.cleanarchitecture.core.repository.MatchRepository;
 
@@ -31,9 +30,7 @@ public class DomainMatchService implements MatchService {
 
     @Override
     public Match getMatch(@NotNull final UUID id) {
-        return this.matchRepository
-          .findById(id)
-          .orElseThrow(() -> new EntityNotFoundException("Match with given id doesn't exist"));
+        return this.matchRepository.findById(id);
     }
 
 	@Override
@@ -42,7 +39,7 @@ public class DomainMatchService implements MatchService {
 	}
 
     @Override
-    public Match updateMatch(@NotNull final UUID id, @NotNull final Match match) {
-        return this.matchRepository.update(id, match);
+    public void updateMatch(@NotNull final UUID id, @NotNull final Match match) {
+        this.matchRepository.update(id, match);
     }
 }

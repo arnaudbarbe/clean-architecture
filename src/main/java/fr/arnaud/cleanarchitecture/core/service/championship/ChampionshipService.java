@@ -17,5 +17,5 @@ public interface ChampionshipService {
     
     List<Championship> getChampionships();
 
-    Championship updateChampionship(@NotNull UUID id, @NotNull Championship championship);
+    void updateChampionship(@NotNull UUID id, @NotNull Championship championship);
 }

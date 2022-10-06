@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.Player;
 import fr.arnaud.cleanarchitecture.core.service.player.PlayerService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.player.request.CreatePlayerRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.player.request.UpdatePlayerRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.player.response.CreatePlayerResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.player.response.GetPlayerResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.player.response.GetPlayersResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.player.response.UpdatePlayerResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -102,10 +100,8 @@ public class PlayerController {
 
 	@Tags({ 
 		@Tag(name="Player")})
-    public UpdatePlayerResponse updatePlayer(@PathVariable final UUID playerId, @RequestBody final UpdatePlayerRequest updatePlayerRequest) {
-        Player player = this.playerService.updatePlayer(playerId, updatePlayerRequest.getPlayer());
-
-		return UpdatePlayerResponse.builder().player(player).build();
+    public void updatePlayer(@PathVariable final UUID playerId, @RequestBody final UpdatePlayerRequest updatePlayerRequest) {
+        this.playerService.updatePlayer(playerId, updatePlayerRequest.getPlayer());
     }
 
 	

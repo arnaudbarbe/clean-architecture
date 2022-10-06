@@ -17,5 +17,5 @@ public interface PlayerService {
     
     List<Player> getPlayers();
 
-	Player updatePlayer(@NotNull UUID id, @NotNull Player player);
+    void updatePlayer(@NotNull UUID id, @NotNull Player player);
 }

@@ -1,20 +1,11 @@
 package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.product;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.arnaud.cleanarchitecture.core.model.Product;
-import fr.arnaud.cleanarchitecture.core.repository.ProductRepository;
-
 @Component("CassandraDbProductRepository")
-public class CassandraDbProductRepository implements ProductRepository {
+public class CassandraDbProductRepository /*implements ProductRepository*/ {
 
-    private final SpringDataCassandraProductRepository productRepository;
+ /*   private final SpringDataCassandraProductRepository productRepository;
 
     @Autowired
     public CassandraDbProductRepository(final SpringDataCassandraProductRepository productRepository) {
@@ -48,5 +39,5 @@ public class CassandraDbProductRepository implements ProductRepository {
 	@Override
 	public void deleteByCreationDateLessThan(final LocalDateTime localDateTime) {
 		this.productRepository.deleteByCreationDateLessThan(localDateTime);
-	}
+	}*/
 }

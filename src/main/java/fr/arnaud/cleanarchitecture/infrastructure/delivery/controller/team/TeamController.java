@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.Team;
 import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.team.request.CreateTeamRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.team.request.UpdateTeamRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.team.response.CreateTeamResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.team.response.GetTeamResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.team.response.GetTeamsResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.team.response.UpdateTeamResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -102,10 +100,8 @@ public class TeamController {
 
 	@Tags({ 
 		@Tag(name="Team")})
-    public UpdateTeamResponse updateTeam(@PathVariable final UUID teamId, @RequestBody final UpdateTeamRequest updateTeamRequest) {
-        Team team = this.teamService.updateTeam(teamId, updateTeamRequest.getTeam());
-
-		return UpdateTeamResponse.builder().team(team).build();
+    public void updateTeam(@PathVariable final UUID teamId, @RequestBody final UpdateTeamRequest updateTeamRequest) {
+        this.teamService.updateTeam(teamId, updateTeamRequest.getTeam());
     }
 
 	

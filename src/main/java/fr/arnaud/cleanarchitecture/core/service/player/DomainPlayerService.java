@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.model.Player;
 import fr.arnaud.cleanarchitecture.core.repository.PlayerRepository;
 
@@ -31,9 +30,7 @@ public class DomainPlayerService implements PlayerService {
 
     @Override
     public Player getPlayer(@NotNull final UUID id) {
-        return this.playerRepository
-          .findById(id)
-          .orElseThrow(() -> new EntityNotFoundException("Player with given id doesn't exist"));
+        return this.playerRepository.findById(id);
     }
 
 	@Override
@@ -42,7 +39,7 @@ public class DomainPlayerService implements PlayerService {
 	}
 
 	@Override
-	public Player updatePlayer(@NotNull final UUID id, @NotNull final Player player) {
-        return this.playerRepository.update(id, player);
+	public void updatePlayer(@NotNull final UUID id, @NotNull final Player player) {
+        this.playerRepository.update(id, player);
 	}
 }

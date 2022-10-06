@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.model.League;
 import fr.arnaud.cleanarchitecture.core.repository.LeagueRepository;
 
@@ -31,9 +30,7 @@ public class DomainLeagueService implements LeagueService {
 
     @Override
     public League getLeague(@NotNull final UUID id) {
-        return this.leagueRepository
-          .findById(id)
-          .orElseThrow(() -> new EntityNotFoundException("League with given id doesn't exist"));
+        return this.leagueRepository.findById(id);
     }
 
 	@Override
@@ -42,7 +39,7 @@ public class DomainLeagueService implements LeagueService {
 	}
 
     @Override
-    public League updateLeague(@NotNull final UUID id, @NotNull final League league) {
-        return this.leagueRepository.update(id, league);
+    public void updateLeague(@NotNull final UUID id, @NotNull final League league) {
+        this.leagueRepository.update(id, league);
     }
 }

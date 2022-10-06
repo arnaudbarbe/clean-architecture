@@ -1,7 +1,5 @@
 package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response;
 
-import java.util.UUID;
-
 import javax.validation.constraints.NotNull;
 
 import fr.arnaud.cleanarchitecture.core.model.Championship;

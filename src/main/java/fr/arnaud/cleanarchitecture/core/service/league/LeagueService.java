@@ -17,5 +17,5 @@ public interface LeagueService {
     
     List<League> getLeagues();
 
-    League updateLeague(@NotNull UUID id, @NotNull League league);
+    void updateLeague(@NotNull UUID id, @NotNull League league);
 }

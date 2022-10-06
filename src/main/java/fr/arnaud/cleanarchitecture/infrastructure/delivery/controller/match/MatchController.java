@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.Match;
 import fr.arnaud.cleanarchitecture.core.service.match.MatchService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.match.request.CreateMatchRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.match.request.UpdateMatchRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.match.response.CreateMatchResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.match.response.GetMatchResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.match.response.GetMatchsResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.match.response.UpdateMatchResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -102,10 +100,8 @@ public class MatchController {
 
 	@Tags({ 
 		@Tag(name="Match")})
-    public UpdateMatchResponse updateMatch(@PathVariable final UUID matchId, @RequestBody final UpdateMatchRequest updateMatchRequest) {
-        Match match = this.matchService.updateMatch(matchId, updateMatchRequest.getMatch());
-
-		return UpdateMatchResponse.builder().match(match).build();
+    public void updateMatch(@PathVariable final UUID matchId, @RequestBody final UpdateMatchRequest updateMatchRequest) {
+        this.matchService.updateMatch(matchId, updateMatchRequest.getMatch());
     }
 
 	

@@ -1,14 +1,13 @@
 package fr.arnaud.cleanarchitecture.core.repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import fr.arnaud.cleanarchitecture.core.model.Match;
 
 public interface MatchRepository {
 	
-    Optional<Match> findById(UUID id);
+    Match findById(UUID id);
 
     void save(Match match);
     
@@ -16,5 +15,5 @@ public interface MatchRepository {
 
     void delete(UUID id);
 
-    Match update(UUID id, Match match);
+    void update(UUID id, Match match);
 }

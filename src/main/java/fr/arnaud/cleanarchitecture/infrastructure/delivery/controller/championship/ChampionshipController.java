@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.Championship;
 import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.CreateChampionshipRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.request.UpdateChampionshipRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.CreateChampionshipResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.GetChampionshipResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.GetChampionshipsResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.response.UpdateChampionshipResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -102,10 +100,8 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public UpdateChampionshipResponse updateChampionship(@PathVariable final UUID championshipId, @RequestBody final UpdateChampionshipRequest updateChampionshipRequest) {
-        Championship championship = this.championshipService.updateChampionship(championshipId, updateChampionshipRequest.getChampionship());
-
-		return UpdateChampionshipResponse.builder().championship(championship).build();
+    public void updateChampionship(@PathVariable final UUID championshipId, @RequestBody final UpdateChampionshipRequest updateChampionshipRequest) {
+        this.championshipService.updateChampionship(championshipId, updateChampionshipRequest.getChampionship());
     }
 
 	

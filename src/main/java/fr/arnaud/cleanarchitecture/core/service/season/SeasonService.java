@@ -17,5 +17,5 @@ public interface SeasonService {
     
     List<Season> getSeasons();
 
-	Season updateSeason(@NotNull UUID id, @NotNull Season season);
+    void updateSeason(@NotNull UUID id, @NotNull Season season);
 }

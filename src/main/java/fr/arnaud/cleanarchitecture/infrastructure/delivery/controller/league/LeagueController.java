@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.League;
 import fr.arnaud.cleanarchitecture.core.service.league.LeagueService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.league.request.CreateLeagueRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.league.request.UpdateLeagueRequest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.league.response.CreateLeagueResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.league.response.GetLeagueResponse;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.league.response.GetLeaguesResponse;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.league.response.UpdateLeagueResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -102,10 +100,8 @@ public class LeagueController {
 
 	@Tags({ 
 		@Tag(name="League")})
-    public UpdateLeagueResponse updateLeague(@PathVariable final UUID leagueId, @RequestBody final UpdateLeagueRequest updateLeagueRequest) {
-        League league = this.leagueService.updateLeague(leagueId, updateLeagueRequest.getLeague());
-
-		return UpdateLeagueResponse.builder().league(league).build();
+    public void updateLeague(@PathVariable final UUID leagueId, @RequestBody final UpdateLeagueRequest updateLeagueRequest) {
+        this.leagueService.updateLeague(leagueId, updateLeagueRequest.getLeague());
     }
 
 	

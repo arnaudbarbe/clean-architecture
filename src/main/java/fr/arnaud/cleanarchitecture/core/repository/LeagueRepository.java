@@ -1,14 +1,13 @@
 package fr.arnaud.cleanarchitecture.core.repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import fr.arnaud.cleanarchitecture.core.model.League;
 
 public interface LeagueRepository {
 	
-    Optional<League> findById(UUID id);
+    League findById(UUID id);
 
     void save(League league);
     
@@ -16,5 +15,5 @@ public interface LeagueRepository {
     
     void delete(UUID id);
 
-    League update(UUID id, League league);
+    void update(UUID id, League league);
 }

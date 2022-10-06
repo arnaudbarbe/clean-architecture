@@ -17,5 +17,5 @@ public interface TeamService {
     
     List<Team> getTeams();
 
-	Team updateTeam(UUID id, @NotNull Team team);
+    void updateTeam(UUID id, @NotNull Team team);
 }

@@ -12,6 +12,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class GetMatchsResponse extends ArrayList<Match> {
 
+	private static final long serialVersionUID = 999335269974135989L;
+
 	public GetMatchsResponse addOrders(final List<Match> matchs) {
 		this.addAll(matchs);
 		return this;

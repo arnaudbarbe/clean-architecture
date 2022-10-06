@@ -5,12 +5,10 @@ import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 import org.springframework.stereotype.Component;
 
-import fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.order.SpringDataCassandraOrderRepository;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.product.SpringDataCassandraProductRepository;
 
 @EnableCassandraRepositories(
-		basePackageClasses = {
-				SpringDataCassandraOrderRepository.class, 
+		basePackageClasses = { 
 				SpringDataCassandraProductRepository.class})
 @Component
 public class CassandraConfiguration extends AbstractCassandraConfiguration {

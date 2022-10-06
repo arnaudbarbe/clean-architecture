@@ -12,6 +12,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class GetPlayersResponse extends ArrayList<Player> {
 
+	private static final long serialVersionUID = -875422354453514099L;
+
 	public GetPlayersResponse addOrders(final List<Player> players) {
 		this.addAll(players);
 		return this;

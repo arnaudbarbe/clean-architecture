@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.model.Championship;
 import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
 
@@ -31,9 +30,7 @@ public class DomainChampionshipService implements ChampionshipService {
 
     @Override
     public Championship getChampionship(@NotNull final UUID id) {
-        return this.championshipRepository
-          .findById(id)
-          .orElseThrow(() -> new EntityNotFoundException("Championship with given id doesn't exist"));
+        return this.championshipRepository.findById(id);
     }
 
 	@Override
@@ -42,7 +39,7 @@ public class DomainChampionshipService implements ChampionshipService {
 	}
 
     @Override
-    public Championship updateChampionship(@NotNull final UUID id, @NotNull final Championship championship) {
-        return this.championshipRepository.update(id, championship);
+    public void updateChampionship(@NotNull final UUID id, @NotNull final Championship championship) {
+        this.championshipRepository.update(id, championship);
     }
 }

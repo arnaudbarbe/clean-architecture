@@ -12,6 +12,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class GetChampionshipsResponse extends ArrayList<Championship> {
 
+	private static final long serialVersionUID = -1056689375231213891L;
+
 	public GetChampionshipsResponse addOrders(final List<Championship> championships) {
 		this.addAll(championships);
 		return this;

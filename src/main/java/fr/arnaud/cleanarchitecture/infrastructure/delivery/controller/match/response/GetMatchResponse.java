@@ -1,7 +1,5 @@
 package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.match.response;
 
-import java.util.UUID;
-
 import javax.validation.constraints.NotNull;
 
 import fr.arnaud.cleanarchitecture.core.model.Match;

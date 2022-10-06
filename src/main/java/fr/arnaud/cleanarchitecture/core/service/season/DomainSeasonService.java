@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.model.Season;
 import fr.arnaud.cleanarchitecture.core.repository.SeasonRepository;
 
@@ -31,9 +30,7 @@ public class DomainSeasonService implements SeasonService {
 
     @Override
     public Season getSeason(@NotNull final UUID id) {
-        return this.seasonRepository
-          .findById(id)
-          .orElseThrow(() -> new EntityNotFoundException("Season with given id doesn't exist"));
+        return this.seasonRepository.findById(id);
     }
 
 	@Override
@@ -42,7 +39,7 @@ public class DomainSeasonService implements SeasonService {
 	}
 
 	@Override
-	public Season updateSeason(@NotNull final UUID id, @NotNull final Season season) {
-        return this.seasonRepository.update(id, season);
+	public void updateSeason(@NotNull final UUID id, @NotNull final Season season) {
+        this.seasonRepository.update(id, season);
 	}
 }
