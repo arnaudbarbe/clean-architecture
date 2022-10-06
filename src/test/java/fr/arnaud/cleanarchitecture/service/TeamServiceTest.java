@@ -3,6 +3,7 @@ package fr.arnaud.cleanarchitecture.service;
 import java.util.UUID;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,8 +30,38 @@ public class TeamServiceTest {
     	UUID uuid = UUID.randomUUID();
     	Team team = Team.builder().id(uuid).name("Poule").build();
     		
-        UUID productId = this.teamService.createTeam(team);
+        UUID teamId = this.teamService.createTeam(team);
         
-        Assertions.assertThat(productId).isNotNull();
+        Assertions.assertThat(teamId).isNotNull();
+    }
+
+    @Test
+    public void deleteTeam() throws Exception {
+    	
+    	UUID uuid = UUID.randomUUID();
+    	Team team = Team.builder().id(uuid).name("Poule").build();
+    		
+        UUID teamId = this.teamService.createTeam(team);
+
+        this.teamService.deleteTeam(teamId);
+        
+        Team existingTeam = this.teamService.getTeam(teamId);
+
+        Assert.assertNull(existingTeam);
+    }
+
+    @Test
+    public void testParameters() throws Exception {
+    	
+    	UUID uuid = UUID.randomUUID();
+    	Team team = Team.builder().id(uuid).name("Poule").build();
+    		
+        UUID teamId = this.teamService.createTeam(team);
+
+        this.teamService.deleteTeam(teamId);
+        
+        Team existingTeam = this.teamService.getTeam(teamId);
+
+        Assert.assertNull(existingTeam);
     }
 }

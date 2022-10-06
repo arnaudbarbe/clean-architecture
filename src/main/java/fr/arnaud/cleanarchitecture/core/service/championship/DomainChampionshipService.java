@@ -20,6 +20,7 @@ public class DomainChampionshipService implements ChampionshipService {
 
     @Override
     public UUID createChampionship(@NotNull final Championship championship) {
+        
         this.championshipRepository.save(championship);
 
         return championship.getId();

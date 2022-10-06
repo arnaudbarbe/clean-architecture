@@ -20,7 +20,7 @@ public class DomainTeamService implements TeamService {
 
 	@Override
 	public UUID createTeam(@NotNull final Team team) {
-		log.debug("create team %h ", team);
+		log.debug("create team {} ", team);
 		this.teamRepository.save(team);
 
 		return team.getId();
@@ -28,21 +28,25 @@ public class DomainTeamService implements TeamService {
 
 	@Override
 	public void deleteTeam(@NotNull final UUID id) {
+		log.debug("delete team Id {} ", id);
 		this.teamRepository.delete(id);
 	}
 
 	@Override
 	public Team getTeam(@NotNull final UUID id) {
+		log.debug("get team Id {} ", id);
 		return this.teamRepository.findById(id);
 	}
 
 	@Override
 	public List<Team> getTeams() {
+		log.debug("get teams");
 		return this.teamRepository.findAll();
 	}
 
 	@Override
 	public void updateTeam(@NotNull final UUID id, @NotNull final Team team) {
+		log.debug("update team Id {} {} ", id, team);
 		this.teamRepository.update(id, team);
 	}
 }
