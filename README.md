@@ -2,14 +2,14 @@
 
 Personal implementation of a clean architecture
 
-folders are organized like this :
+##folders organization
 
  * core (business part)
     * exception 
     * model (Entities)
     * repository (interfaces to storage, should be implemented by infrastructure)
     * service (Business rules)
-    * use case (Business rules too but oriented use case)
+    * use case (Business rules too but use case oriented)
  * infrastructure (technical part)
     * configuration (configuration for each framework/persistence/etc...)
     * delivery (from other system)
@@ -18,3 +18,8 @@ folders are organized like this :
         * task (cron task to execute async process)
         * gateway (to other system)
         * persistence (repositories for each storage system)
+
+##persistence
+
+I'm using postgres, mongodb and cassandra to persist data.
+This is just for fun, don't do this at home.
