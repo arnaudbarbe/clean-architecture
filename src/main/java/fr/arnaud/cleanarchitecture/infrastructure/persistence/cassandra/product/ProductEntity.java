@@ -23,6 +23,7 @@ public class ProductEntity {
 	LocalDateTime creationDate;
 
 	public ProductEntity() {
+		super();
 	}
 
 /*	public ProductEntity(final Product product) {

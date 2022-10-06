@@ -1,6 +1,5 @@
 package fr.arnaud.cleanarchitecture.controller;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -16,32 +15,32 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.arnaud.cleanarchitecture.core.model.Product;
-import fr.arnaud.cleanarchitecture.core.service.product.ProductService;
+import fr.arnaud.cleanarchitecture.core.model.Team;
+import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProductControllerTest {
+public class TeamControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ProductService productService;
+    private TeamService teamService;
 
     private ObjectMapper mapper = new ObjectMapper();
     
     @Test
-    public void createProduct() throws Exception {
+    public void createTeam() throws Exception {
     	
     	UUID uuid = UUID.randomUUID();
-        Product product = new Product(uuid, 12.3d, "parpaing", LocalDateTime.now());
+    	Team team = Team.builder().id(uuid).name("Poule").build();
         
-        String json = this.mapper.writeValueAsString(product);
+        String json = this.mapper.writeValueAsString(team);
         
-        Mockito.when(this.productService.createProduct(product)).thenReturn(uuid);
+        Mockito.when(this.teamService.createTeam(team)).thenReturn(uuid);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/products")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/teams")
         		.content(json)
         		.contentType(MediaType.APPLICATION_JSON)
         		.accept(MediaType.APPLICATION_JSON))
