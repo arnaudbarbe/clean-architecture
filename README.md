@@ -1,6 +1,6 @@
 # clean-architecture
 
-Personnal implémentation of a clean architecture
+Personal implementation of a clean architecture
 
 folders are organized like this :
 
