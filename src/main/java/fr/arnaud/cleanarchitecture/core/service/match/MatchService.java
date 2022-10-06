@@ -3,17 +3,19 @@ package fr.arnaud.cleanarchitecture.core.service.match;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.constraints.NotNull;
+
 import fr.arnaud.cleanarchitecture.core.model.Match;
 
 public interface MatchService {
 	
-    UUID createMatch(Match match);
+    UUID createMatch(@NotNull Match match);
 
-    void deleteMatch(UUID id);
+    void deleteMatch(@NotNull UUID id);
     
-    Match getMatch(UUID id);
+    Match getMatch(@NotNull UUID id);
     
     List<Match> getMatchs();
 
-    Match updateMatch(UUID id, Match match);
+    Match updateMatch(@NotNull UUID id, @NotNull Match match);
 }

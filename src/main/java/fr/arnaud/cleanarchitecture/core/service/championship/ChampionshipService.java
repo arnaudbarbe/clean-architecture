@@ -3,17 +3,19 @@ package fr.arnaud.cleanarchitecture.core.service.championship;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.constraints.NotNull;
+
 import fr.arnaud.cleanarchitecture.core.model.Championship;
 
 public interface ChampionshipService {
 	
-    UUID createChampionship(Championship championship);
+    UUID createChampionship(@NotNull Championship championship);
 
-    void deleteChampionship(UUID id);
+    void deleteChampionship(@NotNull UUID id);
     
-    Championship getChampionship(UUID id);
+    Championship getChampionship(@NotNull UUID id);
     
     List<Championship> getChampionships();
 
-    Championship updateChampionship(UUID id, Championship championship);
+    Championship updateChampionship(@NotNull UUID id, @NotNull Championship championship);
 }

@@ -3,39 +3,46 @@ package fr.arnaud.cleanarchitecture.core.service.season;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.constraints.NotNull;
+
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.model.Season;
 import fr.arnaud.cleanarchitecture.core.repository.SeasonRepository;
 
 public class DomainSeasonService implements SeasonService {
 
-    private final SeasonRepository playerRepository;
+    private final SeasonRepository seasonRepository;
 
-    public DomainSeasonService(final SeasonRepository playerRepository) {
-        this.playerRepository = playerRepository;
+    public DomainSeasonService(@NotNull final SeasonRepository seasonRepository) {
+        this.seasonRepository = seasonRepository;
     }
 
     @Override
-    public UUID createSeason(final Season player) {
-        this.playerRepository.save(player);
+    public UUID createSeason(@NotNull final Season season) {
+        this.seasonRepository.save(season);
 
-        return player.getId();
+        return season.getId();
     }
 
     @Override
-    public void deleteSeason(final UUID id) {
-        this.playerRepository.delete(id);
+    public void deleteSeason(@NotNull final UUID id) {
+        this.seasonRepository.delete(id);
     }
 
     @Override
-    public Season getSeason(final UUID id) {
-        return this.playerRepository
+    public Season getSeason(@NotNull final UUID id) {
+        return this.seasonRepository
           .findById(id)
           .orElseThrow(() -> new EntityNotFoundException("Season with given id doesn't exist"));
     }
 
 	@Override
 	public List<Season> getSeasons() {
-		return this.playerRepository.findAll();
+		return this.seasonRepository.findAll();
+	}
+
+	@Override
+	public Season updateSeason(@NotNull final UUID id, @NotNull final Season season) {
+        return this.seasonRepository.update(id, season);
 	}
 }

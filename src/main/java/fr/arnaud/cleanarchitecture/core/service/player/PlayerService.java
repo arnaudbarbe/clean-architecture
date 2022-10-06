@@ -3,15 +3,19 @@ package fr.arnaud.cleanarchitecture.core.service.player;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.constraints.NotNull;
+
 import fr.arnaud.cleanarchitecture.core.model.Player;
 
 public interface PlayerService {
 	
-    UUID createPlayer(Player player);
+    UUID createPlayer(@NotNull Player player);
 
-    void deletePlayer(UUID id);
+    void deletePlayer(@NotNull UUID id);
     
-    Player getPlayer(UUID id);
+    Player getPlayer(@NotNull UUID id);
     
     List<Player> getPlayers();
+
+	Player updatePlayer(@NotNull UUID id, @NotNull Player player);
 }

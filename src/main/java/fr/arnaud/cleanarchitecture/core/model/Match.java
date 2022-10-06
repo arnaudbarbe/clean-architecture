@@ -14,30 +14,32 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Getter
 @EqualsAndHashCode(of= {"id"})
 @ToString(of= {"id"})
-@Builder
+@Builder(builderClassName = "MatchBuilder")
 public class Match {
 	
 	@NotNull 
-	UUID id;
+	final UUID id;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    LocalDateTime when;
+    final LocalDateTime when;
     
 	@NotNull 
-	Championship championship;
+	final Championship championship;
 	@NotNull 
-    Team homeTeam;
+	final Team homeTeam;
 	@NotNull 
-    Team outsideTeam;
+	final Team outsideTeam;
     
-	int scoreHomeTeam;
-	int scoreOutsideTeam;
+	final int scoreHomeTeam;
+	final int scoreOutsideTeam;
 	
 }

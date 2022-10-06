@@ -8,27 +8,29 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@FieldDefaults(level=AccessLevel.PACKAGE)
 @Getter
 @EqualsAndHashCode(of= {"id", "name"})
 @ToString(of= {"id", "name"})
-@Builder
+@Builder(builderClassName = "ChampionshipBuilder")
 public class Championship {
 
 	@NotNull 
-	UUID id;
+	final UUID id;
 	@NotNull 
-    String name;
+	final String name;
 	@NotNull 
-    Player player;
+	final Player player;
 	@NotNull 
-    Team team;
+	final Team team;
 	@NotNull 
-    Season season;
+	final Season season;
 	@NotNull 
-    League league;
+	final League league;
 
 }

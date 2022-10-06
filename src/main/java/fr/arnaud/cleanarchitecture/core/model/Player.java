@@ -8,20 +8,22 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Getter
 @EqualsAndHashCode(of= {"id", "firstName", "lastName"})
 @ToString(of= {"id", "firstName", "lastName"})
-@Builder
+@Builder(builderClassName = "PlayerBuilder")
 public class Player {
 
 	@NotNull 
-	UUID id;
+	final UUID id;
 	@NotNull 
-    String firstName;
+	final String firstName;
 	@NotNull 
-    String lastName;
+	final String lastName;
 }

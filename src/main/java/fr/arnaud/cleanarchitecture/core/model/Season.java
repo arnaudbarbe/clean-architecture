@@ -14,25 +14,27 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Getter
 @EqualsAndHashCode(of= {"id", "name", "startDate", "endDate"})
 @ToString(of= {"id", "name", "startDate", "endDate"})
-@Builder
+@Builder(builderClassName = "SeasonBuilder")
 public class Season {
 	
 	@NotNull 
-	UUID id;
+	final UUID id;
 	@NotNull 
-    String name;
+	final String name;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    LocalDateTime startDate;
+    final LocalDateTime startDate;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    LocalDateTime endDate;
+    final LocalDateTime endDate;
 
 }
