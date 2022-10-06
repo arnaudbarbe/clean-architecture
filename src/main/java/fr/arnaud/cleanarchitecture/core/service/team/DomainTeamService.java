@@ -7,39 +7,42 @@ import javax.validation.constraints.NotNull;
 
 import fr.arnaud.cleanarchitecture.core.model.Team;
 import fr.arnaud.cleanarchitecture.core.repository.TeamRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DomainTeamService implements TeamService {
 
-    private final TeamRepository playerRepository;
+	private final TeamRepository teamRepository;
 
-    public DomainTeamService(@NotNull final TeamRepository playerRepository) {
-        this.playerRepository = playerRepository;
-    }
+	public DomainTeamService(@NotNull final TeamRepository teamRepository) {
+		this.teamRepository = teamRepository;
+	}
 
-    @Override
-    public UUID createTeam(@NotNull final Team player) {
-        this.playerRepository.save(player);
+	@Override
+	public UUID createTeam(@NotNull final Team team) {
+		log.debug("create team %h ", team);
+		this.teamRepository.save(team);
 
-        return player.getId();
-    }
+		return team.getId();
+	}
 
-    @Override
-    public void deleteTeam(@NotNull final UUID id) {
-        this.playerRepository.delete(id);
-    }
+	@Override
+	public void deleteTeam(@NotNull final UUID id) {
+		this.teamRepository.delete(id);
+	}
 
-    @Override
-    public Team getTeam(@NotNull final UUID id) {
-        return this.playerRepository.findById(id);
-    }
+	@Override
+	public Team getTeam(@NotNull final UUID id) {
+		return this.teamRepository.findById(id);
+	}
 
 	@Override
 	public List<Team> getTeams() {
-		return this.playerRepository.findAll();
+		return this.teamRepository.findAll();
 	}
 
 	@Override
 	public void updateTeam(@NotNull final UUID id, @NotNull final Team team) {
-        this.playerRepository.update(id, team);
+		this.teamRepository.update(id, team);
 	}
 }

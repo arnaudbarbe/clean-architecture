@@ -7,7 +7,9 @@ import javax.validation.constraints.NotNull;
 
 import fr.arnaud.cleanarchitecture.core.model.Player;
 import fr.arnaud.cleanarchitecture.core.repository.PlayerRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DomainPlayerService implements PlayerService {
 
     private final PlayerRepository playerRepository;

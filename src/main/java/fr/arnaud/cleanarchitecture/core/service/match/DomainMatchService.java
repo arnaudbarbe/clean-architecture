@@ -7,7 +7,9 @@ import javax.validation.constraints.NotNull;
 
 import fr.arnaud.cleanarchitecture.core.model.Match;
 import fr.arnaud.cleanarchitecture.core.repository.MatchRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DomainMatchService implements MatchService {
 
     private final MatchRepository matchRepository;

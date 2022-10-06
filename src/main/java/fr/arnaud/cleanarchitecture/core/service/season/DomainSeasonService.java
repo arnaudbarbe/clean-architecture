@@ -7,7 +7,9 @@ import javax.validation.constraints.NotNull;
 
 import fr.arnaud.cleanarchitecture.core.model.Season;
 import fr.arnaud.cleanarchitecture.core.repository.SeasonRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DomainSeasonService implements SeasonService {
 
     private final SeasonRepository seasonRepository;

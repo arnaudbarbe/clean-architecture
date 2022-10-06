@@ -7,7 +7,9 @@ import javax.validation.constraints.NotNull;
 
 import fr.arnaud.cleanarchitecture.core.model.Championship;
 import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DomainChampionshipService implements ChampionshipService {
 
     private final ChampionshipRepository championshipRepository;
@@ -17,10 +19,10 @@ public class DomainChampionshipService implements ChampionshipService {
     }
 
     @Override
-    public UUID createChampionship(@NotNull final Championship league) {
-        this.championshipRepository.save(league);
+    public UUID createChampionship(@NotNull final Championship championship) {
+        this.championshipRepository.save(championship);
 
-        return league.getId();
+        return championship.getId();
     }
 
     @Override
