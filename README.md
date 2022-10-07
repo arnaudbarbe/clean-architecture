@@ -16,8 +16,8 @@ Personal implementation of a clean architecture
         * consumer (MOM consumers)
         * controller (REST controller)
         * task (cron task to execute async process)
-        * gateway (to other system)
-        * persistence (repositories for each storage system)
+    * gateway (to other system)
+    * persistence (repositories for each storage system)
 
 ##persistence
 
