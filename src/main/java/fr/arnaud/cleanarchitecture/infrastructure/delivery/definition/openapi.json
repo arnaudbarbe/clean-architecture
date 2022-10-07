@@ -1,0 +1,3480 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "Test Server",
+		"description": "This is the API description to the server",
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://springdoc.org"
+		},
+		"version": "1.0"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8080",
+			"description": "Generated server url"
+		}
+	],
+	"tags": [
+		{
+			"name": "Season"
+		},
+		{
+			"name": "Match"
+		},
+		{
+			"name": "League"
+		},
+		{
+			"name": "Player"
+		},
+		{
+			"name": "Order"
+		},
+		{
+			"name": "Championship"
+		},
+		{
+			"name": "Team"
+		}
+	],
+	"paths": {
+		"/V1/teams/{teamId}": {
+			"get": {
+				"tags": [
+					"team-controller"
+				],
+				"operationId": "getTeam",
+				"parameters": [
+					{
+						"name": "teamId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/GetTeamResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Team"
+				],
+				"summary": "update a Team",
+				"description": "update a Team",
+				"operationId": "updateTeam",
+				"parameters": [
+					{
+						"name": "teamId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateTeamRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Order"
+				],
+				"summary": "Delete a team",
+				"description": "Delete a team by its identifier",
+				"operationId": "deleteTeam",
+				"parameters": [
+					{
+						"name": "teamId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			}
+		},
+		"/V1/seasons/{seasonId}": {
+			"get": {
+				"tags": [
+					"season-controller"
+				],
+				"operationId": "getSeason",
+				"parameters": [
+					{
+						"name": "seasonId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/GetSeasonResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Season"
+				],
+				"summary": "update a Season",
+				"description": "update a Season",
+				"operationId": "updateSeason",
+				"parameters": [
+					{
+						"name": "seasonId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateSeasonRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Order"
+				],
+				"summary": "Delete a season",
+				"description": "Delete a season by its identifier",
+				"operationId": "deleteSeason",
+				"parameters": [
+					{
+						"name": "seasonId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			}
+		},
+		"/V1/players/{playerId}": {
+			"get": {
+				"tags": [
+					"player-controller"
+				],
+				"operationId": "getPlayer",
+				"parameters": [
+					{
+						"name": "playerId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/GetPlayerResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Player"
+				],
+				"summary": "update a Player",
+				"description": "update a Player",
+				"operationId": "updatePlayer",
+				"parameters": [
+					{
+						"name": "playerId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdatePlayerRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Order"
+				],
+				"summary": "Delete a player",
+				"description": "Delete a player by its identifier",
+				"operationId": "deletePlayer",
+				"parameters": [
+					{
+						"name": "playerId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			}
+		},
+		"/V1/matchs/{matchId}": {
+			"get": {
+				"tags": [
+					"match-controller"
+				],
+				"operationId": "getMatch",
+				"parameters": [
+					{
+						"name": "matchId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/GetMatchResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Match"
+				],
+				"summary": "update a Match",
+				"description": "update a Match",
+				"operationId": "updateMatch",
+				"parameters": [
+					{
+						"name": "matchId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateMatchRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Order"
+				],
+				"summary": "Delete a match",
+				"description": "Delete a match by its identifier",
+				"operationId": "deleteMatch",
+				"parameters": [
+					{
+						"name": "matchId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			}
+		},
+		"/V1/leagues/{leagueId}": {
+			"get": {
+				"tags": [
+					"league-controller"
+				],
+				"operationId": "getLeague",
+				"parameters": [
+					{
+						"name": "leagueId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/GetLeagueResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"League"
+				],
+				"summary": "update a League",
+				"description": "update a League",
+				"operationId": "updateLeague",
+				"parameters": [
+					{
+						"name": "leagueId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateLeagueRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Order"
+				],
+				"summary": "Delete a league",
+				"description": "Delete a league by its identifier",
+				"operationId": "deleteLeague",
+				"parameters": [
+					{
+						"name": "leagueId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			}
+		},
+		"/V1/championships/{championshipId}": {
+			"get": {
+				"tags": [
+					"championship-controller"
+				],
+				"operationId": "getChampionship",
+				"parameters": [
+					{
+						"name": "championshipId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/GetChampionshipResponse"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"Championship"
+				],
+				"summary": "update a Championship",
+				"description": "update a Championship",
+				"operationId": "updateChampionship",
+				"parameters": [
+					{
+						"name": "championshipId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateChampionshipRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Order"
+				],
+				"summary": "Delete a championship",
+				"description": "Delete a championship by its identifier",
+				"operationId": "deleteChampionship",
+				"parameters": [
+					{
+						"name": "championshipId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"204": {
+						"description": "no content"
+					}
+				}
+			}
+		},
+		"/V1/teams": {
+			"get": {
+				"tags": [
+					"team-controller"
+				],
+				"operationId": "getTeams",
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"properties": {
+										"empty": {
+											"type": "boolean"
+										}
+									},
+									"items": {
+										"$ref": "#/components/schemas/Team"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Team"
+				],
+				"summary": "Create a team",
+				"description": "Create an team bla bla",
+				"operationId": "createTeam",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateTeamRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateTeamResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/V1/seasons": {
+			"get": {
+				"tags": [
+					"season-controller"
+				],
+				"operationId": "getSeasons",
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"properties": {
+										"empty": {
+											"type": "boolean"
+										}
+									},
+									"items": {
+										"$ref": "#/components/schemas/Season"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Season"
+				],
+				"summary": "Create a season",
+				"description": "Create an season bla bla",
+				"operationId": "createSeason",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateSeasonRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateSeasonResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/V1/players": {
+			"get": {
+				"tags": [
+					"player-controller"
+				],
+				"operationId": "getPlayers",
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"properties": {
+										"empty": {
+											"type": "boolean"
+										}
+									},
+									"items": {
+										"$ref": "#/components/schemas/Player"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Player"
+				],
+				"summary": "Create a player",
+				"description": "Create an player bla bla",
+				"operationId": "createPlayer",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreatePlayerRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreatePlayerResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/V1/matchs": {
+			"get": {
+				"tags": [
+					"match-controller"
+				],
+				"operationId": "getMatchs",
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"properties": {
+										"empty": {
+											"type": "boolean"
+										}
+									},
+									"items": {
+										"$ref": "#/components/schemas/Match"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Match"
+				],
+				"summary": "Create a match",
+				"description": "Create an match bla bla",
+				"operationId": "createMatch",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateMatchRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateMatchResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/V1/leagues": {
+			"get": {
+				"tags": [
+					"league-controller"
+				],
+				"operationId": "getLeagues",
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"properties": {
+										"empty": {
+											"type": "boolean"
+										}
+									},
+									"items": {
+										"$ref": "#/components/schemas/League"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"League"
+				],
+				"summary": "Create a league",
+				"description": "Create an league bla bla",
+				"operationId": "createLeague",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateLeagueRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateLeagueResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/V1/championships": {
+			"get": {
+				"tags": [
+					"championship-controller"
+				],
+				"operationId": "getChampionships",
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"properties": {
+										"empty": {
+											"type": "boolean"
+										}
+									},
+									"items": {
+										"$ref": "#/components/schemas/Championship"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"Championship"
+				],
+				"summary": "Create a championship",
+				"description": "Create an championship bla bla",
+				"operationId": "createChampionship",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateChampionshipRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server DomainError",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"409": {
+						"description": "Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"405": {
+						"description": "Method not allowed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DomainError"
+								}
+							}
+						}
+					},
+					"201": {
+						"description": "created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateChampionshipResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"DomainError": {
+				"required": [
+					"code",
+					"message"
+				],
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "string",
+						"description": "The code of this error",
+						"readOnly": true,
+						"enum": [
+							"BAD_REQUEST",
+							"UNAUTHORIZED",
+							"FORBIDDEN",
+							"MISSING_PARAMETER",
+							"APPLICATION_FAILURE",
+							"BAD_CURRENT_PASSWORD",
+							"OBJECT_ALREADY_EXIST",
+							"NOT_FOUND",
+							"METHOD_NOT_ALLOWED",
+							"TOO_MANY_REQUESTS"
+						]
+					},
+					"message": {
+						"type": "string",
+						"description": "The message of this error",
+						"readOnly": true
+					}
+				}
+			},
+			"Team": {
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string"
+					}
+				}
+			},
+			"UpdateTeamRequest": {
+				"required": [
+					"team"
+				],
+				"type": "object",
+				"properties": {
+					"team": {
+						"$ref": "#/components/schemas/Team"
+					}
+				}
+			},
+			"Season": {
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			},
+			"UpdateSeasonRequest": {
+				"required": [
+					"season"
+				],
+				"type": "object",
+				"properties": {
+					"season": {
+						"$ref": "#/components/schemas/Season"
+					}
+				}
+			},
+			"Player": {
+				"required": [
+					"firstName",
+					"id",
+					"lastName"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					}
+				}
+			},
+			"UpdatePlayerRequest": {
+				"required": [
+					"player"
+				],
+				"type": "object",
+				"properties": {
+					"player": {
+						"$ref": "#/components/schemas/Player"
+					}
+				}
+			},
+			"Championship": {
+				"required": [
+					"id",
+					"league",
+					"name",
+					"player",
+					"season",
+					"team"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string"
+					},
+					"player": {
+						"$ref": "#/components/schemas/Player"
+					},
+					"team": {
+						"$ref": "#/components/schemas/Team"
+					},
+					"season": {
+						"$ref": "#/components/schemas/Season"
+					},
+					"league": {
+						"$ref": "#/components/schemas/League"
+					}
+				}
+			},
+			"League": {
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string"
+					}
+				}
+			},
+			"Match": {
+				"required": [
+					"championship",
+					"homeTeam",
+					"id",
+					"outsideTeam"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"when": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"championship": {
+						"$ref": "#/components/schemas/Championship"
+					},
+					"homeTeam": {
+						"$ref": "#/components/schemas/Team"
+					},
+					"outsideTeam": {
+						"$ref": "#/components/schemas/Team"
+					},
+					"scoreHomeTeam": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"scoreOutsideTeam": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			},
+			"UpdateMatchRequest": {
+				"required": [
+					"match"
+				],
+				"type": "object",
+				"properties": {
+					"match": {
+						"$ref": "#/components/schemas/Match"
+					}
+				}
+			},
+			"UpdateLeagueRequest": {
+				"required": [
+					"league"
+				],
+				"type": "object",
+				"properties": {
+					"league": {
+						"$ref": "#/components/schemas/League"
+					}
+				}
+			},
+			"UpdateChampionshipRequest": {
+				"required": [
+					"championship"
+				],
+				"type": "object",
+				"properties": {
+					"championship": {
+						"$ref": "#/components/schemas/Championship"
+					}
+				}
+			},
+			"CreateTeamRequest": {
+				"required": [
+					"team"
+				],
+				"type": "object",
+				"properties": {
+					"team": {
+						"$ref": "#/components/schemas/Team"
+					}
+				}
+			},
+			"CreateTeamResponse": {
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			},
+			"CreateSeasonRequest": {
+				"required": [
+					"season"
+				],
+				"type": "object",
+				"properties": {
+					"season": {
+						"$ref": "#/components/schemas/Season"
+					}
+				}
+			},
+			"CreateSeasonResponse": {
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			},
+			"CreatePlayerRequest": {
+				"required": [
+					"player"
+				],
+				"type": "object",
+				"properties": {
+					"player": {
+						"$ref": "#/components/schemas/Player"
+					}
+				}
+			},
+			"CreatePlayerResponse": {
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			},
+			"CreateMatchRequest": {
+				"required": [
+					"match"
+				],
+				"type": "object",
+				"properties": {
+					"match": {
+						"$ref": "#/components/schemas/Match"
+					}
+				}
+			},
+			"CreateMatchResponse": {
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			},
+			"CreateLeagueRequest": {
+				"required": [
+					"league"
+				],
+				"type": "object",
+				"properties": {
+					"league": {
+						"$ref": "#/components/schemas/League"
+					}
+				}
+			},
+			"CreateLeagueResponse": {
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			},
+			"CreateChampionshipRequest": {
+				"required": [
+					"championship"
+				],
+				"type": "object",
+				"properties": {
+					"championship": {
+						"$ref": "#/components/schemas/Championship"
+					}
+				}
+			},
+			"CreateChampionshipResponse": {
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			},
+			"GetTeamResponse": {
+				"required": [
+					"team"
+				],
+				"type": "object",
+				"properties": {
+					"team": {
+						"$ref": "#/components/schemas/Team"
+					}
+				}
+			},
+			"GetSeasonResponse": {
+				"required": [
+					"season"
+				],
+				"type": "object",
+				"properties": {
+					"season": {
+						"$ref": "#/components/schemas/Season"
+					}
+				}
+			},
+			"GetPlayerResponse": {
+				"required": [
+					"player"
+				],
+				"type": "object",
+				"properties": {
+					"player": {
+						"$ref": "#/components/schemas/Player"
+					}
+				}
+			},
+			"GetMatchResponse": {
+				"required": [
+					"match"
+				],
+				"type": "object",
+				"properties": {
+					"match": {
+						"$ref": "#/components/schemas/Match"
+					}
+				}
+			},
+			"GetLeagueResponse": {
+				"required": [
+					"league"
+				],
+				"type": "object",
+				"properties": {
+					"league": {
+						"$ref": "#/components/schemas/League"
+					}
+				}
+			},
+			"GetChampionshipResponse": {
+				"required": [
+					"championship"
+				],
+				"type": "object",
+				"properties": {
+					"championship": {
+						"$ref": "#/components/schemas/Championship"
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"accessToken": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
+	}
+}
