@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/leagues")
+@RequestMapping("/V1/leagues")
 public class LeagueController {
 
     private final LeagueService leagueService;

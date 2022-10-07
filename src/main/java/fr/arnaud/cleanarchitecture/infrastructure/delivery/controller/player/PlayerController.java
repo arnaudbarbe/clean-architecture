@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/players")
+@RequestMapping("/V1/players")
 public class PlayerController {
 
     private final PlayerService playerService;

@@ -28,64 +28,44 @@ public class TeamControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private TeamService teamService;
-
     private ObjectMapper mapper = new ObjectMapper();
     
     @Test
-    public void createTeam() throws Exception {
-    	
-    	UUID uuid = UUID.randomUUID();
-    	Team team = Team.builder().id(uuid).name("Poule").build();
-        
-        String json = this.mapper.writeValueAsString(team);
-        
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/teams")
-        		.content(json)
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
-    }
-
-    @Test
-    public void deleteTeam() throws Exception {
+    public void createDeleteTeam() throws Exception {
     	
         UUID uuid = UUID.randomUUID();
     	Team team = Team.builder().id(uuid).name("Poule").build();
         
         String json = this.mapper.writeValueAsString(team);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/teams")
-        		.content(json)
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON));
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/V1/teams")
+        .content(json)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.status().isCreated());
 
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/V1/teams/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string("{\"id\":" + uuid.toString()  + ", \"name\":\"Poule\"}"));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/teams/" + uuid.toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/V1/teams/" + uuid.toString()));
 
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/V1/teams/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string("{\"id\":" + uuid.toString()  + ", \"name\":\"Poule\"}"));
 
-        ResultActions result = this.mockMvc.perform(MockMvcRequestBuilders.get("/teams/" + uuid.toString()));
-
-         
-        String json = result.getResponse().getContentAsString();
-
-        Team existingTeam = mapper.readValue(json, Team.class);
-
-     
-        Assert.assertNull(existingTeam);
     }
 
 
     @Test
-    public void createTeam() throws Exception {
+    public void getTeams() throws Exception {
     	
     	UUID uuid = UUID.randomUUID();
     	Team team = Team.builder().id(uuid).name("Poule").build();
         
         String json = this.mapper.writeValueAsString(team);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/teams")
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/V1/teams")
         		.content(json)
         		.contentType(MediaType.APPLICATION_JSON)
         		.accept(MediaType.APPLICATION_JSON))

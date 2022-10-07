@@ -30,7 +30,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/matchs")
+@RequestMapping("/V1/matchs")
 public class MatchController {
 
     private final MatchService matchService;
