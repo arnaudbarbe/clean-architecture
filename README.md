@@ -24,6 +24,11 @@ Personal implementation of a clean architecture
 I'm using postgres, mongodb and cassandra to persist data.
 This is just for fun, don't do this at home.
 
+## Swagger
+
+Swagger is available under
+http://localhost:8080/swagger-ui/index.html
+
 ## async IO
 In next release I want to add async IO support to produce event on CRUD operations
 https://www.asyncapi.com/
