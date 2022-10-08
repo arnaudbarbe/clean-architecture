@@ -24,6 +24,14 @@ Personal implementation of a clean architecture
 I'm using postgres, mongodb and cassandra to persist data.
 This is just for fun, don't do this at home.
 
+## async IO
+In next release I want to add async IO support to produce event on CRUD operations
+https://www.asyncapi.com/
+
+## security 
+To be complete these web services need to be secure
+https://www.baeldung.com/security-spring
+
 ## Running tests
 
 You need to start containers in src/main/resources/dockercompose/docker-compose.yml
