@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
 @RequestMapping("/v1/players")
+@Tag(name = "Player", description = "The Player API")
 public class PlayerController {
 
     private final PlayerService playerService;
@@ -134,8 +135,23 @@ public class PlayerController {
 	
 	
 	
-    @GetMapping(
-		value = "/{playerId}")
+	@GetMapping(
+			value = "/{playerId}", 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+	@Operation(
+			summary = "Get a Player", 
+			description = "Get a Player")
+
+	@ApiResponses(
+			value = { @ApiResponse(
+					responseCode = "200", 
+					description = "successful operation") })
+
+	@Tags({ 
+		@Tag(name="Player")})
     public Player getPlayer(@PathVariable final UUID playerId) {
         return Player.fromEntity(this.playerService.getPlayer(playerId));
     }	
@@ -146,7 +162,22 @@ public class PlayerController {
 	
 	
 	
-    @GetMapping()
+	@GetMapping(
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+    @Operation(
+    		summary = "Get all Player",
+    		description = "Get all Player")
+
+    @ApiResponses(
+    		value = {@ApiResponse(
+    				responseCode = "200", 
+    				description = "successful operation")})
+
+	@Tags({ 
+		@Tag(name="Player")})
     public List<Player> getPlayers() {
         return this.playerService.getPlayers().stream().map(Player::fromEntity).toList();
     }

@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
 @RequestMapping("/v1/seasons")
+@Tag(name = "Season", description = "The Season API")
 public class SeasonController {
 
     private final SeasonService seasonService;
@@ -134,8 +135,23 @@ public class SeasonController {
 	
 	
 	
-    @GetMapping(
-		value = "/{seasonId}")
+	@GetMapping(
+			value = "/{seasonId}", 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+	@Operation(
+			summary = "Get a Season", 
+			description = "Get a Season")
+
+	@ApiResponses(
+			value = { @ApiResponse(
+					responseCode = "200", 
+					description = "successful operation") })
+
+	@Tags({ 
+		@Tag(name="Season")})
     public Season getSeason(@PathVariable final UUID seasonId) {
         return Season.fromEntity(this.seasonService.getSeason(seasonId));
     }	
@@ -146,7 +162,22 @@ public class SeasonController {
 	
 	
 	
-    @GetMapping()
+	@GetMapping(
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+    @Operation(
+    		summary = "Get all Season",
+    		description = "Get all Season")
+
+    @ApiResponses(
+    		value = {@ApiResponse(
+    				responseCode = "200", 
+    				description = "successful operation")})
+
+	@Tags({ 
+		@Tag(name="Season")})
     public List<Season> getSeasons() {
         return this.seasonService.getSeasons().stream().map(Season::fromEntity).toList();
     }

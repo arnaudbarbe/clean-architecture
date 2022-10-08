@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
 @RequestMapping("/v1/championships")
+@Tag(name = "Championship", description = "The Championship API")
 public class ChampionshipController {
 
     private final ChampionshipService championshipService;
@@ -133,9 +134,23 @@ public class ChampionshipController {
 	
 	
 	
-	
-    @GetMapping(
-		value = "/{championshipId}")
+	@GetMapping(
+			value = "/{championshipId}", 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+	@Operation(
+			summary = "Get a Championship", 
+			description = "Get a Championship")
+
+	@ApiResponses(
+			value = { @ApiResponse(
+					responseCode = "200", 
+					description = "successful operation") })
+
+	@Tags({ 
+		@Tag(name="Championship")})
     public Championship getChampionship(@PathVariable final UUID championshipId) {
         return Championship.fromEntity(this.championshipService.getChampionship(championshipId));
     }	
@@ -146,7 +161,22 @@ public class ChampionshipController {
 	
 	
 	
-    @GetMapping()
+	@GetMapping(
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+    @Operation(
+    		summary = "Get all Championships",
+    		description = "Get all Championships")
+
+    @ApiResponses(
+    		value = {@ApiResponse(
+    				responseCode = "200", 
+    				description = "successful operation")})
+
+	@Tags({ 
+		@Tag(name="Championship")})
     public List<Championship> getChampionships() {
         return this.championshipService.getChampionships().stream().map(Championship::fromEntity).toList();
     }

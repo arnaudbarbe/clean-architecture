@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
 @RequestMapping("/v1/matchs")
+@Tag(name = "Match", description = "The Match API")
 public class MatchController {
 
     private final MatchService matchService;
@@ -134,8 +135,23 @@ public class MatchController {
 	
 	
 	
-    @GetMapping(
-		value = "/{matchId}")
+	@GetMapping(
+			value = "/{matchId}", 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+	@Operation(
+			summary = "Get a Match", 
+			description = "Get a Match")
+
+	@ApiResponses(
+			value = { @ApiResponse(
+					responseCode = "200", 
+					description = "successful operation") })
+
+	@Tags({ 
+		@Tag(name="Match")})
     public Match getMatch(@PathVariable final UUID matchId) {
         return Match.fromEntity(this.matchService.getMatch(matchId));
     }	
@@ -146,7 +162,22 @@ public class MatchController {
 	
 	
 	
-    @GetMapping()
+	@GetMapping(
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+    @Operation(
+    		summary = "Get all Match",
+    		description = "Get all Match")
+
+    @ApiResponses(
+    		value = {@ApiResponse(
+    				responseCode = "200", 
+    				description = "successful operation")})
+
+	@Tags({ 
+		@Tag(name="Match")})
     public List<Match> getMatchs() {
         return this.matchService.getMatchs().stream().map(Match::fromEntity).toList();
     }

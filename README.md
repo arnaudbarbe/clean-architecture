@@ -37,6 +37,9 @@ https://www.asyncapi.com/
 To be complete these web services need to be secure
 https://www.baeldung.com/security-spring
 
+## SAGA or LRA support 
+add SEATA support ?
+
 ## Running tests
 
 You need to start containers in src/main/resources/dockercompose/docker-compose.yml

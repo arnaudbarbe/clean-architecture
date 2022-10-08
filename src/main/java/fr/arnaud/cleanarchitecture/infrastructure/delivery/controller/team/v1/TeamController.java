@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
 @RequestMapping("/v1/teams")
+@Tag(name = "Team", description = "The Team API")
 public class TeamController {
 
     private final TeamService teamService;
@@ -121,7 +122,7 @@ public class TeamController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Order")})
+		@Tag(name="Team")})
     public void deleteTeam(@PathVariable final UUID teamId) {
         this.teamService.deleteTeam(teamId);
     }
@@ -134,8 +135,23 @@ public class TeamController {
 	
 	
 	
-    @GetMapping(
-		value = "/{teamId}")
+	@GetMapping(
+			value = "/{teamId}", 
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+	@Operation(
+			summary = "Get a Team", 
+			description = "Get a Team")
+
+	@ApiResponses(
+			value = { @ApiResponse(
+					responseCode = "200", 
+					description = "successful operation") })
+
+	@Tags({ 
+		@Tag(name="Team")})
     public Team getTeam(@PathVariable final UUID teamId) {
         return Team.fromEntity(this.teamService.getTeam(teamId));
     }	
@@ -146,7 +162,22 @@ public class TeamController {
 	
 	
 	
-    @GetMapping()
+	@GetMapping(
+			produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@ResponseStatus(code = HttpStatus.OK)
+
+    @Operation(
+    		summary = "Get all Team",
+    		description = "Get all Team")
+
+    @ApiResponses(
+    		value = {@ApiResponse(
+    				responseCode = "200", 
+    				description = "successful operation")})
+
+	@Tags({ 
+		@Tag(name="Team")})
     public List<Team> getTeams() {
         return this.teamService.getTeams().stream().map(Team::fromEntity).toList();
     }
