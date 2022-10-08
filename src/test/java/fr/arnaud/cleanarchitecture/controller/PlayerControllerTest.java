@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.CleanArchitectureApplication;
-import fr.arnaud.cleanarchitecture.core.entities.Team;
+import fr.arnaud.cleanarchitecture.core.entities.Player;
 
 
 
@@ -28,7 +28,7 @@ import fr.arnaud.cleanarchitecture.core.entities.Team;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = CleanArchitectureApplication.class)
 @ActiveProfiles({"test"})
 @AutoConfigureMockMvc
-public class TeamControllerTest {
+public class PlayerControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,57 +36,57 @@ public class TeamControllerTest {
     private ObjectMapper mapper = new ObjectMapper();
     
     @Test
-    public void createDeleteTeam() throws Exception {
+    public void createDeletePlayer() throws Exception {
     	
-    	//create one team
+    	//create one player
         UUID uuid = UUID.randomUUID();
-    	Team team = Team.builder().id(uuid).name("Poule").build();
-        String json = this.mapper.writeValueAsString(team);
+    	Player player = Player.builder().id(uuid).firstName("arnaud").lastName("barbe").build();
+        String json = this.mapper.writeValueAsString(player);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/teams")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
         .content(json)
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        //check if team was correcty created
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+        //check if player was correcty created
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"name\":\"Poule\"}"));
+            .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"firstName\":\"arnaud\",\"lastName\":\"barbe\"}"));
 
-        //delete the team
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + uuid.toString()));
+        //delete the player
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + uuid.toString()));
 
-        //verify that the team is correctly deleted
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+        //verify that the player is correctly deleted
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	team = Team.builder().id(uuid).name("Poule1").build();
+    	player = Player.builder().id(uuid).firstName("arnaud").lastName("barbe").build();
         
-        json = this.mapper.writeValueAsString(team);
+        json = this.mapper.writeValueAsString(player);
  
-    	//create 2 teams
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/teams")
+    	//create 2 players
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	team = Team.builder().id(uuid).name("Poule2").build();
+    	player = Player.builder().id(uuid).firstName("christophe").lastName("lambert").build();
         
-        json = this.mapper.writeValueAsString(team);
+        json = this.mapper.writeValueAsString(player);
  
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/teams")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
-        //check if getTeams return 2 teams
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams")
+        //check if getPlayers return 2 players
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players")
         		.content(json)
         		.contentType(MediaType.APPLICATION_JSON)
         		.accept(MediaType.APPLICATION_JSON))
