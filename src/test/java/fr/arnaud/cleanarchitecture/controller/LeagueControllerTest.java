@@ -68,9 +68,9 @@ public class LeagueControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	league = new League(uuid, "Afebas");
+    	League league1 = new League(uuid, "Afebas");
         
-        json = this.mapper.writeValueAsString(league);
+        json = this.mapper.writeValueAsString(league1);
  
     	//create 2 leagues
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/leagues")
@@ -80,9 +80,9 @@ public class LeagueControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	league = new League(uuid, "FBEP");
+    	League league2 = new League(uuid, "FBEP");
         
-        json = this.mapper.writeValueAsString(league);
+        json = this.mapper.writeValueAsString(league2);
  
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/leagues")
                 .content(json)
@@ -96,6 +96,10 @@ public class LeagueControllerTest extends AbstractTest {
         		.accept(MediaType.APPLICATION_JSON))
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league1.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league2.id().toString()));
+        
     }
 }
 

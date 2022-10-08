@@ -67,9 +67,9 @@ public class PlayerControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	player = new Player(uuid, "arnaud", "barbe");
+    	Player player1 = new Player(uuid, "arnaud", "barbe");
         
-        json = this.mapper.writeValueAsString(player);
+        json = this.mapper.writeValueAsString(player1);
  
     	//create 2 players
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
@@ -79,9 +79,9 @@ public class PlayerControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	player = new Player(uuid, "christophe", "lambert");
+    	Player player2 = new Player(uuid, "christophe", "lambert");
         
-        json = this.mapper.writeValueAsString(player);
+        json = this.mapper.writeValueAsString(player2);
  
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
                 .content(json)
@@ -95,6 +95,10 @@ public class PlayerControllerTest extends AbstractTest {
         		.accept(MediaType.APPLICATION_JSON))
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player1.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player2.id().toString()));
+
     }
 }
 

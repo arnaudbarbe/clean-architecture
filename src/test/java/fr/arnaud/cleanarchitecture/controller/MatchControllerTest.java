@@ -132,7 +132,7 @@ public class MatchControllerTest extends AbstractTest {
     	uuid = UUID.randomUUID();
     	Match aller = new Match(uuid, LocalDateTime.now(), championship, team1, team2, 10, 2);
         
-        json = this.mapper.writeValueAsString(match);
+        json = this.mapper.writeValueAsString(aller);
  
     	//create 2 matchs
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/matchs")
@@ -144,7 +144,7 @@ public class MatchControllerTest extends AbstractTest {
     	uuid = UUID.randomUUID();
     	Match retour = new Match(uuid, LocalDateTime.now(), championship, team2, team1, 4, 8);
         
-        json = this.mapper.writeValueAsString(match);
+        json = this.mapper.writeValueAsString(retour);
  
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/matchs")
                 .content(json)
@@ -158,6 +158,17 @@ public class MatchControllerTest extends AbstractTest {
         		.accept(MediaType.APPLICATION_JSON))
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team1.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team2.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league.id().toString()));
+
+        //delete the match
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + aller.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + retour.id().toString()));
     }
 }
 

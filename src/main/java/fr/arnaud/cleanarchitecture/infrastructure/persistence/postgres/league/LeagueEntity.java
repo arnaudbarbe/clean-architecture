@@ -15,7 +15,7 @@ import lombok.ToString;
 @Setter
 @ToString(of= {"id", "name"})
 @Entity
-@Table(name = "jeague")
+@Table(name = "league")
 public class LeagueEntity {
 
 	@Id

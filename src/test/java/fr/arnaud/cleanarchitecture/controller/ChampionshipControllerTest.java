@@ -100,9 +100,9 @@ public class ChampionshipControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	championship = new Championship(uuid, "France", player, season, league);
+    	Championship championship1 = new Championship(uuid, "France", player, season, league);
         
-        json = this.mapper.writeValueAsString(championship);
+        json = this.mapper.writeValueAsString(championship1);
  
     	//create 2 championships
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/championships")
@@ -112,9 +112,9 @@ public class ChampionshipControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	championship = new Championship(uuid, "Belgium", player, season, league);
+    	Championship championship2 = new Championship(uuid, "Belgium", player, season, league);
         
-        json = this.mapper.writeValueAsString(championship);
+        json = this.mapper.writeValueAsString(championship2);
  
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/championships")
                 .content(json)
@@ -128,6 +128,14 @@ public class ChampionshipControllerTest extends AbstractTest {
         		.accept(MediaType.APPLICATION_JSON))
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
-    }
+        
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship1.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship2.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league.id().toString()));
+   }
 }
 

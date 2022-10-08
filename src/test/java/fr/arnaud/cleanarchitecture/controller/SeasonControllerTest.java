@@ -68,9 +68,9 @@ public class SeasonControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	season = new Season(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	Season season1 = new Season(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
         
-        json = this.mapper.writeValueAsString(season);
+        json = this.mapper.writeValueAsString(season1);
  
     	//create 2 seasons
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
@@ -80,9 +80,9 @@ public class SeasonControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	season = new Season(uuid, "2023/2024", LocalDateTime.of(2023, 9, 1, 0, 0, 0), LocalDateTime.of(2024, 6, 30, 0, 0, 0));
+    	Season season2 = new Season(uuid, "2023/2024", LocalDateTime.of(2023, 9, 1, 0, 0, 0), LocalDateTime.of(2024, 6, 30, 0, 0, 0));
         
-        json = this.mapper.writeValueAsString(season);
+        json = this.mapper.writeValueAsString(season2);
  
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
                 .content(json)
@@ -96,6 +96,10 @@ public class SeasonControllerTest extends AbstractTest {
         		.accept(MediaType.APPLICATION_JSON))
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season1.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season2.id().toString()));
+        
     }
 }
 

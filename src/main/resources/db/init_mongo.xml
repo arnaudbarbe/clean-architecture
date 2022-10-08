@@ -1,0 +1,3 @@
+<changeSet id="1" author="liquibase">
+    <ext:dropCollection collectionName="match">
+</changeSet>
