@@ -1,6 +1,6 @@
-delete from championship_entity;
-delete from league_entity;
-delete from player_entity;
-delete from product_entity;
-delete from season_entity;
-delete from team_entity;
+DROP TABLE IF EXISTS team;
+DROP TABLE IF EXISTS championship;
+DROP TABLE IF EXISTS league;
+DROP TABLE IF EXISTS player;
+DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS season;

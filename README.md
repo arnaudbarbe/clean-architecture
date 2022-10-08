@@ -24,4 +24,9 @@ Personal implementation of a clean architecture
 I'm using postgres, mongodb and cassandra to persist data.
 This is just for fun, don't do this at home.
 
+## Running tests
+
+You need to start containers in src/main/resources/dockercompose/docker-compose.yml
+Then run tests
+
 https://wordpress.com/support/markdown-quick-reference/

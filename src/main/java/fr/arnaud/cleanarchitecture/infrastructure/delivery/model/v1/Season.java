@@ -3,7 +3,13 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record Season(UUID id, String name, LocalDateTime startDate, LocalDateTime endDate) {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public record Season(UUID id, String name, 
+		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") 
+		LocalDateTime startDate, 
+		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") 
+		LocalDateTime endDate) {
 	
 	public fr.arnaud.cleanarchitecture.core.entities.Season toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entities.Season.builder().id(this.id).name(this.name).startDate(this.startDate).endDate(this.endDate).build();

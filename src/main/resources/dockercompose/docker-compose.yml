@@ -1,0 +1,48 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: postgresql_clean
+    image: postgres:14.5
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PGDATA=/data/postgres
+    volumes:
+       - postgres:/data/postgres
+       - ./init_db.sql:/docker-entrypoint-initdb.d/create_tables.sql:ro
+    ports:
+      - 5432:5432
+    networks:
+      - clean
+
+  cassandra:
+    container_name: cassandra_clean
+    image: cassandra:3.11.10
+    ports:
+      - 9042:9042
+    volumes:
+      - cassandra:/var/lib/cassandra
+      - ./cassandra:/docker-entrypoint-initdb.d:ro
+    networks:
+      - clean
+
+  mongo:
+    container_name: mongodb_clean
+    image: bitnami/mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/bitnami/mongodb
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+    networks:
+      - clean
+
+networks:
+  clean:
+
+volumes:
+    postgres:
+    cassandra:
+    mongo:
+    

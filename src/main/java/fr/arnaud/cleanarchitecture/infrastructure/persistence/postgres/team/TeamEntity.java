@@ -3,10 +3,14 @@ package fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.team;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fr.arnaud.cleanarchitecture.core.entities.Team;
+import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.championship.ChampionshipEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,12 +19,16 @@ import lombok.ToString;
 @Setter
 @ToString(of= {"id", "name"})
 @Entity
-@Table
+@Table(name = "team")
 public class TeamEntity {
 
 	@Id
 	UUID id;
 	String name;
+	
+	@ManyToOne
+	@JoinColumn(foreignKey=@ForeignKey(name="fk_championship_team"), name = "teamId", nullable = false)
+	ChampionshipEntity championship;
 
 	public TeamEntity() {
 		super();
@@ -44,6 +52,7 @@ public class TeamEntity {
 
 	public void fromModel(final Team team) {
 		this.name = team.getName();
+		this.championship = new ChampionshipEntity(team.getChampionship().getId());
 	}
 
 	@Override

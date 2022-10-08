@@ -1,8 +1,15 @@
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import fr.arnaud.cleanarchitecture.CleanArchitectureApplication;
 import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
@@ -27,6 +34,10 @@ import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
 @Configuration
 @ComponentScan(basePackageClasses = CleanArchitectureApplication.class)
 public class BeanConfiguration {
+	
+    public static final String DATETIME_FORMAT = "dd-MM-yyyy HH:mm";
+    public static final LocalDateTime FIXED_DATE = LocalDateTime.now();
+    public static LocalDateTimeSerializer LOCAL_DATETIME_SERIALIZER = new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT));
 
     @Bean
     ChampionshipService championshipService(final ChampionshipRepository championshipRepository) {
@@ -57,5 +68,10 @@ public class BeanConfiguration {
     TeamService teamService(final TeamRepository teamRepository) {
         return new DomainTeamService(teamRepository);
     }
-
+    
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+        return builder -> builder.serializationInclusion(JsonInclude.Include.NON_NULL)
+          .serializers(LOCAL_DATETIME_SERIALIZER);
+    }
 }

@@ -13,7 +13,6 @@ import fr.arnaud.cleanarchitecture.core.entities.Championship;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.league.LeagueEntity;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.player.PlayerEntity;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.season.SeasonEntity;
-import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.team.TeamEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,7 +21,7 @@ import lombok.ToString;
 @Setter
 @ToString(of= {"id", "name"})
 @Entity
-@Table
+@Table(name = "championship")
 public class ChampionshipEntity {
 
 	@Id
@@ -33,10 +32,6 @@ public class ChampionshipEntity {
 	@ManyToOne
 	@JoinColumn(foreignKey=@ForeignKey(name="fk_championship_player"), name = "playerId", nullable = false)
 	PlayerEntity player;
-
-	@ManyToOne
-	@JoinColumn(foreignKey=@ForeignKey(name="fk_championship_team"), name = "teamId", nullable = false)
-	TeamEntity team;
 
 	@ManyToOne
 	@JoinColumn(foreignKey=@ForeignKey(name="fk_championship_season"), name = "seasonId", nullable = false)
@@ -63,7 +58,6 @@ public class ChampionshipEntity {
 		return Championship.builder()
 				.id(this.id)
 				.name(this.name)
-				.team(this.team.toModel())
 				.player(this.player.toModel())
 				.season(this.season.toModel())
 				.league(this.league.toModel())
@@ -73,7 +67,6 @@ public class ChampionshipEntity {
 	public void fromModel(final Championship championship) {
 		this.name = championship.getName();
 		this.player = new PlayerEntity(championship.getPlayer().getId());
-		this.team = new TeamEntity(championship.getTeam().getId());
 		this.season = new SeasonEntity(championship.getSeason().getId());
 		this.league = new LeagueEntity(championship.getLeague().getId());
 	}

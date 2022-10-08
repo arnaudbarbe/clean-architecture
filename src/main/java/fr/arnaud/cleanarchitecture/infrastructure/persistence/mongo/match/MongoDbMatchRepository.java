@@ -74,10 +74,11 @@ public class MongoDbMatchRepository implements MatchRepository {
     	Team outsideTeam = this.teamRepository.findById(UUID.fromString(matchEntity.getOutsideTeamId()));
     	
     	if(homeTeam == null) {
-    		throw new EntityNotFoundException("Team with id " + matchEntity.getHomeTeamId());
+    		//FIXME : we return an empty team object when we can't find it into db
+    		homeTeam = Team.builder().id(UUID.fromString(matchEntity.getHomeTeamId())).build();
     	}
     	if(outsideTeam == null) {
-    		throw new EntityNotFoundException("Team with id " + matchEntity.getOutsideTeamId());
+    		outsideTeam = Team.builder().id(UUID.fromString(matchEntity.getOutsideTeamId())).build();
     	}
     	
         return matchEntity.toModel(homeTeam, outsideTeam);

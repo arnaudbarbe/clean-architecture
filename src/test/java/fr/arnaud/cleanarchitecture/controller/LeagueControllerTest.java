@@ -2,7 +2,6 @@ package fr.arnaud.cleanarchitecture.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hamcrest.Matchers;
@@ -23,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.CleanArchitectureApplication;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Season;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.League;
+
 
 
 
@@ -31,7 +31,7 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Season;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = CleanArchitectureApplication.class)
 @ActiveProfiles({"test"})
 @AutoConfigureMockMvc
-public class SeasonControllerTest extends AbstractTest {
+public class LeagueControllerTest extends AbstractTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,57 +41,57 @@ public class SeasonControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeleteSeason() throws Exception {
+    public void createDeleteLeague() throws Exception {
     	
-    	//create one season
+    	//create one league
         UUID uuid = UUID.randomUUID();
-    	Season season = new Season(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
-        String json = this.mapper.writeValueAsString(season);
+    	League league = new League(uuid, "Afebas");
+        String json = this.mapper.writeValueAsString(league);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/leagues")
         .content(json)
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        //check if season was correcty created
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+        //check if league was correcty created
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
-        
-         //delete the season
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + uuid.toString()));
+            .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"name\":\"Afebas\"}"));
 
-        //verify that the season is correctly deleted
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+        //delete the league
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + uuid.toString()));
+
+        //verify that the league is correctly deleted
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	season = new Season(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	league = new League(uuid, "Afebas");
         
-        json = this.mapper.writeValueAsString(season);
+        json = this.mapper.writeValueAsString(league);
  
-    	//create 2 seasons
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
+    	//create 2 leagues
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/leagues")
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	season = new Season(uuid, "2023/2024", LocalDateTime.of(2023, 9, 1, 0, 0, 0), LocalDateTime.of(2024, 6, 30, 0, 0, 0));
+    	league = new League(uuid, "FBEP");
         
-        json = this.mapper.writeValueAsString(season);
+        json = this.mapper.writeValueAsString(league);
  
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/leagues")
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
-        //check if getSeasons return 2 seasons
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons")
+        //check if getLeagues return 2 leagues
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues")
         		.contentType(MediaType.APPLICATION_JSON)
         		.accept(MediaType.APPLICATION_JSON))
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))

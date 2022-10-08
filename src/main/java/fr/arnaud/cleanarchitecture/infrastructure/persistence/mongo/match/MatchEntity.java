@@ -15,11 +15,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(of= {"id", "when", "homeTeamId", "outsideTeamId", "scoreHomeTeam", "scoreOutsideTeam"})
-@Document
+@Document(collection = "match")
 public class MatchEntity {
 
 	@Id
-	String id;
+	UUID id;
 	
     LocalDateTime when;
 
@@ -34,18 +34,18 @@ public class MatchEntity {
 		super();
 	}
 
-	public MatchEntity(final String id) {
+	public MatchEntity(final UUID id) {
 		this.id = id;
 	}
 
 	public MatchEntity(final Match match) {
-		this.id = match.getId().toString();
+		this.id = match.getId();
 		fromModel(match);
 	}
 
 	public Match toModel(final Team homeTeam, final Team outsideTeam) {
 		return Match.builder()
-				.id(UUID.fromString(this.id))
+				.id(this.id)
 				.when(this.when)
 				.homeTeam(homeTeam)
 				.outsideTeam(outsideTeam)

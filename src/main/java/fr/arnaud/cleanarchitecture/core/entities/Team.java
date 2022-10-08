@@ -26,4 +26,6 @@ public class Team {
 	private UUID id;
 	@NotNull 
 	private String name;
+	@NotNull 
+	private Championship championship;
 }

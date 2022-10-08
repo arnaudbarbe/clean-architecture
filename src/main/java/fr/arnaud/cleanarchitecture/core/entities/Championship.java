@@ -27,8 +27,6 @@ public class Championship {
 	@NotNull 
 	final Player player;
 	@NotNull 
-	final Team team;
-	@NotNull 
 	final Season season;
 	@NotNull 
 	final League league;

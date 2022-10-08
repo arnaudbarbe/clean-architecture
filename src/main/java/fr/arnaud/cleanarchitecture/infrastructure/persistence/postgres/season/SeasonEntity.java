@@ -16,7 +16,7 @@ import lombok.ToString;
 @Setter
 @ToString(of= {"id", "name", "startDate", "endDate"})
 @Entity
-@Table
+@Table(name = "season")
 public class SeasonEntity {
 
 	@Id

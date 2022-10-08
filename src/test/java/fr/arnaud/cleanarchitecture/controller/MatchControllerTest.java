@@ -25,10 +25,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.arnaud.cleanarchitecture.CleanArchitectureApplication;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Championship;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.League;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Match;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Player;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Season;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Team;
-
 
 
 
@@ -36,7 +36,7 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Team;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = CleanArchitectureApplication.class)
 @ActiveProfiles({"test"})
 @AutoConfigureMockMvc
-public class TeamControllerTest extends AbstractTest {
+public class MatchControllerTest extends AbstractTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -46,9 +46,9 @@ public class TeamControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeleteTeam() throws Exception {
+    public void createDeleteMatch() throws Exception {
     	
-    	//create one team
+    	//create one 
     	UUID uuid = UUID.randomUUID();
     	Season season = new Season(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
     	String json = this.mapper.writeValueAsString(season);
@@ -88,8 +88,8 @@ public class TeamControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isCreated());
     	
         uuid = UUID.randomUUID();
-    	Team team = new Team(uuid, "Poule", championship);
-        json = this.mapper.writeValueAsString(team);
+    	Team team1 = new Team(uuid, "Poule o pot", championship);
+        json = this.mapper.writeValueAsString(team1);
         
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/teams")
         .content(json)
@@ -97,44 +97,63 @@ public class TeamControllerTest extends AbstractTest {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        //check if team was correcty created
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"name\":\"Poule\"}"));
+    	Team team2 = new Team(uuid, "Swimming Poule", championship);
+        json = this.mapper.writeValueAsString(team2);
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/teams")
+        .content(json)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        //delete the team
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + uuid.toString()));
+        uuid = UUID.randomUUID();
+    	Match match = new Match(uuid, LocalDateTime.now(), championship, team1, team2, 10, 2);
+        json = this.mapper.writeValueAsString(match);
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/matchs")
+        .content(json)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        //verify that the team is correctly deleted
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+        //check if match was correcty created
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+
+
+        //delete the match
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + uuid.toString()));
+
+        //verify that the match is correctly deleted
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	team = new Team(uuid, "Poule1", championship);
+    	Match aller = new Match(uuid, LocalDateTime.now(), championship, team1, team2, 10, 2);
         
-        json = this.mapper.writeValueAsString(team);
+        json = this.mapper.writeValueAsString(match);
  
-    	//create 2 teams
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/teams")
+    	//create 2 matchs
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/matchs")
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	team = new Team(uuid, "Poule2", championship);
+    	Match retour = new Match(uuid, LocalDateTime.now(), championship, team2, team1, 4, 8);
         
-        json = this.mapper.writeValueAsString(team);
+        json = this.mapper.writeValueAsString(match);
  
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/teams")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/matchs")
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
-        //check if getTeams return 2 teams
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams")
+        //check if getMatchs return 2 matchs
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs")
         		.contentType(MediaType.APPLICATION_JSON)
         		.accept(MediaType.APPLICATION_JSON))
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
