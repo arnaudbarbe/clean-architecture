@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.model.Championship;
+import fr.arnaud.cleanarchitecture.core.entities.Championship;
 import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
 import lombok.extern.slf4j.Slf4j;
 

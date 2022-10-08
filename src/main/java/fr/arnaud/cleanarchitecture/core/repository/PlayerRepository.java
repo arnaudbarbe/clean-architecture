@@ -3,7 +3,7 @@ package fr.arnaud.cleanarchitecture.core.repository;
 import java.util.List;
 import java.util.UUID;
 
-import fr.arnaud.cleanarchitecture.core.model.Player;
+import fr.arnaud.cleanarchitecture.core.entities.Player;
 
 public interface PlayerRepository {
 	

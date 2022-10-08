@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import fr.arnaud.cleanarchitecture.core.model.Championship;
+import fr.arnaud.cleanarchitecture.core.entities.Championship;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.league.LeagueEntity;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.player.PlayerEntity;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.season.SeasonEntity;

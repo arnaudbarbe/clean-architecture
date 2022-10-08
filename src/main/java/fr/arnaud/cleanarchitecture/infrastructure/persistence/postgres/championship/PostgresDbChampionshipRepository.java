@@ -8,8 +8,8 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.arnaud.cleanarchitecture.core.entities.Championship;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
-import fr.arnaud.cleanarchitecture.core.model.Championship;
 import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
 
 @Component

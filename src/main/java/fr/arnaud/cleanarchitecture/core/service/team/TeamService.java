@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.model.Team;
+import fr.arnaud.cleanarchitecture.core.entities.Team;
 
 public interface TeamService {
 	

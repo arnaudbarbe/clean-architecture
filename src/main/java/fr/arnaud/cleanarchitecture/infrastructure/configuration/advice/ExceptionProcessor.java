@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.datastax.oss.driver.api.core.servererrors.UnauthorizedException;
 
+import fr.arnaud.cleanarchitecture.core.entities.DomainError;
 import fr.arnaud.cleanarchitecture.core.exception.BadCurrentPasswordException;
 import fr.arnaud.cleanarchitecture.core.exception.BadParameterException;
 import fr.arnaud.cleanarchitecture.core.exception.BadUuidException;
@@ -22,7 +23,6 @@ import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.exception.ForbiddenException;
 import fr.arnaud.cleanarchitecture.core.exception.NotAllowedException;
 import fr.arnaud.cleanarchitecture.core.exception.ValidationException;
-import fr.arnaud.cleanarchitecture.core.model.DomainError;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

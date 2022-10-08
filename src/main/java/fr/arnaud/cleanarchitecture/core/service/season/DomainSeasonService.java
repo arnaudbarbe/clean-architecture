@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.model.Season;
+import fr.arnaud.cleanarchitecture.core.entities.Season;
 import fr.arnaud.cleanarchitecture.core.repository.SeasonRepository;
 import lombok.extern.slf4j.Slf4j;
 

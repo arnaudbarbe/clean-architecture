@@ -1,25 +1,23 @@
 package fr.arnaud.cleanarchitecture.controller;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 import java.util.UUID;
 
-import org.junit.Assert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.arnaud.cleanarchitecture.core.model.Team;
-import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
+import fr.arnaud.cleanarchitecture.core.entities.Team;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,24 +33,23 @@ public class TeamControllerTest {
     	
         UUID uuid = UUID.randomUUID();
     	Team team = Team.builder().id(uuid).name("Poule").build();
-        
         String json = this.mapper.writeValueAsString(team);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/V1/teams")
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/teams")
         .content(json)
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/V1/teams/" + uuid.toString()))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string("{\"id\":" + uuid.toString()  + ", \"name\":\"Poule\"}"));
+            .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"name\":\"Poule\"}"));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/V1/teams/" + uuid.toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + uuid.toString()));
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/V1/teams/" + uuid.toString()))
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string("{\"id\":" + uuid.toString()  + ", \"name\":\"Poule\"}"));
+            .andExpect(MockMvcResultMatchers.content().string(""));
 
     }
 
@@ -65,11 +62,13 @@ public class TeamControllerTest {
         
         String json = this.mapper.writeValueAsString(team);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/V1/teams")
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams")
         		.content(json)
         		.contentType(MediaType.APPLICATION_JSON)
         		.accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+        		.andExpect(jsonPath("$", Matchers.hasSize(1)))
+        		.andExpect(jsonPath("$[0].name", is(team.getName())))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
 
