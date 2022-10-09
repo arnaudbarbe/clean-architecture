@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import fr.arnaud.cleanarchitecture.core.entities.Championship;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.league.LeagueEntity;
-import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.player.PlayerEntity;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.season.SeasonEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,9 +28,7 @@ public class ChampionshipEntity {
 
 	String name;
 
-	@ManyToOne
-	@JoinColumn(foreignKey=@ForeignKey(name="fk_championship_player"), name = "playerId", nullable = false)
-	PlayerEntity player;
+	UUID playerId;
 
 	@ManyToOne
 	@JoinColumn(foreignKey=@ForeignKey(name="fk_championship_season"), name = "seasonId", nullable = false)
@@ -66,7 +63,7 @@ public class ChampionshipEntity {
 
 	public void fromModel(final Championship championship) {
 		this.name = championship.getName();
-		this.player = new PlayerEntity(championship.getPlayer().getId());
+		this.playerId = championship.getPlayer().getId();
 		this.season = new SeasonEntity(championship.getSeason().getId());
 		this.league = new LeagueEntity(championship.getLeague().getId());
 	}

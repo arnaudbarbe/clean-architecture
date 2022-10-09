@@ -11,12 +11,15 @@ Personal implementation of a clean architecture
     * service (Business rules)
     * use case (Business rules too but use case oriented)
  * infrastructure (technical part)
+    * client
+        * sync (sync client like codegen generated code)
+        * async (async client like asyncapi generated code)
     * configuration (configuration for each framework/persistence/etc...)
-    * delivery (from other system)
+    * delivery (entry point from other system)
         * consumer (MOM consumers)
         * controller (REST controller)
         * task (cron task to execute async process)
-    * gateway (to other system)
+    * gateway (entry point to other system)
     * persistence (repositories for each storage system)
 
 ##persistence

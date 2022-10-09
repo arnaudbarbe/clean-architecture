@@ -1,9 +1,8 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.player;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.player;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,20 +12,20 @@ import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.repository.PlayerRepository;
 
 @Component
-public class PostgresDbPlayerRepository implements PlayerRepository {
+public class CassandraDbPlayerRepository implements PlayerRepository {
 
-    private final SpringDataPostgresPlayerRepository playerRepository;
+    private final SpringDataCassandraPlayerRepository playerRepository;
 
     @Autowired
-    public PostgresDbPlayerRepository(final SpringDataPostgresPlayerRepository playerRepository) {
+    public CassandraDbPlayerRepository(final SpringDataCassandraPlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
     }
 
     @Override
     public Player findById(final UUID id) {
-        Optional<PlayerEntity> optionalPlayerEntity = this.playerRepository.findById(id);
-        if (optionalPlayerEntity.isPresent()) {
-            return optionalPlayerEntity.get()
+        Optional<PlayerEntity> playerEntity = this.playerRepository.findById(id);
+        if (playerEntity.isPresent()) {
+            return playerEntity.get()
                 .toModel();
         } else {
             return null;
@@ -41,11 +40,12 @@ public class PostgresDbPlayerRepository implements PlayerRepository {
 	@Override
 	public List<Player> findAll() {
 
-		return StreamSupport.stream(this.playerRepository.findAll().spliterator(), false)
+		return this.playerRepository.findAll()
+		.stream()
 		.map(PlayerEntity::toModel).toList();
 	}
 
-	@Override
+    @Override
 	public void delete(final UUID id) {
         this.playerRepository.deleteById(id);
 	}
