@@ -9,8 +9,7 @@ import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.champions
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.championship.SpringDataPostgresChampionshipRepository;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.league.LeagueEntity;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.league.SpringDataPostgresLeagueRepository;
-import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.player.PlayerEntity;
-import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.player.SpringDataPostgresPlayerRepository;
+
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.season.SeasonEntity;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.season.SpringDataPostgresSeasonRepository;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.team.SpringDataPostgresTeamRepository;
@@ -20,14 +19,12 @@ import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.team.Team
 		basePackageClasses = {
 			SpringDataPostgresChampionshipRepository.class,
 			SpringDataPostgresLeagueRepository.class,
-			SpringDataPostgresPlayerRepository.class,
 			SpringDataPostgresSeasonRepository.class,
 			SpringDataPostgresTeamRepository.class})
 @EntityScan(
 		basePackageClasses = {
 				ChampionshipEntity.class,
 				LeagueEntity.class,
-				PlayerEntity.class,
 				SeasonEntity.class,
 				TeamEntity.class
 		})
