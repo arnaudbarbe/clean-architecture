@@ -43,6 +43,6 @@ add SEATA support ?
 ## Running tests
 
 You need to start containers in src/main/resources/dockercompose/docker-compose.yml
-Then run tests
+before running test or start the spring boot server
 
 https://wordpress.com/support/markdown-quick-reference/
