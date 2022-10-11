@@ -1,10 +1,7 @@
 package com.asyncapi.infrastructure;
 
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Declarables;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import com.asyncapi.service.MessageHandlerService;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -20,8 +17,6 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.messaging.MessageChannel;
-
-import com.asyncapi.service.MessageHandlerService;
 
 @Configuration
 public class Config {
@@ -43,8 +38,24 @@ public class Config {
     private String createLeagueExchange;
 
     
+    @Value("${amqp.exchange.updateLeague}")
+    private String updateLeagueExchange;
+
+    
     @Value("${amqp.exchange.deleteLeague}")
     private String deleteLeagueExchange;
+
+    
+    @Value("${amqp.exchange.createPlayer}")
+    private String createPlayerExchange;
+
+    
+    @Value("${amqp.exchange.updatePlayer}")
+    private String updatePlayerExchange;
+
+    
+    @Value("${amqp.exchange.deletePlayer}")
+    private String deletePlayerExchange;
 
     
     
@@ -52,17 +63,33 @@ public class Config {
     private String createLeagueQueue;
 
     
+    @Value("${amqp.queue.updateLeague}")
+    private String updateLeagueQueue;
+
+    
     @Value("${amqp.queue.deleteLeague}")
     private String deleteLeagueQueue;
+
+    
+    @Value("${amqp.queue.createPlayer}")
+    private String createPlayerQueue;
+
+    
+    @Value("${amqp.queue.updatePlayer}")
+    private String updatePlayerQueue;
+
+    
+    @Value("${amqp.queue.deletePlayer}")
+    private String deletePlayerQueue;
 
     
 
     @Bean
     public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(this.host);
-        connectionFactory.setUsername(this.username);
-        connectionFactory.setPassword(this.password);
-        connectionFactory.setPort(this.port);
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(host);
+        connectionFactory.setUsername(username);
+        connectionFactory.setPassword(password);
+        connectionFactory.setPort(port);
         return connectionFactory;
     }
 
@@ -75,9 +102,17 @@ public class Config {
     public Declarables exchanges() {
         return new Declarables(
                 
-                new TopicExchange(this.createLeagueExchange, true, false),
+                new TopicExchange(createLeagueExchange, true, false),
                 
-                new TopicExchange(this.deleteLeagueExchange, true, false)
+                new TopicExchange(updateLeagueExchange, true, false),
+                
+                new TopicExchange(deleteLeagueExchange, true, false),
+                
+                new TopicExchange(createPlayerExchange, true, false),
+                
+                new TopicExchange(updatePlayerExchange, true, false),
+                
+                new TopicExchange(deletePlayerExchange, true, false)
                 
                 );
     }
@@ -86,9 +121,17 @@ public class Config {
     public Declarables queues() {
         return new Declarables(
                 
-                new Queue(this.createLeagueQueue, true, false, false),
+                new Queue(createLeagueQueue, true, false, false),
                 
-                new Queue(this.deleteLeagueQueue, true, false, false)
+                new Queue(updateLeagueQueue, true, false, false),
+                
+                new Queue(deleteLeagueQueue, true, false, false),
+                
+                new Queue(createPlayerQueue, true, false, false),
+                
+                new Queue(updatePlayerQueue, true, false, false),
+                
+                new Queue(deletePlayerQueue, true, false, false)
                 
                 );
     }
@@ -101,16 +144,48 @@ public class Config {
 
     @Bean
     public IntegrationFlow createLeagueFlow() {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), this.createLeagueQueue))
-                .handle(this.messageHandlerService::handleCreateLeague)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), createLeagueQueue))
+                .handle(messageHandlerService::handleCreateLeague)
+                .get();
+    }
+    
+
+    @Bean
+    public IntegrationFlow updateLeagueFlow() {
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), updateLeagueQueue))
+                .handle(messageHandlerService::handleUpdateLeague)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow deleteLeagueFlow() {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), this.deleteLeagueQueue))
-                .handle(this.messageHandlerService::handleDeleteLeague)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), deleteLeagueQueue))
+                .handle(messageHandlerService::handleDeleteLeague)
+                .get();
+    }
+    
+
+    @Bean
+    public IntegrationFlow createPlayerFlow() {
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), createPlayerQueue))
+                .handle(messageHandlerService::handleCreatePlayer)
+                .get();
+    }
+    
+
+    @Bean
+    public IntegrationFlow updatePlayerFlow() {
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), updatePlayerQueue))
+                .handle(messageHandlerService::handleUpdatePlayer)
+                .get();
+    }
+    
+
+    @Bean
+    public IntegrationFlow deletePlayerFlow() {
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory(), deletePlayerQueue))
+                .handle(messageHandlerService::handleDeletePlayer)
                 .get();
     }
     
@@ -119,7 +194,8 @@ public class Config {
 
     @Bean
     public RabbitTemplate rabbitTemplate() {
-        return new RabbitTemplate(connectionFactory());
+        RabbitTemplate template = new RabbitTemplate(connectionFactory());
+        return template;
     }
     
 
@@ -130,9 +206,24 @@ public class Config {
 
     @Bean
     @ServiceActivator(inputChannel = "createLeagueSubOutboundChannel")
-    public AmqpOutboundEndpoint createLeagueOutbound(final AmqpTemplate amqpTemplate) {
+    public AmqpOutboundEndpoint createLeagueOutbound(AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(this.createLeagueExchange);
+        outbound.setExchangeName(createLeagueExchange);
+        outbound.setRoutingKey("#");
+        return outbound;
+    }
+    
+
+    @Bean
+    public MessageChannel updateLeagueSubOutboundChannel() {
+        return new DirectChannel();
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "updateLeagueSubOutboundChannel")
+    public AmqpOutboundEndpoint updateLeagueOutbound(AmqpTemplate amqpTemplate) {
+        AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
+        outbound.setExchangeName(updateLeagueExchange);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -145,9 +236,54 @@ public class Config {
 
     @Bean
     @ServiceActivator(inputChannel = "deleteLeagueSubOutboundChannel")
-    public AmqpOutboundEndpoint deleteLeagueOutbound(final AmqpTemplate amqpTemplate) {
+    public AmqpOutboundEndpoint deleteLeagueOutbound(AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(this.deleteLeagueExchange);
+        outbound.setExchangeName(deleteLeagueExchange);
+        outbound.setRoutingKey("#");
+        return outbound;
+    }
+    
+
+    @Bean
+    public MessageChannel createPlayerSubOutboundChannel() {
+        return new DirectChannel();
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "createPlayerSubOutboundChannel")
+    public AmqpOutboundEndpoint createPlayerOutbound(AmqpTemplate amqpTemplate) {
+        AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
+        outbound.setExchangeName(createPlayerExchange);
+        outbound.setRoutingKey("#");
+        return outbound;
+    }
+    
+
+    @Bean
+    public MessageChannel updatePlayerSubOutboundChannel() {
+        return new DirectChannel();
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "updatePlayerSubOutboundChannel")
+    public AmqpOutboundEndpoint updatePlayerOutbound(AmqpTemplate amqpTemplate) {
+        AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
+        outbound.setExchangeName(updatePlayerExchange);
+        outbound.setRoutingKey("#");
+        return outbound;
+    }
+    
+
+    @Bean
+    public MessageChannel deletePlayerSubOutboundChannel() {
+        return new DirectChannel();
+    }
+
+    @Bean
+    @ServiceActivator(inputChannel = "deletePlayerSubOutboundChannel")
+    public AmqpOutboundEndpoint deletePlayerOutbound(AmqpTemplate amqpTemplate) {
+        AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
+        outbound.setExchangeName(deletePlayerExchange);
         outbound.setRoutingKey("#");
         return outbound;
     }

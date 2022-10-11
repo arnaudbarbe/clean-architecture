@@ -12,6 +12,14 @@ amqp:
   
     
   
+    
+  
+    
+  
+    
+  
+    
+  
   queue:
   
     
@@ -19,7 +27,23 @@ amqp:
     
   
     
+    updateLeague: 
+    
+  
+    
     deleteLeague: 
+    
+  
+    
+    createPlayer: 
+    
+  
+    
+    updatePlayer: 
+    
+  
+    
+    deletePlayer: 
     
   
 

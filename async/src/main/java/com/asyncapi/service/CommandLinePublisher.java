@@ -17,7 +17,15 @@ public class CommandLinePublisher implements CommandLineRunner {
         System.out.println("******* Sending message: *******");
         publisherService.createLeagueSub("Hello World from createLeague");
                 
+        publisherService.updateLeagueSub("Hello World from updateLeague");
+                
         publisherService.deleteLeagueSub("Hello World from deleteLeague");
+                
+        publisherService.createPlayerSub("Hello World from createPlayer");
+                
+        publisherService.updatePlayerSub("Hello World from updatePlayer");
+                
+        publisherService.deletePlayerSub("Hello World from deletePlayer");
                 
         System.out.println("Message sent");
     }
