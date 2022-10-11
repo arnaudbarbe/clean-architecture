@@ -36,7 +36,7 @@ http://localhost:8080/swagger-ui/index.html
 
 Async support was added, description file is in clean-architecture\src\main\java\fr\arnaud\cleanarchitecture\infrastructure\client directory
 * generate documentation with : ag async.yml -o docs/html/ @asyncapi/html-template --force-write
-* generate java doc with :
+* generate java doc with : ag async.yml @asyncapi/java-spring-template -o src --force-write
 
 
 https://www.asyncapi.com/

@@ -1,0 +1,25 @@
+
+amqp:
+  broker: 
+    # Local RabbitMQ
+    host: localhost:5672
+    port: 
+    username:
+    password:
+  exchange:
+  
+    
+  
+    
+  
+  queue:
+  
+    
+    createLeague: 
+    
+  
+    
+    deleteLeague: 
+    
+  
+
