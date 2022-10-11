@@ -35,6 +35,7 @@ http://localhost:8080/swagger-ui/index.html
 ## async IO
 In next release I want to add async IO support to produce event on CRUD operations
 https://www.asyncapi.com/
+https://eltonminetto.dev/en/post/2022-01-30-asyncapi/
 
 ## security 
 To be complete these web services need to be secure
