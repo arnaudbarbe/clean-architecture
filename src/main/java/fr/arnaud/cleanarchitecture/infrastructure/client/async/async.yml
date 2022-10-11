@@ -1,0 +1,53 @@
+asyncapi: 2.2.0
+info:
+  title: API async entry point
+  version: 1.0.0
+  description: The Awesome API async entry point
+  contact:
+    name: Arnaud Barbe
+    email: arnaud.barbe@free.ru
+servers:
+  rabbitmq:
+    url: localhost:5672
+    description: Local RabbitMQ
+    protocol: amqp
+    protocolVersion: "0.9.1"
+channels:
+  create-league:
+    publish:
+      operationId: createLeaguePub
+      description: The league to create
+      message:
+        $ref: "#/components/messages/league"
+      bindings:
+        amqp:
+          timestamp: true
+          ack: false
+          bindingVersion: 0.2.0
+    subscribe:
+      operationId: createLeagueSub
+      description: The league to create
+      message:
+        $ref: "#/components/messages/league"
+    bindings:
+      amqp:
+        is: routingKey
+        exchange:
+          name: createLeagueExchange
+          type: direct
+          durable: true
+          vhost: /
+        bindingVersion: 0.2.0
+components:
+  messages:
+    league:
+      payload:
+        type: object
+        properties:
+          id:
+            type: string
+            description: the league id
+          name:
+            type: string
+            description: the league name
+

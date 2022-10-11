@@ -38,6 +38,20 @@ services:
     networks:
       - clean
 
+  rabbitmq:
+      container_name: rabbitmq_clean
+      hostname: "rabbitmq"
+      image: rabbitmq:3.8.11-management-alpine
+      networks:
+          - clean
+      ports:
+          - 5672:5672
+          - 15672:15672
+      volumes:
+          - rabbitmq-etc:/etc/rabbitmq
+          - rabbitmq-data:/var/lib/rabbitmq
+          - rabbitmq-log:/var/log/rabbitmq
+
 networks:
   clean:
 
@@ -45,4 +59,7 @@ volumes:
     postgres:
     cassandra:
     mongo:
+    rabbitmq-etc:
+    rabbitmq-data:
+    rabbitmq-log:
     

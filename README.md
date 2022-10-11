@@ -33,7 +33,12 @@ Swagger is available under
 http://localhost:8080/swagger-ui/index.html
 
 ## async IO
-In next release I want to add async IO support to produce event on CRUD operations
+
+Async support was added, description file is in clean-architecture\src\main\java\fr\arnaud\cleanarchitecture\infrastructure\client directory
+* generate documentation with : ag async.yml -o docs/html/ @asyncapi/html-template --force-write
+* generate java doc with :
+
+
 https://www.asyncapi.com/
 https://eltonminetto.dev/en/post/2022-01-30-asyncapi/
 
