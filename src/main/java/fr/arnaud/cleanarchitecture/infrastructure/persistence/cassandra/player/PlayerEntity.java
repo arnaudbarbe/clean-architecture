@@ -33,10 +33,10 @@ public class PlayerEntity {
 
 	public PlayerEntity(final Player player) {
 		this.id = player.getId();
-		fromModel(player);
+		fromEntity(player);
 	}
 
-	public Player toModel() {
+	public Player toEntity() {
 		return Player.builder()
 				.id(this.id)
 				.firstName(this.firstName)
@@ -44,7 +44,7 @@ public class PlayerEntity {
 				.build();
 	}
 
-	public void fromModel(final Player player) {
+	public void fromEntity(final Player player) {
 		this.firstName = player.getFirstName();
 		this.lastName = player.getLastName();
 	}

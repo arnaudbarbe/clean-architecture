@@ -26,7 +26,7 @@ public class CassandraDbPlayerRepository implements PlayerRepository {
         Optional<PlayerEntity> playerEntity = this.playerRepository.findById(id);
         if (playerEntity.isPresent()) {
             return playerEntity.get()
-                .toModel();
+                .toEntity();
         } else {
             return null;
         }
@@ -42,7 +42,7 @@ public class CassandraDbPlayerRepository implements PlayerRepository {
 
 		return this.playerRepository.findAll()
 		.stream()
-		.map(PlayerEntity::toModel).toList();
+		.map(PlayerEntity::toEntity).toList();
 	}
 
     @Override
@@ -56,7 +56,7 @@ public class CassandraDbPlayerRepository implements PlayerRepository {
         Optional<PlayerEntity> optionalPlayerEntity = this.playerRepository.findById(id);
         if (optionalPlayerEntity.isPresent()) {
         	PlayerEntity playerEntity = optionalPlayerEntity.get();
-        	playerEntity.fromModel(player);
+        	playerEntity.fromEntity(player);
         } else {
             throw new EntityNotFoundException("Player with id " + id + " not found");
         }
