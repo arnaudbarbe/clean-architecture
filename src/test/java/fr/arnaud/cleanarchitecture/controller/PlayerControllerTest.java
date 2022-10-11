@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.CleanArchitectureApplication;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Player;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
 
 
 
@@ -44,7 +44,7 @@ public class PlayerControllerTest extends AbstractTest {
     	
     	//create one player
         UUID uuid = UUID.randomUUID();
-    	Player player = new Player(uuid, "arnaud", "barbe");
+    	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
         String json = this.mapper.writeValueAsString(player);
         
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
@@ -67,7 +67,7 @@ public class PlayerControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	Player player1 = new Player(uuid, "arnaud", "barbe");
+    	PlayerDto player1 = new PlayerDto(uuid, "arnaud", "barbe");
         
         json = this.mapper.writeValueAsString(player1);
  
@@ -79,7 +79,7 @@ public class PlayerControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	Player player2 = new Player(uuid, "christophe", "lambert");
+    	PlayerDto player2 = new PlayerDto(uuid, "christophe", "lambert");
         
         json = this.mapper.writeValueAsString(player2);
  

@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.core.entities;
+package fr.arnaud.cleanarchitecture.core.entity;
 
 import java.util.UUID;
 
@@ -15,13 +15,15 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Getter
-@EqualsAndHashCode(of= {"id", "name"})
-@ToString(of= {"id", "name"})
-@Builder(builderClassName = "LeagueBuilder")
-public class League {
+@EqualsAndHashCode(of= {"id", "firstName", "lastName"})
+@ToString(of= {"id", "firstName", "lastName"})
+@Builder(builderClassName = "PlayerBuilder")
+public class Player {
 
 	@NotNull 
 	final UUID id;
 	@NotNull 
-	final String name;
+	final String firstName;
+	@NotNull 
+	final String lastName;
 }

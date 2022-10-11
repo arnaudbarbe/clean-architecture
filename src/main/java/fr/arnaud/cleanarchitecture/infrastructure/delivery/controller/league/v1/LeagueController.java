@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.service.league.LeagueService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.League;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -67,7 +67,7 @@ public class LeagueController {
 
 	@Tags({ 
 		@Tag(name="League")})
-    public UUID createLeague(@RequestBody final League league) {
+    public UUID createLeague(@RequestBody final LeagueDto league) {
         return this.leagueService.createLeague(league.toEntity());
     }
 
@@ -96,7 +96,7 @@ public class LeagueController {
 
 	@Tags({ 
 		@Tag(name="League")})
-    public void updateLeague(@PathVariable final UUID leagueId, @RequestBody final League league) {
+    public void updateLeague(@PathVariable final UUID leagueId, @RequestBody final LeagueDto league) {
         this.leagueService.updateLeague(leagueId, league.toEntity());
     }
 
@@ -152,8 +152,8 @@ public class LeagueController {
 
 	@Tags({ 
 		@Tag(name="League")})
-    public League getLeague(@PathVariable final UUID leagueId) {
-        return League.fromEntity(this.leagueService.getLeague(leagueId));
+    public LeagueDto getLeague(@PathVariable final UUID leagueId) {
+        return LeagueDto.fromEntity(this.leagueService.getLeague(leagueId));
     }	
 	
 	
@@ -178,7 +178,7 @@ public class LeagueController {
 
 	@Tags({ 
 		@Tag(name="League")})
-    public List<League> getLeagues() {
-        return this.leagueService.getLeagues().stream().map(League::fromEntity).toList();
+    public List<LeagueDto> getLeagues() {
+        return this.leagueService.getLeagues().stream().map(LeagueDto::fromEntity).toList();
     }
 }

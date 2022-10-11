@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.core.entities;
+package fr.arnaud.cleanarchitecture.core.entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -21,20 +21,25 @@ import lombok.experimental.FieldDefaults;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Getter
-@EqualsAndHashCode(of= {"id", "name", "startDate", "endDate"})
-@ToString(of= {"id", "name", "startDate", "endDate"})
-@Builder(builderClassName = "SeasonBuilder")
-public class Season {
+@EqualsAndHashCode(of= {"id"})
+@ToString(of= {"id"})
+@Builder(builderClassName = "MatchBuilder")
+public class Match {
 	
 	@NotNull 
 	final UUID id;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    final LocalDateTime when;
+    
 	@NotNull 
-	final String name;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    final LocalDateTime startDate;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    final LocalDateTime endDate;
-
+	final Championship championship;
+	@NotNull 
+	final Team homeTeam;
+	@NotNull 
+	final Team outsideTeam;
+    
+	final int scoreHomeTeam;
+	final int scoreOutsideTeam;
+	
 }

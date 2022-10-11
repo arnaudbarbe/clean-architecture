@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.entities.Match;
+import fr.arnaud.cleanarchitecture.core.entity.Match;
 import fr.arnaud.cleanarchitecture.core.repository.MatchRepository;
 import lombok.extern.slf4j.Slf4j;
 

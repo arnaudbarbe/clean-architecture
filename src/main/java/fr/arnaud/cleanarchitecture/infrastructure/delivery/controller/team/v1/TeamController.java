@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Team;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.TeamDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -67,7 +67,7 @@ public class TeamController {
 
 	@Tags({ 
 		@Tag(name="Team")})
-    public UUID createTeam(@RequestBody final Team team) {
+    public UUID createTeam(@RequestBody final TeamDto team) {
         return this.teamService.createTeam(team.toEntity());
     }
 
@@ -96,7 +96,7 @@ public class TeamController {
 
 	@Tags({ 
 		@Tag(name="Team")})
-    public void updateTeam(@PathVariable final UUID teamId, @RequestBody final Team team) {
+    public void updateTeam(@PathVariable final UUID teamId, @RequestBody final TeamDto team) {
         this.teamService.updateTeam(teamId, team.toEntity());
     }
 
@@ -152,8 +152,8 @@ public class TeamController {
 
 	@Tags({ 
 		@Tag(name="Team")})
-    public Team getTeam(@PathVariable final UUID teamId) {
-        return Team.fromEntity(this.teamService.getTeam(teamId));
+    public TeamDto getTeam(@PathVariable final UUID teamId) {
+        return TeamDto.fromEntity(this.teamService.getTeam(teamId));
     }	
 	
 	
@@ -178,7 +178,7 @@ public class TeamController {
 
 	@Tags({ 
 		@Tag(name="Team")})
-    public List<Team> getTeams() {
-        return this.teamService.getTeams().stream().map(Team::fromEntity).toList();
+    public List<TeamDto> getTeams() {
+        return this.teamService.getTeams().stream().map(TeamDto::fromEntity).toList();
     }
 }

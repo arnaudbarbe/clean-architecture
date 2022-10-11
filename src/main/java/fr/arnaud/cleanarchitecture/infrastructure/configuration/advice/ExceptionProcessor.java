@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.datastax.oss.driver.api.core.servererrors.UnauthorizedException;
 
-import fr.arnaud.cleanarchitecture.core.entities.DomainError;
+import fr.arnaud.cleanarchitecture.core.entity.DomainError;
 import fr.arnaud.cleanarchitecture.core.exception.BadCurrentPasswordException;
 import fr.arnaud.cleanarchitecture.core.exception.BadParameterException;
 import fr.arnaud.cleanarchitecture.core.exception.BadUuidException;

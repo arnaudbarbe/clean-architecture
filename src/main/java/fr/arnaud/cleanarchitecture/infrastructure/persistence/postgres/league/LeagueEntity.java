@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import fr.arnaud.cleanarchitecture.core.entities.League;
+import fr.arnaud.cleanarchitecture.core.entity.League;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -23,11 +23,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.CleanArchitectureApplication;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Championship;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.League;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Player;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Season;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Team;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.TeamDto;
 
 
 
@@ -50,7 +50,7 @@ public class TeamControllerTest extends AbstractTest {
     	
     	//create one team
     	UUID uuid = UUID.randomUUID();
-    	Season season = new Season(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
     	String json = this.mapper.writeValueAsString(season);
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
         .content(json)
@@ -59,7 +59,7 @@ public class TeamControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	Player player = new Player(uuid, "arnaud", "barbe");
+    	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
     	json = this.mapper.writeValueAsString(player);
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
         .content(json)
@@ -68,7 +68,7 @@ public class TeamControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
     	uuid = UUID.randomUUID();
-    	League league = new League(uuid, "Afebas");
+    	LeagueDto league = new LeagueDto(uuid, "Afebas");
     	uuid = UUID.randomUUID();
     	json = this.mapper.writeValueAsString(league);
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/leagues")
@@ -77,7 +77,7 @@ public class TeamControllerTest extends AbstractTest {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
         
-    	Championship championship = new Championship(uuid, "France", player, season, league);
+    	ChampionshipDto championship = new ChampionshipDto(uuid, "France", player, season, league);
     	
         json = this.mapper.writeValueAsString(championship);
         
@@ -88,7 +88,7 @@ public class TeamControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isCreated());
     	
         uuid = UUID.randomUUID();
-    	Team team = new Team(uuid, "Poule", championship);
+    	TeamDto team = new TeamDto(uuid, "Poule", championship);
         json = this.mapper.writeValueAsString(team);
         
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/teams")
@@ -112,7 +112,7 @@ public class TeamControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	Team team1 = new Team(uuid, "Poule1", championship);
+    	TeamDto team1 = new TeamDto(uuid, "Poule1", championship);
         
         json = this.mapper.writeValueAsString(team1);
  
@@ -124,7 +124,7 @@ public class TeamControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	Team team2 = new Team(uuid, "Poule2", championship);
+    	TeamDto team2 = new TeamDto(uuid, "Poule2", championship);
         
         json = this.mapper.writeValueAsString(team2);
  

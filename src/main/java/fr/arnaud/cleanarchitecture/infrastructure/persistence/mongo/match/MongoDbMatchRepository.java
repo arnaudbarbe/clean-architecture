@@ -8,8 +8,8 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.arnaud.cleanarchitecture.core.entities.Match;
-import fr.arnaud.cleanarchitecture.core.entities.Team;
+import fr.arnaud.cleanarchitecture.core.entity.Match;
+import fr.arnaud.cleanarchitecture.core.entity.Team;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.repository.MatchRepository;
 import fr.arnaud.cleanarchitecture.core.repository.TeamRepository;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Season;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -67,7 +67,7 @@ public class SeasonController {
 
 	@Tags({ 
 		@Tag(name="Season")})
-    public UUID createSeason(@RequestBody final Season season) {
+    public UUID createSeason(@RequestBody final SeasonDto season) {
         return this.seasonService.createSeason(season.toEntity());
     }
 
@@ -96,7 +96,7 @@ public class SeasonController {
 
 	@Tags({ 
 		@Tag(name="Season")})
-    public void updateSeason(@PathVariable final UUID seasonId, @RequestBody final Season season) {
+    public void updateSeason(@PathVariable final UUID seasonId, @RequestBody final SeasonDto season) {
         this.seasonService.updateSeason(seasonId, season.toEntity());
     }
 
@@ -152,8 +152,8 @@ public class SeasonController {
 
 	@Tags({ 
 		@Tag(name="Season")})
-    public Season getSeason(@PathVariable final UUID seasonId) {
-        return Season.fromEntity(this.seasonService.getSeason(seasonId));
+    public SeasonDto getSeason(@PathVariable final UUID seasonId) {
+        return SeasonDto.fromEntity(this.seasonService.getSeason(seasonId));
     }	
 	
 	
@@ -178,7 +178,7 @@ public class SeasonController {
 
 	@Tags({ 
 		@Tag(name="Season")})
-    public List<Season> getSeasons() {
-        return this.seasonService.getSeasons().stream().map(Season::fromEntity).toList();
+    public List<SeasonDto> getSeasons() {
+        return this.seasonService.getSeasons().stream().map(SeasonDto::fromEntity).toList();
     }
 }

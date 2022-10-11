@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.entities.Match;
+import fr.arnaud.cleanarchitecture.core.entity.Match;
 
 public interface MatchService {
 	

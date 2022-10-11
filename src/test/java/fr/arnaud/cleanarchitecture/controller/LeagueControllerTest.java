@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.CleanArchitectureApplication;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.League;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 
 
 
@@ -45,7 +45,7 @@ public class LeagueControllerTest extends AbstractTest {
     	
     	//create one league
         UUID uuid = UUID.randomUUID();
-    	League league = new League(uuid, "Afebas");
+    	LeagueDto league = new LeagueDto(uuid, "Afebas");
         String json = this.mapper.writeValueAsString(league);
         
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/leagues")
@@ -68,7 +68,7 @@ public class LeagueControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	League league1 = new League(uuid, "Afebas");
+    	LeagueDto league1 = new LeagueDto(uuid, "Afebas");
         
         json = this.mapper.writeValueAsString(league1);
  
@@ -80,7 +80,7 @@ public class LeagueControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	League league2 = new League(uuid, "FBEP");
+    	LeagueDto league2 = new LeagueDto(uuid, "FBEP");
         
         json = this.mapper.writeValueAsString(league2);
  

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.service.match.MatchService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Match;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.MatchDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -67,7 +67,7 @@ public class MatchController {
 
 	@Tags({ 
 		@Tag(name="Match")})
-    public UUID createMatch(@RequestBody final Match match) {
+    public UUID createMatch(@RequestBody final MatchDto match) {
         return this.matchService.createMatch(match.toEntity());
     }
 
@@ -96,7 +96,7 @@ public class MatchController {
 
 	@Tags({ 
 		@Tag(name="Match")})
-    public void updateMatch(@PathVariable final UUID matchId, @RequestBody final Match match) {
+    public void updateMatch(@PathVariable final UUID matchId, @RequestBody final MatchDto match) {
         this.matchService.updateMatch(matchId, match.toEntity());
     }
 
@@ -152,8 +152,8 @@ public class MatchController {
 
 	@Tags({ 
 		@Tag(name="Match")})
-    public Match getMatch(@PathVariable final UUID matchId) {
-        return Match.fromEntity(this.matchService.getMatch(matchId));
+    public MatchDto getMatch(@PathVariable final UUID matchId) {
+        return MatchDto.fromEntity(this.matchService.getMatch(matchId));
     }	
 	
 	
@@ -178,7 +178,7 @@ public class MatchController {
 
 	@Tags({ 
 		@Tag(name="Match")})
-    public List<Match> getMatchs() {
-        return this.matchService.getMatchs().stream().map(Match::fromEntity).toList();
+    public List<MatchDto> getMatchs() {
+        return this.matchService.getMatchs().stream().map(MatchDto::fromEntity).toList();
     }
 }

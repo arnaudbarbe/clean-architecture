@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Championship;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -67,7 +67,7 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public UUID createChampionship(@RequestBody final Championship championship) {
+    public UUID createChampionship(@RequestBody final ChampionshipDto championship) {
         return this.championshipService.createChampionship(championship.toEntity());
     }
 
@@ -96,7 +96,7 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public void updateChampionship(@PathVariable final UUID championshipId, @RequestBody final Championship championship) {
+    public void updateChampionship(@PathVariable final UUID championshipId, @RequestBody final ChampionshipDto championship) {
         this.championshipService.updateChampionship(championshipId, championship.toEntity());
     }
 
@@ -151,8 +151,8 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public Championship getChampionship(@PathVariable final UUID championshipId) {
-        return Championship.fromEntity(this.championshipService.getChampionship(championshipId));
+    public ChampionshipDto getChampionship(@PathVariable final UUID championshipId) {
+        return ChampionshipDto.fromEntity(this.championshipService.getChampionship(championshipId));
     }	
 	
 	
@@ -177,7 +177,7 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public List<Championship> getChampionships() {
-        return this.championshipService.getChampionships().stream().map(Championship::fromEntity).toList();
+    public List<ChampionshipDto> getChampionships() {
+        return this.championshipService.getChampionships().stream().map(ChampionshipDto::fromEntity).toList();
     }
 }

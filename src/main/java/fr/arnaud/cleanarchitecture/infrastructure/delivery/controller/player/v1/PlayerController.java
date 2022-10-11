@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.service.player.PlayerService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.model.v1.Player;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -67,7 +67,7 @@ public class PlayerController {
 
 	@Tags({ 
 		@Tag(name="Player")})
-    public UUID createPlayer(@RequestBody final Player player) {
+    public UUID createPlayer(@RequestBody final PlayerDto player) {
         return this.playerService.createPlayer(player.toEntity());
     }
 
@@ -96,7 +96,7 @@ public class PlayerController {
 
 	@Tags({ 
 		@Tag(name="Player")})
-    public void updatePlayer(@PathVariable final UUID playerId, @RequestBody final Player player) {
+    public void updatePlayer(@PathVariable final UUID playerId, @RequestBody final PlayerDto player) {
         this.playerService.updatePlayer(playerId, player.toEntity());
     }
 
@@ -152,8 +152,8 @@ public class PlayerController {
 
 	@Tags({ 
 		@Tag(name="Player")})
-    public Player getPlayer(@PathVariable final UUID playerId) {
-        return Player.fromEntity(this.playerService.getPlayer(playerId));
+    public PlayerDto getPlayer(@PathVariable final UUID playerId) {
+        return PlayerDto.fromEntity(this.playerService.getPlayer(playerId));
     }	
 	
 	
@@ -178,7 +178,7 @@ public class PlayerController {
 
 	@Tags({ 
 		@Tag(name="Player")})
-    public List<Player> getPlayers() {
-        return this.playerService.getPlayers().stream().map(Player::fromEntity).toList();
+    public List<PlayerDto> getPlayers() {
+        return this.playerService.getPlayers().stream().map(PlayerDto::fromEntity).toList();
     }
 }
