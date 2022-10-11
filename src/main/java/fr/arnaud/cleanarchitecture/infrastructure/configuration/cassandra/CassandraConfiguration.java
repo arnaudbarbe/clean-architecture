@@ -16,6 +16,7 @@ import org.springframework.data.cassandra.core.convert.CassandraConverter;
 import org.springframework.data.cassandra.core.convert.MappingCassandraConverter;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.core.cql.keyspace.KeyspaceOption;
+import org.springframework.data.cassandra.core.cql.session.init.ResourceKeyspacePopulator;
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
@@ -111,23 +112,20 @@ public class CassandraConfiguration extends AbstractCassandraConfiguration {
 		return new MappingCassandraConverter(mappingContext);
 	}
 
-	/*	@Override
+	@Override
 	protected ResourceKeyspacePopulator keyspacePopulator() {
 	
 		return new ResourceKeyspacePopulator(
-				scriptOf("CREATE TABLE IF NOT EXISTS productentity ( "+
-				"id text, " +
-				"name text, " + 
-				"price decimal, " + 
-				"unit text, " + 
-				"creationDate text, " + 
+				scriptOf("CREATE TABLE IF NOT EXISTS player ( "+
+				"id uuid, " +
+				"firstName text, " + 
+				"lastName text, " + 
 				"PRIMARY KEY ((id)));")
 		);
-	}*/
+	}
 
 	@Override
 	protected String getKeyspaceName() {
 		return this.keySpaceName;
 	}
-
 }

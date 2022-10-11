@@ -27,7 +27,7 @@ public class PostgresDbSeasonRepository implements SeasonRepository {
         Optional<SeasonEntity> optionalSeasonEntity = this.seasonRepository.findById(id);
         if (optionalSeasonEntity.isPresent()) {
             return optionalSeasonEntity.get()
-                .toModel();
+                .toEntity();
         } else {
             return null;
         }
@@ -42,7 +42,7 @@ public class PostgresDbSeasonRepository implements SeasonRepository {
 	public List<Season> findAll() {
 
 		return StreamSupport.stream(this.seasonRepository.findAll().spliterator(), false)
-		.map(SeasonEntity::toModel).toList();
+		.map(SeasonEntity::toEntity).toList();
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class PostgresDbSeasonRepository implements SeasonRepository {
         Optional<SeasonEntity> optionalSeasonEntity = this.seasonRepository.findById(id);
         if (optionalSeasonEntity.isPresent()) {
         	SeasonEntity seasonEntity = optionalSeasonEntity.get();
-        	seasonEntity.fromModel(season);
+        	seasonEntity.fromEntity(season);
         } else {
             throw new EntityNotFoundException("Season with id " + id + " not found");
         }

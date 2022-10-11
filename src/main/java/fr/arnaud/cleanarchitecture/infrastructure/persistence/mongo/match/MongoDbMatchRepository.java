@@ -35,7 +35,7 @@ public class MongoDbMatchRepository implements MatchRepository {
         	
         	MatchEntity matchEntity = optionalMatchEntity.get();
         	
-        	return mapTomodel(matchEntity);
+        	return mapToEntity(matchEntity);
         } else {
             return null;
         }
@@ -49,7 +49,7 @@ public class MongoDbMatchRepository implements MatchRepository {
 	@Override
 	public List<Match> findAll() {
 		return StreamSupport.stream(this.matchRepository.findAll().spliterator(), false)
-		.map(this::mapTomodel).toList();
+		.map(this::mapToEntity).toList();
 	}
 
 	@Override
@@ -62,14 +62,14 @@ public class MongoDbMatchRepository implements MatchRepository {
         Optional<MatchEntity> optionalMatchEntity = this.matchRepository.findById(id);
         if (optionalMatchEntity.isPresent()) {
         	MatchEntity matchEntity = optionalMatchEntity.get();
-        	matchEntity.fromModel(match);
+        	matchEntity.fromEntity(match);
         	this.matchRepository.save(matchEntity);
         } else {
             throw new EntityNotFoundException("Match with id " + id + " not found");
         }
 	}
 	
-    private Match mapTomodel(final MatchEntity matchEntity) {
+    private Match mapToEntity(final MatchEntity matchEntity) {
     	Team homeTeam = this.teamRepository.findById(UUID.fromString(matchEntity.getHomeTeamId()));
     	Team outsideTeam = this.teamRepository.findById(UUID.fromString(matchEntity.getOutsideTeamId()));
     	
@@ -81,6 +81,6 @@ public class MongoDbMatchRepository implements MatchRepository {
     		outsideTeam = Team.builder().id(UUID.fromString(matchEntity.getOutsideTeamId())).build();
     	}
     	
-        return matchEntity.toModel(homeTeam, outsideTeam);
+        return matchEntity.toEntity(homeTeam, outsideTeam);
 	}
 }

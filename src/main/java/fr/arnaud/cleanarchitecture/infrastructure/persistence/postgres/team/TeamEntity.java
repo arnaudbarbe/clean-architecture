@@ -40,17 +40,17 @@ public class TeamEntity {
 
 	public TeamEntity(final Team team) {
 		this.id = team.getId();
-		fromModel(team);
+		fromEntity(team);
 	}
 
-	public Team toModel() {
+	public Team toEntity() {
 		return Team.builder()
 				.id(this.id)
 				.name(this.name)
 				.build();
 	}
 
-	public void fromModel(final Team team) {
+	public void fromEntity(final Team team) {
 		this.name = team.getName();
 		this.championship = new ChampionshipEntity(team.getChampionship().getId());
 	}

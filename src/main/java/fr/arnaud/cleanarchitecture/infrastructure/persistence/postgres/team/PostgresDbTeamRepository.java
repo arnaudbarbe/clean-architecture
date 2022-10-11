@@ -26,7 +26,7 @@ public class PostgresDbTeamRepository implements TeamRepository {
     public Team findById(final UUID id) {
         Optional<TeamEntity> optionalTeamEntity = this.teamRepository.findById(id);
         if (optionalTeamEntity.isPresent()) {
-            return optionalTeamEntity.get().toModel();
+            return optionalTeamEntity.get().toEntity();
         } else {
             return null;
         }
@@ -41,7 +41,7 @@ public class PostgresDbTeamRepository implements TeamRepository {
 	public List<Team> findAll() {
 
 		return StreamSupport.stream(this.teamRepository.findAll().spliterator(), false)
-		.map(TeamEntity::toModel).toList();
+		.map(TeamEntity::toEntity).toList();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class PostgresDbTeamRepository implements TeamRepository {
         Optional<TeamEntity> optionalTeamEntity = this.teamRepository.findById(id);
         if (optionalTeamEntity.isPresent()) {
         	TeamEntity teamEntity = optionalTeamEntity.get();
-        	teamEntity.fromModel(team);
+        	teamEntity.fromEntity(team);
         } else {
             throw new EntityNotFoundException("Team with id " + id + " not found");
         }

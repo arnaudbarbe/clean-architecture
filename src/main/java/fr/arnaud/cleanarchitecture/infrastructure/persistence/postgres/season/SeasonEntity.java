@@ -38,10 +38,10 @@ public class SeasonEntity {
 
 	public SeasonEntity(final Season season) {
 		this.id = season.getId();
-		fromModel(season);
+		fromEntity(season);
 	}
 
-	public Season toModel() {
+	public Season toEntity() {
 		return Season.builder()
 				.id(this.id)
 				.name(this.name)
@@ -50,7 +50,7 @@ public class SeasonEntity {
 				.build();
 	}
 
-	public void fromModel(final Season season) {
+	public void fromEntity(final Season season) {
 		this.name = season.getName();
 		this.startDate = season.getStartDate();
 		this.endDate = season.getEndDate();

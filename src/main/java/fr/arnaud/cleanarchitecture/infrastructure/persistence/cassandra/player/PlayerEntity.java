@@ -2,9 +2,8 @@ package fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.player;
 
 import java.util.UUID;
 
-import javax.persistence.Table;
-
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
 import fr.arnaud.cleanarchitecture.core.entities.Player;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(of= {"id", "firstName", "lastName"})
-@Table
+@Table("player")
 public class PlayerEntity {
 
 	@PrimaryKey

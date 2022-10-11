@@ -40,10 +40,10 @@ public class MatchEntity {
 
 	public MatchEntity(final Match match) {
 		this.id = match.getId();
-		fromModel(match);
+		fromEntity(match);
 	}
 
-	public Match toModel(final Team homeTeam, final Team outsideTeam) {
+	public Match toEntity(final Team homeTeam, final Team outsideTeam) {
 		return Match.builder()
 				.id(this.id)
 				.when(this.when)
@@ -54,7 +54,7 @@ public class MatchEntity {
 				.build();
 	}
 
-	public void fromModel(final Match match) {
+	public void fromEntity(final Match match) {
 		this.when = match.getWhen();
 		this.homeTeamId = match.getHomeTeam().getId().toString();
 		this.outsideTeamId = match.getOutsideTeam().getId().toString();

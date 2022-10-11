@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fr.arnaud.cleanarchitecture.core.entities.Championship;
+import fr.arnaud.cleanarchitecture.core.entities.Player;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.league.LeagueEntity;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.season.SeasonEntity;
 import lombok.Getter;
@@ -48,20 +49,20 @@ public class ChampionshipEntity {
 
 	public ChampionshipEntity(final Championship championship) {
 		this.id = championship.getId();
-		fromModel(championship);
+		fromEntity(championship);
 	}
 
-	public Championship toModel() {
+	public Championship toEntity(final Player player) {
 		return Championship.builder()
 				.id(this.id)
 				.name(this.name)
-				.player(this.player.toModel())
-				.season(this.season.toModel())
-				.league(this.league.toModel())
+				.player(player)
+				.season(this.season.toEntity())
+				.league(this.league.toEntity())
 				.build();
 	}
 
-	public void fromModel(final Championship championship) {
+	public void fromEntity(final Championship championship) {
 		this.name = championship.getName();
 		this.playerId = championship.getPlayer().getId();
 		this.season = new SeasonEntity(championship.getSeason().getId());

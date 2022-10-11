@@ -32,17 +32,17 @@ public class LeagueEntity {
 
 	public LeagueEntity(final League league) {
 		this.id = league.getId();
-		fromModel(league);
+		fromEntity(league);
 	}
 
-	public League toModel() {
+	public League toEntity() {
 		return League.builder()
 				.id(this.id)
 				.name(this.name)
 				.build();
 	}
 
-	public void fromModel(final League league) {
+	public void fromEntity(final League league) {
 		this.name = league.getName();
 	}
 

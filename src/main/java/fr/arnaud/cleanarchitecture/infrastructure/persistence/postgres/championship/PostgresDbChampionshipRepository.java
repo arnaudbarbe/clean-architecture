@@ -9,24 +9,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.entities.Championship;
+import fr.arnaud.cleanarchitecture.core.entities.Player;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
+import fr.arnaud.cleanarchitecture.core.repository.PlayerRepository;
 
 @Component
 public class PostgresDbChampionshipRepository implements ChampionshipRepository {
 
     private final SpringDataPostgresChampionshipRepository championshipRepository;
+    
+    private final PlayerRepository playerRepository;
 
     @Autowired
-    public PostgresDbChampionshipRepository(final SpringDataPostgresChampionshipRepository championshipRepository) {
+    public PostgresDbChampionshipRepository(final SpringDataPostgresChampionshipRepository championshipRepository, final PlayerRepository playerRepository) {
         this.championshipRepository = championshipRepository;
+        this.playerRepository = playerRepository;
     }
 
     @Override
     public Championship findById(final UUID id) {
-        Optional<ChampionshipEntity> championshipEntity = this.championshipRepository.findById(id);
-        if (championshipEntity.isPresent()) {
-            return championshipEntity.get().toModel();
+        Optional<ChampionshipEntity> optionalChampionshipEntity = this.championshipRepository.findById(id);
+        if (optionalChampionshipEntity.isPresent()) {
+        	
+        	ChampionshipEntity championshipEntity = optionalChampionshipEntity.get();
+        	
+        	return mapToEntity(championshipEntity);
         } else {
             return null;
         }
@@ -41,7 +49,7 @@ public class PostgresDbChampionshipRepository implements ChampionshipRepository 
 	public List<Championship> findAll() {
 
 		return StreamSupport.stream(this.championshipRepository.findAll().spliterator(), false)
-		.map(ChampionshipEntity::toModel).toList();
+		.map(this::mapToEntity).toList();
 	}
 
 	@Override
@@ -54,9 +62,19 @@ public class PostgresDbChampionshipRepository implements ChampionshipRepository 
         Optional<ChampionshipEntity> optionalChampionshipEntity = this.championshipRepository.findById(id);
         if (optionalChampionshipEntity.isPresent()) {
         	ChampionshipEntity championshipEntity = optionalChampionshipEntity.get();
-        	championshipEntity.fromModel(championship);
+        	championshipEntity.fromEntity(championship);
         } else {
             throw new EntityNotFoundException("Championship with id " + id + " not found");
         }
+	}
+	
+    private Championship mapToEntity(final ChampionshipEntity championshipEntity) {
+    	Player player = this.playerRepository.findById(championshipEntity.getPlayerId());
+    	
+    	if(player == null) {
+    		//FIXME : we return an empty team object when we can't find it into db
+    		player = Player.builder().id(championshipEntity.getPlayerId()).build();
+    	}
+        return championshipEntity.toEntity(player);
 	}
 }

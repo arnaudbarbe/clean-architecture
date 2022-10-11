@@ -27,7 +27,7 @@ public class PostgresDbLeagueRepository implements LeagueRepository {
         Optional<LeagueEntity> optionalLeagueEntity = this.leagueRepository.findById(id);
         if (optionalLeagueEntity.isPresent()) {
             return optionalLeagueEntity.get()
-                .toModel();
+                .toEntity();
         } else {
             return null;
         }
@@ -42,7 +42,7 @@ public class PostgresDbLeagueRepository implements LeagueRepository {
 	public List<League> findAll() {
 
 		return StreamSupport.stream(this.leagueRepository.findAll().spliterator(), false)
-		.map(LeagueEntity::toModel).toList();
+		.map(LeagueEntity::toEntity).toList();
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class PostgresDbLeagueRepository implements LeagueRepository {
         Optional<LeagueEntity> optionalLeagueEntity = this.leagueRepository.findById(id);
         if (optionalLeagueEntity.isPresent()) {
         	LeagueEntity leagueEntity = optionalLeagueEntity.get();
-        	leagueEntity.fromModel(league);
+        	leagueEntity.fromEntity(league);
         } else {
             throw new EntityNotFoundException("League with id " + id + " not found");
         }
