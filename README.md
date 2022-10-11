@@ -2,7 +2,7 @@
 
 Personal implementation of a clean architecture
 
-##folders organization
+## folders organization
 
  * core (business part)
     * exception 
@@ -22,7 +22,7 @@ Personal implementation of a clean architecture
     * gateway (entry point to other system)
     * persistence (repositories for each storage system)
 
-##persistence
+## persistence
 
 I'm using postgres, mongodb and cassandra to persist data.
 This is just for fun, don't do this at home.
