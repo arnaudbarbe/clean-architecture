@@ -3,8 +3,6 @@ package fr.arnaud.cleanarchitecture.core.service.championship;
 import java.util.List;
 import java.util.UUID;
 
-import javax.validation.constraints.NotNull;
-
 import fr.arnaud.cleanarchitecture.core.entity.Championship;
 import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,12 +12,12 @@ public class DomainChampionshipService implements ChampionshipService {
 
     private final ChampionshipRepository championshipRepository;
 
-    public DomainChampionshipService(@NotNull final ChampionshipRepository championshipRepository) {
+    public DomainChampionshipService(final ChampionshipRepository championshipRepository) {
         this.championshipRepository = championshipRepository;
     }
 
     @Override
-    public UUID createChampionship(@NotNull final Championship championship) {
+    public UUID createChampionship(final Championship championship) {
         
         this.championshipRepository.save(championship);
 
@@ -27,12 +25,12 @@ public class DomainChampionshipService implements ChampionshipService {
     }
 
     @Override
-    public void deleteChampionship(@NotNull final UUID id) {
+    public void deleteChampionship(final UUID id) {
         this.championshipRepository.delete(id);
     }
 
     @Override
-    public Championship getChampionship(@NotNull final UUID id) {
+    public Championship getChampionship(final UUID id) {
         return this.championshipRepository.findById(id);
     }
 
@@ -42,7 +40,7 @@ public class DomainChampionshipService implements ChampionshipService {
 	}
 
     @Override
-    public void updateChampionship(@NotNull final UUID id, @NotNull final Championship championship) {
+    public void updateChampionship(final UUID id, final Championship championship) {
         this.championshipRepository.update(id, championship);
     }
 }

@@ -3,8 +3,6 @@ package fr.arnaud.cleanarchitecture.core.service.player;
 import java.util.List;
 import java.util.UUID;
 
-import javax.validation.constraints.NotNull;
-
 import fr.arnaud.cleanarchitecture.core.entity.Player;
 import fr.arnaud.cleanarchitecture.core.repository.PlayerRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -19,19 +17,19 @@ public class DomainPlayerService implements PlayerService {
     }
 
     @Override
-    public UUID createPlayer(@NotNull final Player player) {
+    public UUID createPlayer(final Player player) {
         this.playerRepository.save(player);
 
         return player.getId();
     }
 
     @Override
-    public void deletePlayer(@NotNull final UUID id) {
+    public void deletePlayer(final UUID id) {
         this.playerRepository.delete(id);
     }
 
     @Override
-    public Player getPlayer(@NotNull final UUID id) {
+    public Player getPlayer(final UUID id) {
         return this.playerRepository.findById(id);
     }
 
@@ -41,7 +39,7 @@ public class DomainPlayerService implements PlayerService {
 	}
 
 	@Override
-	public void updatePlayer(@NotNull final UUID id, @NotNull final Player player) {
+	public void updatePlayer(final UUID id, final Player player) {
         this.playerRepository.update(id, player);
 	}
 }
