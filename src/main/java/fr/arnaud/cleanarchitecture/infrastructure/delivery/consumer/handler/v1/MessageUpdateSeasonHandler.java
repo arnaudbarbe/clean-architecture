@@ -1,0 +1,28 @@
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.handler.GenericHandler;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.stereotype.Service;
+
+import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
+
+@Service
+public class MessageUpdateSeasonHandler implements GenericHandler<Message<SeasonDto>>{
+
+	private SeasonService seasonService;
+
+	@Autowired
+	public MessageUpdateSeasonHandler(final SeasonService seasonService) {
+		super();
+		this.seasonService = seasonService;
+	}
+
+	@Override
+	public Object handle(final Message<SeasonDto> payload, final MessageHeaders headers) {
+		this.seasonService.updateSeason(payload.getPayload().id(), payload.getPayload().toEntity());
+		return null;
+	}
+}
