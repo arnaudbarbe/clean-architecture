@@ -13,12 +13,13 @@ Personal implementation of a clean architecture
  * infrastructure (technical part)
     * client
         * sync (sync client like codegen generated code)
-        * async (async client like asyncapi generated code)
+        * async (async client)
     * configuration (configuration for each framework/persistence/etc...)
     * delivery (entry point from other system)
         * consumer (MOM consumers)
         * controller (REST controller)
         * task (cron task to execute async process)
+        * dto (versionned Data Transfert Object used in consumer and controller classes)
     * gateway (entry point to other system)
     * persistence (repositories for each storage system)
 
