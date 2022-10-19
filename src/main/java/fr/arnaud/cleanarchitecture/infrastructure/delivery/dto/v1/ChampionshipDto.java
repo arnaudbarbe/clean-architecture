@@ -1,11 +1,12 @@
 package fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
 
-public record ChampionshipDto(@NotNull UUID id, @NotNull String name, @NotNull PlayerDto player, @NotNull SeasonDto season, @NotNull LeagueDto league) {
+public record ChampionshipDto(@NotNull UUID id, @NotNull String name, @NotNull PlayerDto player, @NotNull SeasonDto season, @NotNull LeagueDto league)  implements Serializable {
 
 	public fr.arnaud.cleanarchitecture.core.entity.Championship toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entity.Championship.builder().id(this.id).name(this.name)

@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.handler.GenericHandler;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,7 @@ import fr.arnaud.cleanarchitecture.core.service.player.PlayerService;
 
 
 @Service
-public class MessageDeletePlayerHandler implements GenericHandler<Message<UUID>>{
+public class MessageDeletePlayerHandler implements GenericHandler<UUID>{
 
  
 	private PlayerService playerService;
@@ -24,8 +23,8 @@ public class MessageDeletePlayerHandler implements GenericHandler<Message<UUID>>
 	}
 
 	@Override
-	public Object handle(final Message<UUID> payload, final MessageHeaders headers) {
-		this.playerService.deletePlayer(payload.getPayload());
+	public Object handle(final UUID id, final MessageHeaders headers) {
+		this.playerService.deletePlayer(id);
 		return null;
 	}
 }

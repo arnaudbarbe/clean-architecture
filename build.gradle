@@ -31,9 +31,10 @@ dependencies {
 	implementation 'org.springframework.integration:spring-integration-amqp'
 	
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
+	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.platform:junit-platform-suite-api:1.9.0'
-
+	testImplementation 'com.rabbitmq:amqp-client:4.0.0'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.4'
     
 	implementation 'org.liquibase:liquibase-core'

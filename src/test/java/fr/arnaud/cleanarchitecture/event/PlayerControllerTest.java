@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.controller;
+package fr.arnaud.cleanarchitecture.event;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -43,11 +43,8 @@ public class PlayerControllerTest extends AbstractTest {
     	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
         String json = this.mapper.writeValueAsString(player);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
-        .content(json)
-        .contentType(MediaType.APPLICATION_JSON)
-        .accept(MediaType.APPLICATION_JSON))
-        .andExpect(MockMvcResultMatchers.status().isCreated());
+        this.playerPublisherService.createPlayerAsync(player);
+        Thread.sleep(2000);
 
         //check if player was correcty created
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
@@ -55,7 +52,8 @@ public class PlayerControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"firstName\":\"arnaud\",\"lastName\":\"barbe\"}"));
 
         //delete the player
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + uuid.toString()));
+        this.playerPublisherService.deletePlayerAsync(uuid);
+        Thread.sleep(2000);
 
         //verify that the player is correctly deleted
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
@@ -68,23 +66,15 @@ public class PlayerControllerTest extends AbstractTest {
         json = this.mapper.writeValueAsString(player1);
  
     	//create 2 players
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
-                .content(json)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+        this.playerPublisherService.createPlayerAsync(player1);
         
     	uuid = UUID.randomUUID();
     	PlayerDto player2 = new PlayerDto(uuid, "christophe", "lambert");
         
         json = this.mapper.writeValueAsString(player2);
  
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/players")
-                .content(json)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
-        
+        this.playerPublisherService.createPlayerAsync(player2);
+        Thread.sleep(2000);
         //check if getPlayers return 2 players
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players")
         		.contentType(MediaType.APPLICATION_JSON)
@@ -92,8 +82,8 @@ public class PlayerControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player1.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player2.id().toString()));
+        this.playerPublisherService.deletePlayerAsync(player1.id());
+        this.playerPublisherService.deletePlayerAsync(player2.id());
 
     }
 }

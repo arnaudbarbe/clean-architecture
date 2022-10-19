@@ -1,10 +1,11 @@
 package fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-public record LeagueDto(@NotNull UUID id, @NotNull String name) {
+public record LeagueDto(@NotNull UUID id, @NotNull String name) implements Serializable {
 
 	public fr.arnaud.cleanarchitecture.core.entity.League toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entity.League.builder().id(this.id).name(this.name).build();

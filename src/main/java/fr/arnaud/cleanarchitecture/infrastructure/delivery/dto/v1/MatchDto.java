@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public record MatchDto(@NotNull UUID id, 
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") 
 		@NotNull LocalDateTime when, 
-		@NotNull ChampionshipDto championship, @NotNull TeamDto homeTeam, @NotNull TeamDto outsideTeam, int scoreHomeTeam, int scoreOutsideTeam) {
+		@NotNull ChampionshipDto championship, @NotNull TeamDto homeTeam, @NotNull TeamDto outsideTeam, int scoreHomeTeam, int scoreOutsideTeam) implements Serializable {
 
 	public fr.arnaud.cleanarchitecture.core.entity.Match toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entity.Match.builder().id(this.id).when(this.when).championship(this.championship.toEntity())
