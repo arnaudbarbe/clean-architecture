@@ -4,14 +4,13 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.handler.GenericHandler;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
 
 @Service
-public class MessageDeleteSeasonHandler implements GenericHandler<Message<UUID>>{
+public class MessageDeleteSeasonHandler implements GenericHandler<UUID>{
 
 	private SeasonService seasonService;
 
@@ -22,8 +21,8 @@ public class MessageDeleteSeasonHandler implements GenericHandler<Message<UUID>>
 	}
 
 	@Override
-	public Object handle(final Message<UUID> payload, final MessageHeaders headers) {
-		this.seasonService.deleteSeason(payload.getPayload());
+	public Object handle(final UUID id, final MessageHeaders headers) {
+		this.seasonService.deleteSeason(id);
 		return null;
 	}
       

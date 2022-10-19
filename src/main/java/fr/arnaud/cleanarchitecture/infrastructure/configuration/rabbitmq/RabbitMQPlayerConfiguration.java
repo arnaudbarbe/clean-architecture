@@ -134,7 +134,7 @@ public class RabbitMQPlayerConfiguration {
     @ServiceActivator(inputChannel = "deletePlayerAsyncOutboundChannel")
     public AmqpOutboundEndpoint deletePlayerOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(this.DELETE_PLAYER_EXCHANGE_NAME);
+        outbound.setExchangeName(DELETE_PLAYER_EXCHANGE_NAME);
         outbound.setRoutingKey("#");
         return outbound;
     }

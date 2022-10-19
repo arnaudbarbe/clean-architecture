@@ -4,14 +4,13 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.handler.GenericHandler;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
 
 @Service
-public class MessageDeleteChampionshipHandler implements GenericHandler<Message<UUID>>{
+public class MessageDeleteChampionshipHandler implements GenericHandler<UUID>{
 
 	private ChampionshipService championshipService;
 
@@ -22,8 +21,8 @@ public class MessageDeleteChampionshipHandler implements GenericHandler<Message<
 	}
 
 	@Override
-	public Object handle(final Message<UUID> payload, final MessageHeaders headers) {
-		this.championshipService.deleteChampionship(payload.getPayload());
+	public Object handle(final UUID id, final MessageHeaders headers) {
+		this.championshipService.deleteChampionship(id);
 		return null;
 	}
       

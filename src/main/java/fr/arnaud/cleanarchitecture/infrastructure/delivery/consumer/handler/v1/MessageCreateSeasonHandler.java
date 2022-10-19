@@ -2,7 +2,6 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.handler.GenericHandler;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,7 @@ import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 
 @Service
-public class MessageCreateSeasonHandler implements GenericHandler<Message<SeasonDto>>{
+public class MessageCreateSeasonHandler implements GenericHandler<SeasonDto>{
 
 	private SeasonService seasonService;
 	
@@ -21,7 +20,8 @@ public class MessageCreateSeasonHandler implements GenericHandler<Message<Season
 	}
 
 	@Override
-	public Object handle(final Message<SeasonDto> payload, final MessageHeaders headers) {
-		return this.seasonService.createSeason(payload.getPayload().toEntity());
+	public Object handle(final SeasonDto season, final MessageHeaders headers) {
+		this.seasonService.createSeason(season.toEntity());
+		return null;
 	}
 }

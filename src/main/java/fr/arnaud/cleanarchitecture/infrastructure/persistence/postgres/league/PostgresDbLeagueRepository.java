@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.entity.League;
@@ -47,7 +48,9 @@ public class PostgresDbLeagueRepository implements LeagueRepository {
 
 	@Override
 	public void delete(final UUID id) {
-        this.leagueRepository.deleteById(id);
+		try {
+	        this.leagueRepository.deleteById(id);
+		} catch(EmptyResultDataAccessException e) {}
 	}
 
 	@Override

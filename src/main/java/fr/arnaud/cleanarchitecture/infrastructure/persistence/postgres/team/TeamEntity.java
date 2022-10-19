@@ -27,7 +27,7 @@ public class TeamEntity {
 	String name;
 	
 	@ManyToOne
-	@JoinColumn(foreignKey=@ForeignKey(name="fk_championship_team"), name = "teamId", nullable = false)
+	@JoinColumn(foreignKey=@ForeignKey(name="fk_championship_team"), name = "championshipId", nullable = false)
 	ChampionshipEntity championship;
 
 	public TeamEntity() {
