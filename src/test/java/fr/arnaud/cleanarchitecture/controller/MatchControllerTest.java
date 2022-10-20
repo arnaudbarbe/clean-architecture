@@ -44,6 +44,9 @@ public class MatchControllerTest extends AbstractTest {
     @Test
     public void createDeleteMatch() throws Exception {
     	
+        //delete unknown object
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + UUID.randomUUID().toString()));
+
     	//create one 
     	UUID uuid = UUID.randomUUID();
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
@@ -155,13 +158,6 @@ public class MatchControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team1.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team2.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league.id().toString()));
-
         //delete the match
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + aller.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + retour.id().toString()));

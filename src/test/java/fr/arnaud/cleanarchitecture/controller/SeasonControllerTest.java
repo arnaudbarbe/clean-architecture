@@ -39,6 +39,9 @@ public class SeasonControllerTest extends AbstractTest {
     @Test
     public void createDeleteSeason() throws Exception {
     	
+        //delete unknown object
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + UUID.randomUUID().toString()));
+
     	//create one season
         UUID uuid = UUID.randomUUID();
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));

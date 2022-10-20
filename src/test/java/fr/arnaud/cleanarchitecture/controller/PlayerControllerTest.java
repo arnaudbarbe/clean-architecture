@@ -38,7 +38,10 @@ public class PlayerControllerTest extends AbstractTest {
     @Test
     public void createDeletePlayer() throws Exception {
     	
-    	//create one player
+        //delete unknown object
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + UUID.randomUUID().toString()));
+
+        //create one player
         UUID uuid = UUID.randomUUID();
     	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
         String json = this.mapper.writeValueAsString(player);

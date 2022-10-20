@@ -39,7 +39,10 @@ public class LeagueControllerTest extends AbstractTest {
     @Test
     public void createDeleteLeague() throws Exception {
     	
-    	//create one league
+        //delete unknown object
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + UUID.randomUUID().toString()));
+
+        //create one league
         UUID uuid = UUID.randomUUID();
     	LeagueDto league = new LeagueDto(uuid, "Afebas");
         String json = this.mapper.writeValueAsString(league);

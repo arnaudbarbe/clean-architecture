@@ -43,7 +43,10 @@ public class ChampionshipControllerTest extends AbstractTest {
     @Test
     public void createDeleteChampionship() throws Exception {
     	
-    	//create one championship
+        //delete unknown object
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + UUID.randomUUID().toString()));
+
+        //create one championship
         UUID uuid = UUID.randomUUID();
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
     	String json = this.mapper.writeValueAsString(season);
@@ -129,9 +132,6 @@ public class ChampionshipControllerTest extends AbstractTest {
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship1.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship2.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league.id().toString()));
    }
 }
 
