@@ -26,7 +26,7 @@ public class SeasonControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeleteSeason() throws Exception {
+    public void crudSeason() throws Exception {
     	
     	//create one season
         UUID uuid = UUID.randomUUID();

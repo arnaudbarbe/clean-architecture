@@ -36,7 +36,7 @@ public class PlayerControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeletePlayer() throws Exception {
+    public void crudPlayer() throws Exception {
     	
         //delete unknown object
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + UUID.randomUUID().toString()));
@@ -52,10 +52,26 @@ public class PlayerControllerTest extends AbstractTest {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        //check if player was correcty created
+        //check if player was correctly created
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"firstName\":\"arnaud\",\"lastName\":\"barbe\"}"));
+
+        //update the player
+        player = new PlayerDto(uuid, "arnaud", "lecrubier");
+        
+        json = this.mapper.writeValueAsString(player);
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/v1/players/" + uuid.toString())
+        .content(json)
+        .contentType(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
+        
+        //check if player was correctly updated
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string(json));
 
         //delete the player
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + uuid.toString()));
@@ -97,6 +113,12 @@ public class PlayerControllerTest extends AbstractTest {
         
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player1.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player2.id().toString()));
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players")
+        		.contentType(MediaType.APPLICATION_JSON)
+        		.accept(MediaType.APPLICATION_JSON))
+        		.andExpect(jsonPath("$", Matchers.hasSize(0)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
 }

@@ -27,25 +27,41 @@ public class LeagueEventTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeleteLeague() throws Exception {
+    public void crudLeague() throws Exception {
     	
-    	//create one league
+        //delete unknown object
+        this.leaguePublisherService.deleteLeagueAsync(UUID.randomUUID());
+        
+        //create one league
         UUID uuid = UUID.randomUUID();
     	LeagueDto league = new LeagueDto(uuid, "Afebas");
         String json = this.mapper.writeValueAsString(league);
         
         this.leaguePublisherService.createLeagueAsync(league);
         Thread.sleep(2000);
-
-        //check if league was correcty created
+        
+       //check if league was correctly created
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"name\":\"Afebas\"}"));
 
+        //update the league
+        league = new LeagueDto(uuid, "FFB");
+        
+        json = this.mapper.writeValueAsString(league);
+        
+        this.leaguePublisherService.updateLeagueAsync(league);
+        Thread.sleep(2000);
+        
+        //check if championship was correctly updated
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string(json));
+       
         //delete the league
         this.leaguePublisherService.deleteLeagueAsync(uuid);
         Thread.sleep(2000);
-
+        
         //verify that the league is correctly deleted
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
@@ -54,6 +70,8 @@ public class LeagueEventTest extends AbstractTest {
     	uuid = UUID.randomUUID();
     	LeagueDto league1 = new LeagueDto(uuid, "Afebas");
         
+        json = this.mapper.writeValueAsString(league1);
+ 
     	//create 2 leagues
         this.leaguePublisherService.createLeagueAsync(league1);
         
@@ -63,18 +81,25 @@ public class LeagueEventTest extends AbstractTest {
         json = this.mapper.writeValueAsString(league2);
  
         this.leaguePublisherService.createLeagueAsync(league2);
-
         Thread.sleep(2000);
+        
         //check if getLeagues return 2 leagues
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues")
         		.contentType(MediaType.APPLICATION_JSON)
         		.accept(MediaType.APPLICATION_JSON))
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
-
+        
         this.leaguePublisherService.deleteLeagueAsync(league1.id());
         this.leaguePublisherService.deleteLeagueAsync(league2.id());
+        Thread.sleep(2000);
         
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues")
+        		.contentType(MediaType.APPLICATION_JSON)
+        		.accept(MediaType.APPLICATION_JSON))
+        		.andExpect(jsonPath("$", Matchers.hasSize(0)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 }
 

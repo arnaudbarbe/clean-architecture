@@ -37,7 +37,7 @@ public class SeasonControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeleteSeason() throws Exception {
+    public void crudSeason() throws Exception {
     	
         //delete unknown object
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + UUID.randomUUID().toString()));
@@ -58,6 +58,22 @@ public class SeasonControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(json));
         
+        //update the season
+        season = new SeasonDto(uuid, "2021/2022", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+        
+        json = this.mapper.writeValueAsString(season);
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/v1/seasons/" + uuid.toString())
+        .content(json)
+        .contentType(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
+        
+        //check if season was correctly updated
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string(json));
+
          //delete the season
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + uuid.toString()));
 
@@ -99,6 +115,12 @@ public class SeasonControllerTest extends AbstractTest {
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season1.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season2.id().toString()));
         
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons")
+        		.contentType(MediaType.APPLICATION_JSON)
+        		.accept(MediaType.APPLICATION_JSON))
+        		.andExpect(jsonPath("$", Matchers.hasSize(0)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 }
 

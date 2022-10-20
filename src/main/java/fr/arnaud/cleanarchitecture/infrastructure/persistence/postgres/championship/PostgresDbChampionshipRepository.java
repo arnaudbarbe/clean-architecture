@@ -66,6 +66,7 @@ public class PostgresDbChampionshipRepository implements ChampionshipRepository 
         if (optionalChampionshipEntity.isPresent()) {
         	ChampionshipEntity championshipEntity = optionalChampionshipEntity.get();
         	championshipEntity.fromEntity(championship);
+        	this.championshipRepository.save(championshipEntity);
         } else {
             throw new EntityNotFoundException("Championship with id " + id + " not found");
         }

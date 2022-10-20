@@ -60,6 +60,7 @@ public class PostgresDbSeasonRepository implements SeasonRepository {
         if (optionalSeasonEntity.isPresent()) {
         	SeasonEntity seasonEntity = optionalSeasonEntity.get();
         	seasonEntity.fromEntity(season);
+        	this.seasonRepository.save(seasonEntity);
         } else {
             throw new EntityNotFoundException("Season with id " + id + " not found");
         }

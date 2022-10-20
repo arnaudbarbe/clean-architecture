@@ -60,6 +60,7 @@ public class PostgresDbLeagueRepository implements LeagueRepository {
         if (optionalLeagueEntity.isPresent()) {
         	LeagueEntity leagueEntity = optionalLeagueEntity.get();
         	leagueEntity.fromEntity(league);
+        	this.leagueRepository.save(leagueEntity);
         } else {
             throw new EntityNotFoundException("League with id " + id + " not found");
         }

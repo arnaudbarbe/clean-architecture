@@ -42,7 +42,7 @@ public class TeamControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeleteTeam() throws Exception {
+    public void crudTeam() throws Exception {
     	
         //delete unknown object
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + UUID.randomUUID().toString()));
@@ -96,10 +96,26 @@ public class TeamControllerTest extends AbstractTest {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        //check if team was correcty created
+        //check if team was correctly created
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"name\":\"Poule\"}"));
+            .andExpect(MockMvcResultMatchers.content().string(json));
+
+        //update the team
+        team = new TeamDto(uuid, "PouPoule", championship);
+        
+        json = this.mapper.writeValueAsString(team);
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/v1/teams/" + uuid.toString())
+        .content(json)
+        .contentType(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
+        
+        //check if team was correctly updated
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string(json));
 
         //delete the team
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + uuid.toString()));
@@ -142,10 +158,12 @@ public class TeamControllerTest extends AbstractTest {
         
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team1.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team2.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league.id().toString()));
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams")
+        		.contentType(MediaType.APPLICATION_JSON)
+        		.accept(MediaType.APPLICATION_JSON))
+        		.andExpect(jsonPath("$", Matchers.hasSize(0)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
 }

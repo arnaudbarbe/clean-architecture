@@ -37,7 +37,7 @@ public class LeagueControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeleteLeague() throws Exception {
+    public void crudLeague() throws Exception {
     	
         //delete unknown object
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + UUID.randomUUID().toString()));
@@ -53,11 +53,27 @@ public class LeagueControllerTest extends AbstractTest {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        //check if league was correcty created
+        //check if league was correctly created
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"name\":\"Afebas\"}"));
 
+        //update the league
+        league = new LeagueDto(uuid, "FFB");
+        
+        json = this.mapper.writeValueAsString(league);
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/v1/leagues/" + uuid.toString())
+        .content(json)
+        .contentType(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
+        
+        //check if championship was correctly updated
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string(json));
+       
         //delete the league
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + uuid.toString()));
 
@@ -99,6 +115,12 @@ public class LeagueControllerTest extends AbstractTest {
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league1.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league2.id().toString()));
         
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues")
+        		.contentType(MediaType.APPLICATION_JSON)
+        		.accept(MediaType.APPLICATION_JSON))
+        		.andExpect(jsonPath("$", Matchers.hasSize(0)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 }
 

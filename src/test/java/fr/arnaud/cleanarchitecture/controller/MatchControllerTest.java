@@ -42,7 +42,7 @@ public class MatchControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeleteMatch() throws Exception {
+    public void crudMatch() throws Exception {
     	
         //delete unknown object
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + UUID.randomUUID().toString()));
@@ -96,6 +96,7 @@ public class MatchControllerTest extends AbstractTest {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
+        uuid = UUID.randomUUID();
     	TeamDto team2 = new TeamDto(uuid, "Swimming Poule", championship);
         json = this.mapper.writeValueAsString(team2);
         
@@ -119,6 +120,21 @@ public class MatchControllerTest extends AbstractTest {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk());
 
+        //update the match
+        match = new MatchDto(uuid, LocalDateTime.now(), championship, team1, team2, 8, 3);
+        
+        json = this.mapper.writeValueAsString(match);
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/v1/matchs/" + uuid.toString())
+        .content(json)
+        .contentType(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
+        
+        //check if match was correctly updated
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string(json));
 
         //delete the match
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + uuid.toString()));
@@ -161,6 +177,13 @@ public class MatchControllerTest extends AbstractTest {
         //delete the match
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + aller.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + retour.id().toString()));
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs")
+        		.contentType(MediaType.APPLICATION_JSON)
+        		.accept(MediaType.APPLICATION_JSON))
+        		.andExpect(jsonPath("$", Matchers.hasSize(0)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 }
 

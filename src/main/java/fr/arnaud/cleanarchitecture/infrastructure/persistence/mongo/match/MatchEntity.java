@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import fr.arnaud.cleanarchitecture.core.entity.Championship;
 import fr.arnaud.cleanarchitecture.core.entity.Match;
 import fr.arnaud.cleanarchitecture.core.entity.Team;
 import lombok.Getter;
@@ -30,6 +31,8 @@ public class MatchEntity {
 	int scoreHomeTeam;
 	int scoreOutsideTeam;
 
+	UUID championshipId;
+
 	public MatchEntity() {
 		super();
 	}
@@ -43,23 +46,25 @@ public class MatchEntity {
 		fromEntity(match);
 	}
 
-	public Match toEntity(final Team homeTeam, final Team outsideTeam) {
+	public Match toEntity(final Team homeTeam, final Team outsideTeam, final Championship championship) {
 		return Match.builder()
 				.id(this.id)
 				.when(this.when)
-				.homeTeam(homeTeam)
-				.outsideTeam(outsideTeam)
 				.scoreHomeTeam(this.scoreHomeTeam)
 				.scoreOutsideTeam(this.scoreOutsideTeam)
+				.homeTeam(homeTeam)
+				.outsideTeam(outsideTeam)
+				.championship(championship)
 				.build();
 	}
 
 	public void fromEntity(final Match match) {
 		this.when = match.getWhen();
-		this.homeTeamId = match.getHomeTeam().getId().toString();
-		this.outsideTeamId = match.getOutsideTeam().getId().toString();
 		this.scoreHomeTeam = match.getScoreHomeTeam();
 		this.scoreOutsideTeam = match.getScoreOutsideTeam();
+		this.homeTeamId = match.getHomeTeam().getId().toString();
+		this.outsideTeamId = match.getOutsideTeam().getId().toString();
+		this.championshipId = match.getChampionship().getId();
 	}
 
 	@Override

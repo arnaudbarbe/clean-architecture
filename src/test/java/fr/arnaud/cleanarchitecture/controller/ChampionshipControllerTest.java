@@ -1,7 +1,5 @@
 package fr.arnaud.cleanarchitecture.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -41,9 +39,9 @@ public class ChampionshipControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeleteChampionship() throws Exception {
+    public void crudChampionship() throws Exception {
     	
-        //delete unknown object
+        //delete unknown object, nothing should happen
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + UUID.randomUUID().toString()));
 
         //create one championship
@@ -85,11 +83,28 @@ public class ChampionshipControllerTest extends AbstractTest {
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
-        //check if championship was correcty created
+        //check if championship was correctly created
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(json));
 
+        //update the championship
+        championship = new ChampionshipDto(uuid, "USA", player, season, league);
+        
+        json = this.mapper.writeValueAsString(championship);
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.put("/v1/championships/" + uuid.toString())
+        .content(json)
+        .contentType(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(MockMvcResultMatchers.status().isNoContent());
+        
+        //check if championship was correctly updated
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().string(json));
+       
+       
         //delete the championship
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + uuid.toString()));
 
@@ -125,13 +140,20 @@ public class ChampionshipControllerTest extends AbstractTest {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships")
         		.contentType(MediaType.APPLICATION_JSON)
         		.accept(MediaType.APPLICATION_JSON))
-        		.andExpect(jsonPath("$", Matchers.hasSize(2)))
+        		.andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
         
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship1.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship2.id().toString()));
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship.id().toString()));
+        
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships")
+        		.contentType(MediaType.APPLICATION_JSON)
+        		.accept(MediaType.APPLICATION_JSON))
+        		.andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(0)))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
    }
 }
 

@@ -57,6 +57,7 @@ public class CassandraDbPlayerRepository implements PlayerRepository {
         if (optionalPlayerEntity.isPresent()) {
         	PlayerEntity playerEntity = optionalPlayerEntity.get();
         	playerEntity.fromEntity(player);
+        	this.playerRepository.save(playerEntity);
         } else {
             throw new EntityNotFoundException("Player with id " + id + " not found");
         }

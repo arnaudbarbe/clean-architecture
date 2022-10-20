@@ -25,7 +25,7 @@ public class PlayerControllerTest extends AbstractTest {
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
     
     @Test
-    public void createDeletePlayer() throws Exception {
+    public void crudPlayer() throws Exception {
     	
     	//create one player
         UUID uuid = UUID.randomUUID();
@@ -35,7 +35,7 @@ public class PlayerControllerTest extends AbstractTest {
         this.playerPublisherService.createPlayerAsync(player);
         Thread.sleep(2000);
 
-        //check if player was correcty created
+        //check if player was correctly created
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"firstName\":\"arnaud\",\"lastName\":\"barbe\"}"));

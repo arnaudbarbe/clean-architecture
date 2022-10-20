@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import fr.arnaud.cleanarchitecture.core.entity.Championship;
 import fr.arnaud.cleanarchitecture.core.entity.Team;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.championship.ChampionshipEntity;
 import lombok.Getter;
@@ -43,10 +44,11 @@ public class TeamEntity {
 		fromEntity(team);
 	}
 
-	public Team toEntity() {
+	public Team toEntity(final Championship championship) {
 		return Team.builder()
 				.id(this.id)
 				.name(this.name)
+				.championship(championship)
 				.build();
 	}
 

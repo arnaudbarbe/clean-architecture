@@ -8,9 +8,11 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import fr.arnaud.cleanarchitecture.core.entity.Championship;
 import fr.arnaud.cleanarchitecture.core.entity.Match;
 import fr.arnaud.cleanarchitecture.core.entity.Team;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
+import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
 import fr.arnaud.cleanarchitecture.core.repository.MatchRepository;
 import fr.arnaud.cleanarchitecture.core.repository.TeamRepository;
 
@@ -21,11 +23,14 @@ public class MongoDbMatchRepository implements MatchRepository {
 
     private final TeamRepository teamRepository;
     
+    private final ChampionshipRepository championshipRepository;
+    
     @Autowired
     public MongoDbMatchRepository(final SpringDataMongoMatchRepository matchRepository,
-    		final TeamRepository teamRepository) {
+    		final TeamRepository teamRepository, final ChampionshipRepository championshipRepository) {
         this.matchRepository = matchRepository;
         this.teamRepository = teamRepository;
+        this.championshipRepository = championshipRepository;
     }
 
     @Override
@@ -81,6 +86,13 @@ public class MongoDbMatchRepository implements MatchRepository {
     		outsideTeam = Team.builder().id(UUID.fromString(matchEntity.getOutsideTeamId())).build();
     	}
     	
-        return matchEntity.toEntity(homeTeam, outsideTeam);
+    	Championship championship = this.championshipRepository.findById(matchEntity.getChampionshipId());
+    	
+    	if(championship == null) {
+    		//FIXME : we return an empty championship object when we can't find it into db
+    		championship = Championship.builder().id(matchEntity.getChampionshipId()).build();
+    	}
+
+        return matchEntity.toEntity(homeTeam, outsideTeam, championship);
 	}
 }
