@@ -6,7 +6,7 @@ Personal implementation of a clean architecture
 
  * core (business part)
     * exception 
-    * model (Entities)
+    * model (Entities, Values object and aggregate)
     * repository (interfaces to storage, should be implemented by infrastructure)
     * service (Business rules)
     * use case (Business rules too but use case oriented)
@@ -33,16 +33,10 @@ This is just for fun, don't do this at home.
 Swagger is available under
 http://localhost:8080/swagger-ui/index.html
 
-## async IO
+## HATEOAS
 
-Async support is in progress using https://www.asyncapi.com/.
+add HATEOAS support to return functionnalities like delete, etc..
 
-description file is in clean-architecture\async\async.yml, generated files are in clean-architecture\async\src.
-
-* generate documentation with : ag async.yml -o docs/html/ @asyncapi/html-template --force-write
-* generate java doc with : ag async.yml @asyncapi/java-spring-template -o src --force-write
-
-https://eltonminetto.dev/en/post/2022-01-30-asyncapi/
 
 ## security 
 To be complete these web services need to be secure
