@@ -30,9 +30,12 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import fr.arnaud.cleanarchitecture.infrastructure.client.async.ChampionshipPublisherService;
 import fr.arnaud.cleanarchitecture.infrastructure.client.async.LeaguePublisherService;
+import fr.arnaud.cleanarchitecture.infrastructure.client.async.MatchPublisherService;
 import fr.arnaud.cleanarchitecture.infrastructure.client.async.PlayerPublisherService;
 import fr.arnaud.cleanarchitecture.infrastructure.client.async.SeasonPublisherService;
+import fr.arnaud.cleanarchitecture.infrastructure.client.async.TeamPublisherService;
 
 
 @RunWith(SpringRunner.class)
@@ -55,6 +58,15 @@ public abstract class AbstractTest {
 
 	@Autowired
 	protected SeasonPublisherService seasonPublisherService;
+
+	@Autowired
+	protected ChampionshipPublisherService championshipPublisherService;
+
+	@Autowired
+	protected MatchPublisherService matchPublisherService;
+
+	@Autowired
+	protected TeamPublisherService teamPublisherService;
 
 	@Value("${spring.datasource.url}")
 	protected String sqlUrl;
