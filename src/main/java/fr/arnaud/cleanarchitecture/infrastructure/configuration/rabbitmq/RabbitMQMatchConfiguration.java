@@ -24,72 +24,72 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQMatchConfiguration {
 
-	private static final String CREATE_LEAGUE_QUEUE_NAME_REQUEST = "createMatchRequest";
+	private static final String CREATE_LEAGUE_QUEUE_NAME_REQUEST_V1 = "createMatchRequestV1";
     
-	private static final String UPDATE_LEAGUE_QUEUE_NAME_REQUEST = "updateMatchRequest";
+	private static final String UPDATE_LEAGUE_QUEUE_NAME_REQUEST_V1 = "updateMatchRequestV1";
 
-	private static final String DELETE_LEAGUE_QUEUE_NAME_REQUEST = "deleteMatchRequest";
+	private static final String DELETE_LEAGUE_QUEUE_NAME_REQUEST_V1 = "deleteMatchRequestV1";
 
-	private static final String CREATE_LEAGUE_EXCHANGE_NAME_REQUEST = "createMatchRequest";
+	private static final String CREATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1 = "createMatchRequestV1";
 	
-	private static final String UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST = "updateMatchRequest";
+	private static final String UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1 = "updateMatchRequestV1";
     
-	private static final String DELETE_LEAGUE_EXCHANGE_NAME_REQUEST = "deleteMatchRequest";
+	private static final String DELETE_LEAGUE_EXCHANGE_NAME_REQUEST_V1 = "deleteMatchRequestV1";
 
     @Autowired
-    MessageCreateMatchHandler messageCreateMatchHandler;
+    MessageCreateMatchHandler messageCreateMatchHandlerV1;
     
     @Autowired
-    MessageUpdateMatchHandler messageUpdateMatchHandler;
+    MessageUpdateMatchHandler messageUpdateMatchHandlerV1;
     
     @Autowired
-    MessageDeleteMatchHandler messageDeleteMatchHandler;
+    MessageDeleteMatchHandler messageDeleteMatchHandlerV1;
 
     @Bean
     public Declarables matchDeclarables() {
     	
-    	Queue createMatchRequestQueue = new Queue(CREATE_LEAGUE_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue updateMatchRequestQueue = new Queue(UPDATE_LEAGUE_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue deleteMatchRequestQueue = new Queue(DELETE_LEAGUE_QUEUE_NAME_REQUEST, true, false, false);
+    	Queue createMatchRequestQueueV1 = new Queue(CREATE_LEAGUE_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue updateMatchRequestQueueV1 = new Queue(UPDATE_LEAGUE_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue deleteMatchRequestQueueV1 = new Queue(DELETE_LEAGUE_QUEUE_NAME_REQUEST_V1, true, false, false);
 
-    	DirectExchange createMatchExchangeRequest = new DirectExchange(CREATE_LEAGUE_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange updateMatchExchangeRequest = new DirectExchange(UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange deleteMatchExchangeRequest = new DirectExchange(DELETE_LEAGUE_EXCHANGE_NAME_REQUEST, true, false);
+    	DirectExchange createMatchExchangeRequestV1 = new DirectExchange(CREATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange updateMatchExchangeRequestV1 = new DirectExchange(UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange deleteMatchExchangeRequestV1 = new DirectExchange(DELETE_LEAGUE_EXCHANGE_NAME_REQUEST_V1, true, false);
         
         return new Declarables(
-        		createMatchRequestQueue,
-        		updateMatchRequestQueue,
-        		deleteMatchRequestQueue,
-        		createMatchExchangeRequest,
-        		updateMatchExchangeRequest,
-        		deleteMatchExchangeRequest,
-                BindingBuilder.bind(createMatchRequestQueue).to(createMatchExchangeRequest).with("#"),
-                BindingBuilder.bind(updateMatchRequestQueue).to(updateMatchExchangeRequest).with("#"),
-                BindingBuilder.bind(deleteMatchRequestQueue).to(deleteMatchExchangeRequest).with("#")
+        		createMatchRequestQueueV1,
+        		updateMatchRequestQueueV1,
+        		deleteMatchRequestQueueV1,
+        		createMatchExchangeRequestV1,
+        		updateMatchExchangeRequestV1,
+        		deleteMatchExchangeRequestV1,
+                BindingBuilder.bind(createMatchRequestQueueV1).to(createMatchExchangeRequestV1).with("#"),
+                BindingBuilder.bind(updateMatchRequestQueueV1).to(updateMatchExchangeRequestV1).with("#"),
+                BindingBuilder.bind(deleteMatchRequestQueueV1).to(deleteMatchExchangeRequestV1).with("#")
         );
     }
     
     // consumer
     @Bean
     public IntegrationFlow createMatchFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_LEAGUE_QUEUE_NAME_REQUEST))
-                .handle(this.messageCreateMatchHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_LEAGUE_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageCreateMatchHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow updateMatchFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_LEAGUE_QUEUE_NAME_REQUEST))
-                .handle(this.messageUpdateMatchHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_LEAGUE_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageUpdateMatchHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow deleteMatchFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_LEAGUE_QUEUE_NAME_REQUEST))
-                .handle(this.messageDeleteMatchHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_LEAGUE_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageDeleteMatchHandlerV1::handle)
                 .get();
     }
     
@@ -104,7 +104,7 @@ public class RabbitMQMatchConfiguration {
     @ServiceActivator(inputChannel = "createMatchAsyncOutboundChannel")
     public AmqpOutboundEndpoint createMatchOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(CREATE_LEAGUE_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(CREATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -117,7 +117,7 @@ public class RabbitMQMatchConfiguration {
     @ServiceActivator(inputChannel = "updateMatchAsyncOutboundChannel")
     public AmqpOutboundEndpoint updateMatchOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -133,7 +133,7 @@ public class RabbitMQMatchConfiguration {
     @ServiceActivator(inputChannel = "deleteMatchAsyncOutboundChannel")
     public AmqpOutboundEndpoint deleteMatchOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(DELETE_LEAGUE_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(DELETE_LEAGUE_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }

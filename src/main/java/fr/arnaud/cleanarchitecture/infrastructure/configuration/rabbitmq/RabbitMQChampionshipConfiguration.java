@@ -24,72 +24,72 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQChampionshipConfiguration {
 
-	private static final String CREATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST = "createChampionshipRequest";
+	private static final String CREATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST_V1 = "createChampionshipRequestV1";
     
-	private static final String UPDATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST = "updateChampionshipRequest";
+	private static final String UPDATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST_V1 = "updateChampionshipRequestV1";
 
-	private static final String DELETE_CHAMPIONSHIP_QUEUE_NAME_REQUEST = "deleteChampionshipRequest";
+	private static final String DELETE_CHAMPIONSHIP_QUEUE_NAME_REQUEST_V1 = "deleteChampionshipRequestV1";
 
-	private static final String CREATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST = "createChampionshipRequest";
+	private static final String CREATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST_V1 = "createChampionshipRequestV1";
 	
-	private static final String UPDATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST = "updateChampionshipRequest";
+	private static final String UPDATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST_V1 = "updateChampionshipRequestV1";
     
-	private static final String DELETE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST = "deleteChampionshipRequest";
+	private static final String DELETE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST_V1 = "deleteChampionshipRequestV1";
 
     @Autowired
-    MessageCreateChampionshipHandler messageCreateChampionshipHandler;
+    MessageCreateChampionshipHandler messageCreateChampionshipHandlerV1;
     
     @Autowired
-    MessageUpdateChampionshipHandler messageUpdateChampionshipHandler;
+    MessageUpdateChampionshipHandler messageUpdateChampionshipHandlerV1;
     
     @Autowired
-    MessageDeleteChampionshipHandler messageDeleteChampionshipHandler;
+    MessageDeleteChampionshipHandler messageDeleteChampionshipHandlerV1;
 
     @Bean
     public Declarables championshipDeclarables() {
     	
-    	Queue createChampionshipRequestQueue = new Queue(CREATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue updateChampionshipRequestQueue = new Queue(UPDATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue deleteChampionshipRequestQueue = new Queue(DELETE_CHAMPIONSHIP_QUEUE_NAME_REQUEST, true, false, false);
+    	Queue createChampionshipRequestQueueV1 = new Queue(CREATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue updateChampionshipRequestQueueV1 = new Queue(UPDATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue deleteChampionshipRequestQueueV1 = new Queue(DELETE_CHAMPIONSHIP_QUEUE_NAME_REQUEST_V1, true, false, false);
 
-    	DirectExchange createChampionshipExchangeRequest = new DirectExchange(CREATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange updateChampionshipExchangeRequest = new DirectExchange(UPDATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange deleteChampionshipExchangeRequest = new DirectExchange(DELETE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST, true, false);
+    	DirectExchange createChampionshipExchangeRequestV1 = new DirectExchange(CREATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange updateChampionshipExchangeRequestV1 = new DirectExchange(UPDATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange deleteChampionshipExchangeRequestV1 = new DirectExchange(DELETE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST_V1, true, false);
         
         return new Declarables(
-        		createChampionshipRequestQueue,
-        		updateChampionshipRequestQueue,
-        		deleteChampionshipRequestQueue,
-        		createChampionshipExchangeRequest,
-        		updateChampionshipExchangeRequest,
-        		deleteChampionshipExchangeRequest,
-                BindingBuilder.bind(createChampionshipRequestQueue).to(createChampionshipExchangeRequest).with("#"),
-                BindingBuilder.bind(updateChampionshipRequestQueue).to(updateChampionshipExchangeRequest).with("#"),
-                BindingBuilder.bind(deleteChampionshipRequestQueue).to(deleteChampionshipExchangeRequest).with("#")
+        		createChampionshipRequestQueueV1,
+        		updateChampionshipRequestQueueV1,
+        		deleteChampionshipRequestQueueV1,
+        		createChampionshipExchangeRequestV1,
+        		updateChampionshipExchangeRequestV1,
+        		deleteChampionshipExchangeRequestV1,
+                BindingBuilder.bind(createChampionshipRequestQueueV1).to(createChampionshipExchangeRequestV1).with("#"),
+                BindingBuilder.bind(updateChampionshipRequestQueueV1).to(updateChampionshipExchangeRequestV1).with("#"),
+                BindingBuilder.bind(deleteChampionshipRequestQueueV1).to(deleteChampionshipExchangeRequestV1).with("#")
         );
     }
     
     // consumer
     @Bean
     public IntegrationFlow createChampionshipFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST))
-                .handle(this.messageCreateChampionshipHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageCreateChampionshipHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow updateChampionshipFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST))
-                .handle(this.messageUpdateChampionshipHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_CHAMPIONSHIP_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageUpdateChampionshipHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow deleteChampionshipFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_CHAMPIONSHIP_QUEUE_NAME_REQUEST))
-                .handle(this.messageDeleteChampionshipHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_CHAMPIONSHIP_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageDeleteChampionshipHandlerV1::handle)
                 .get();
     }
     
@@ -104,7 +104,7 @@ public class RabbitMQChampionshipConfiguration {
     @ServiceActivator(inputChannel = "createChampionshipAsyncOutboundChannel")
     public AmqpOutboundEndpoint createChampionshipOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(CREATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(CREATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -117,7 +117,7 @@ public class RabbitMQChampionshipConfiguration {
     @ServiceActivator(inputChannel = "updateChampionshipAsyncOutboundChannel")
     public AmqpOutboundEndpoint updateChampionshipOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(UPDATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(UPDATE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -133,7 +133,7 @@ public class RabbitMQChampionshipConfiguration {
     @ServiceActivator(inputChannel = "deleteChampionshipAsyncOutboundChannel")
     public AmqpOutboundEndpoint deleteChampionshipOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(DELETE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(DELETE_CHAMPIONSHIP_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }

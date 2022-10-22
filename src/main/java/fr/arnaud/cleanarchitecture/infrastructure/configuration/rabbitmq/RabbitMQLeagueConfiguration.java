@@ -24,72 +24,72 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQLeagueConfiguration {
 
-	private static final String CREATE_LEAGUE_QUEUE_NAME_REQUEST = "createLeagueRequest";
+	private static final String CREATE_LEAGUE_QUEUE_NAME_REQUEST_V1 = "createLeagueRequestV1";
     
-	private static final String UPDATE_LEAGUE_QUEUE_NAME_REQUEST = "updateLeagueRequest";
+	private static final String UPDATE_LEAGUE_QUEUE_NAME_REQUEST_V1 = "updateLeagueRequestV1";
 
-	private static final String DELETE_LEAGUE_QUEUE_NAME_REQUEST = "deleteLeagueRequest";
+	private static final String DELETE_LEAGUE_QUEUE_NAME_REQUEST_V1 = "deleteLeagueRequestV1";
 
-	private static final String CREATE_LEAGUE_EXCHANGE_NAME_REQUEST = "createLeagueRequest";
+	private static final String CREATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1 = "createLeagueRequestV1";
 	
-	private static final String UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST = "updateLeagueRequest";
+	private static final String UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1 = "updateLeagueRequestV1";
     
-	private static final String DELETE_LEAGUE_EXCHANGE_NAME_REQUEST = "deleteLeagueRequest";
+	private static final String DELETE_LEAGUE_EXCHANGE_NAME_REQUEST_V1 = "deleteLeagueRequestV1";
 
     @Autowired
-    MessageCreateLeagueHandler messageCreateLeagueHandler;
+    MessageCreateLeagueHandler messageCreateLeagueHandlerV1;
     
     @Autowired
-    MessageUpdateLeagueHandler messageUpdateLeagueHandler;
+    MessageUpdateLeagueHandler messageUpdateLeagueHandlerV1;
     
     @Autowired
-    MessageDeleteLeagueHandler messageDeleteLeagueHandler;
+    MessageDeleteLeagueHandler messageDeleteLeagueHandlerV1;
 
     @Bean
     public Declarables leagueDeclarables() {
     	
-    	Queue createLeagueRequestQueue = new Queue(CREATE_LEAGUE_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue updateLeagueRequestQueue = new Queue(UPDATE_LEAGUE_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue deleteLeagueRequestQueue = new Queue(DELETE_LEAGUE_QUEUE_NAME_REQUEST, true, false, false);
+    	Queue createLeagueRequestQueueV1 = new Queue(CREATE_LEAGUE_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue updateLeagueRequestQueueV1 = new Queue(UPDATE_LEAGUE_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue deleteLeagueRequestQueueV1 = new Queue(DELETE_LEAGUE_QUEUE_NAME_REQUEST_V1, true, false, false);
 
-    	DirectExchange createLeagueExchangeRequest = new DirectExchange(CREATE_LEAGUE_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange updateLeagueExchangeRequest = new DirectExchange(UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange deleteLeagueExchangeRequest = new DirectExchange(DELETE_LEAGUE_EXCHANGE_NAME_REQUEST, true, false);
+    	DirectExchange createLeagueExchangeRequestV1 = new DirectExchange(CREATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange updateLeagueExchangeRequestV1 = new DirectExchange(UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange deleteLeagueExchangeRequestV1 = new DirectExchange(DELETE_LEAGUE_EXCHANGE_NAME_REQUEST_V1, true, false);
         
         return new Declarables(
-        		createLeagueRequestQueue,
-        		updateLeagueRequestQueue,
-        		deleteLeagueRequestQueue,
-        		createLeagueExchangeRequest,
-        		updateLeagueExchangeRequest,
-        		deleteLeagueExchangeRequest,
-                BindingBuilder.bind(createLeagueRequestQueue).to(createLeagueExchangeRequest).with("#"),
-                BindingBuilder.bind(updateLeagueRequestQueue).to(updateLeagueExchangeRequest).with("#"),
-                BindingBuilder.bind(deleteLeagueRequestQueue).to(deleteLeagueExchangeRequest).with("#")
+        		createLeagueRequestQueueV1,
+        		updateLeagueRequestQueueV1,
+        		deleteLeagueRequestQueueV1,
+        		createLeagueExchangeRequestV1,
+        		updateLeagueExchangeRequestV1,
+        		deleteLeagueExchangeRequestV1,
+                BindingBuilder.bind(createLeagueRequestQueueV1).to(createLeagueExchangeRequestV1).with("#"),
+                BindingBuilder.bind(updateLeagueRequestQueueV1).to(updateLeagueExchangeRequestV1).with("#"),
+                BindingBuilder.bind(deleteLeagueRequestQueueV1).to(deleteLeagueExchangeRequestV1).with("#")
         );
     }
     
     // consumer
     @Bean
     public IntegrationFlow createLeagueFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_LEAGUE_QUEUE_NAME_REQUEST))
-                .handle(this.messageCreateLeagueHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_LEAGUE_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageCreateLeagueHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow updateLeagueFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_LEAGUE_QUEUE_NAME_REQUEST))
-                .handle(this.messageUpdateLeagueHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_LEAGUE_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageUpdateLeagueHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow deleteLeagueFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_LEAGUE_QUEUE_NAME_REQUEST))
-                .handle(this.messageDeleteLeagueHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_LEAGUE_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageDeleteLeagueHandlerV1::handle)
                 .get();
     }
     
@@ -104,7 +104,7 @@ public class RabbitMQLeagueConfiguration {
     @ServiceActivator(inputChannel = "createLeagueAsyncOutboundChannel")
     public AmqpOutboundEndpoint createLeagueOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(CREATE_LEAGUE_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(CREATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -117,7 +117,7 @@ public class RabbitMQLeagueConfiguration {
     @ServiceActivator(inputChannel = "updateLeagueAsyncOutboundChannel")
     public AmqpOutboundEndpoint updateLeagueOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(UPDATE_LEAGUE_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -133,7 +133,7 @@ public class RabbitMQLeagueConfiguration {
     @ServiceActivator(inputChannel = "deleteLeagueAsyncOutboundChannel")
     public AmqpOutboundEndpoint deleteLeagueOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(DELETE_LEAGUE_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(DELETE_LEAGUE_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }

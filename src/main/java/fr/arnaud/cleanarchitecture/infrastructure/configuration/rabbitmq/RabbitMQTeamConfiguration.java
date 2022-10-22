@@ -24,72 +24,72 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQTeamConfiguration {
 
-	private static final String CREATE_TEAM_QUEUE_NAME_REQUEST = "createTeamRequest";
+	private static final String CREATE_TEAM_QUEUE_NAME_REQUEST_V1 = "createTeamRequestV1";
     
-	private static final String UPDATE_TEAM_QUEUE_NAME_REQUEST = "updateTeamRequest";
+	private static final String UPDATE_TEAM_QUEUE_NAME_REQUEST_V1 = "updateTeamRequestV1";
 
-	private static final String DELETE_TEAM_QUEUE_NAME_REQUEST = "deleteTeamRequest";
+	private static final String DELETE_TEAM_QUEUE_NAME_REQUEST_V1 = "deleteTeamRequestV1";
 
-	private static final String CREATE_TEAM_EXCHANGE_NAME_REQUEST = "createTeamRequest";
+	private static final String CREATE_TEAM_EXCHANGE_NAME_REQUEST_V1 = "createTeamRequestV1";
 	
-	private static final String UPDATE_TEAM_EXCHANGE_NAME_REQUEST = "updateTeamRequest";
+	private static final String UPDATE_TEAM_EXCHANGE_NAME_REQUEST_V1 = "updateTeamRequestV1";
     
-	private static final String DELETE_TEAM_EXCHANGE_NAME_REQUEST = "deleteTeamRequest";
+	private static final String DELETE_TEAM_EXCHANGE_NAME_REQUEST_V1 = "deleteTeamRequestV1";
 
     @Autowired
-    MessageCreateTeamHandler messageCreateTeamHandler;
+    MessageCreateTeamHandler messageCreateTeamHandlerV1;
     
     @Autowired
-    MessageUpdateTeamHandler messageUpdateTeamHandler;
+    MessageUpdateTeamHandler messageUpdateTeamHandlerV1;
     
     @Autowired
-    MessageDeleteTeamHandler messageDeleteTeamHandler;
+    MessageDeleteTeamHandler messageDeleteTeamHandlerV1;
 
     @Bean
     public Declarables teamDeclarables() {
     	
-    	Queue createTeamRequestQueue = new Queue(CREATE_TEAM_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue updateTeamRequestQueue = new Queue(UPDATE_TEAM_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue deleteTeamRequestQueue = new Queue(DELETE_TEAM_QUEUE_NAME_REQUEST, true, false, false);
+    	Queue createTeamRequestQueueV1 = new Queue(CREATE_TEAM_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue updateTeamRequestQueueV1 = new Queue(UPDATE_TEAM_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue deleteTeamRequestQueueV1 = new Queue(DELETE_TEAM_QUEUE_NAME_REQUEST_V1, true, false, false);
 
-    	DirectExchange createTeamExchangeRequest = new DirectExchange(CREATE_TEAM_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange updateTeamExchangeRequest = new DirectExchange(UPDATE_TEAM_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange deleteTeamExchangeRequest = new DirectExchange(DELETE_TEAM_EXCHANGE_NAME_REQUEST, true, false);
+    	DirectExchange createTeamExchangeRequestV1 = new DirectExchange(CREATE_TEAM_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange updateTeamExchangeRequestV1 = new DirectExchange(UPDATE_TEAM_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange deleteTeamExchangeRequestV1 = new DirectExchange(DELETE_TEAM_EXCHANGE_NAME_REQUEST_V1, true, false);
         
         return new Declarables(
-        		createTeamRequestQueue,
-        		updateTeamRequestQueue,
-        		deleteTeamRequestQueue,
-        		createTeamExchangeRequest,
-        		updateTeamExchangeRequest,
-        		deleteTeamExchangeRequest,
-                BindingBuilder.bind(createTeamRequestQueue).to(createTeamExchangeRequest).with("#"),
-                BindingBuilder.bind(updateTeamRequestQueue).to(updateTeamExchangeRequest).with("#"),
-                BindingBuilder.bind(deleteTeamRequestQueue).to(deleteTeamExchangeRequest).with("#")
+        		createTeamRequestQueueV1,
+        		updateTeamRequestQueueV1,
+        		deleteTeamRequestQueueV1,
+        		createTeamExchangeRequestV1,
+        		updateTeamExchangeRequestV1,
+        		deleteTeamExchangeRequestV1,
+                BindingBuilder.bind(createTeamRequestQueueV1).to(createTeamExchangeRequestV1).with("#"),
+                BindingBuilder.bind(updateTeamRequestQueueV1).to(updateTeamExchangeRequestV1).with("#"),
+                BindingBuilder.bind(deleteTeamRequestQueueV1).to(deleteTeamExchangeRequestV1).with("#")
         );
     }
     
     // consumer
     @Bean
     public IntegrationFlow createTeamFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_TEAM_QUEUE_NAME_REQUEST))
-                .handle(this.messageCreateTeamHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_TEAM_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageCreateTeamHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow updateTeamFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_TEAM_QUEUE_NAME_REQUEST))
-                .handle(this.messageUpdateTeamHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_TEAM_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageUpdateTeamHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow deleteTeamFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_TEAM_QUEUE_NAME_REQUEST))
-                .handle(this.messageDeleteTeamHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_TEAM_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageDeleteTeamHandlerV1::handle)
                 .get();
     }
     
@@ -104,7 +104,7 @@ public class RabbitMQTeamConfiguration {
     @ServiceActivator(inputChannel = "createTeamAsyncOutboundChannel")
     public AmqpOutboundEndpoint createTeamOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(CREATE_TEAM_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(CREATE_TEAM_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -117,7 +117,7 @@ public class RabbitMQTeamConfiguration {
     @ServiceActivator(inputChannel = "updateTeamAsyncOutboundChannel")
     public AmqpOutboundEndpoint updateTeamOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(UPDATE_TEAM_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(UPDATE_TEAM_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -133,7 +133,7 @@ public class RabbitMQTeamConfiguration {
     @ServiceActivator(inputChannel = "deleteTeamAsyncOutboundChannel")
     public AmqpOutboundEndpoint deleteTeamOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(DELETE_TEAM_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(DELETE_TEAM_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
