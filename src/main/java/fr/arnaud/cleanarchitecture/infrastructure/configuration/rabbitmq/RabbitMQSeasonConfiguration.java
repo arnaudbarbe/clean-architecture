@@ -24,72 +24,72 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQSeasonConfiguration {
 
-    private static final String CREATE_SEASON_QUEUE_NAME_REQUEST = "createSeasonRequest";
+    private static final String CREATE_SEASON_QUEUE_NAME_REQUEST_V1 = "createSeasonRequestV1";
     
-    private static final String UPDATE_SEASON_QUEUE_NAME_REQUEST = "updateSeasonRequest";
+    private static final String UPDATE_SEASON_QUEUE_NAME_REQUEST_V1 = "updateSeasonRequestV1";
 
-    private static final String DELETE_SEASON_QUEUE_NAME_REQUEST = "deleteSeasonRequest";
+    private static final String DELETE_SEASON_QUEUE_NAME_REQUEST_V1 = "deleteSeasonRequestV1";
 
-    private static final String CREATE_SEASON_EXCHANGE_NAME_REQUEST = "createSeasonRequest";
+    private static final String CREATE_SEASON_EXCHANGE_NAME_REQUEST_V1 = "createSeasonRequestV1";
 
-    private static final String UPDATE_SEASON_EXCHANGE_NAME_REQUEST = "updateSeasonRequest";
+    private static final String UPDATE_SEASON_EXCHANGE_NAME_REQUEST_V1 = "updateSeasonRequestV1";
 
-    private static final String DELETE_SEASON_EXCHANGE_NAME_REQUEST = "deleteSeasonRequest";
+    private static final String DELETE_SEASON_EXCHANGE_NAME_REQUEST_V1 = "deleteSeasonRequestV1";
 
     @Autowired
-    MessageCreateSeasonHandler messageCreateSeasonHandler;
+    MessageCreateSeasonHandler messageCreateSeasonHandlerV1;
     
     @Autowired
-    MessageUpdateSeasonHandler messageUpdateSeasonHandler;
+    MessageUpdateSeasonHandler messageUpdateSeasonHandlerV1;
     
     @Autowired
-    MessageDeleteSeasonHandler messageDeleteSeasonHandler;
+    MessageDeleteSeasonHandler messageDeleteSeasonHandlerV1;
 
     @Bean
     public Declarables seasonDeclarables() {
     	
-    	Queue createSeasonQueue = new Queue(CREATE_SEASON_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue updateSeasonQueue = new Queue(UPDATE_SEASON_QUEUE_NAME_REQUEST, true, false, false);
-    	Queue deleteSeasonQueue = new Queue(DELETE_SEASON_QUEUE_NAME_REQUEST, true, false, false);
+    	Queue createSeasonQueueV1 = new Queue(CREATE_SEASON_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue updateSeasonQueueV1 = new Queue(UPDATE_SEASON_QUEUE_NAME_REQUEST_V1, true, false, false);
+    	Queue deleteSeasonQueueV1 = new Queue(DELETE_SEASON_QUEUE_NAME_REQUEST_V1, true, false, false);
 
-    	DirectExchange createSeasonExchange = new DirectExchange(CREATE_SEASON_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange updateSeasonExchange = new DirectExchange(UPDATE_SEASON_EXCHANGE_NAME_REQUEST, true, false);
-    	DirectExchange deleteSeasonExchange = new DirectExchange(DELETE_SEASON_EXCHANGE_NAME_REQUEST, true, false);
+    	DirectExchange createSeasonExchangeV1 = new DirectExchange(CREATE_SEASON_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange updateSeasonExchangeV1 = new DirectExchange(UPDATE_SEASON_EXCHANGE_NAME_REQUEST_V1, true, false);
+    	DirectExchange deleteSeasonExchangeV1 = new DirectExchange(DELETE_SEASON_EXCHANGE_NAME_REQUEST_V1, true, false);
 
         return new Declarables(
-        		createSeasonQueue,
-        		updateSeasonQueue,
-        		deleteSeasonQueue,
-        		createSeasonExchange,
-        		updateSeasonExchange,
-        		deleteSeasonExchange,
-                BindingBuilder.bind(createSeasonQueue).to(createSeasonExchange).with("#"),
-                BindingBuilder.bind(updateSeasonQueue).to(updateSeasonExchange).with("#"),
-                BindingBuilder.bind(deleteSeasonQueue).to(deleteSeasonExchange).with("#")
+        		createSeasonQueueV1,
+        		updateSeasonQueueV1,
+        		deleteSeasonQueueV1,
+        		createSeasonExchangeV1,
+        		updateSeasonExchangeV1,
+        		deleteSeasonExchangeV1,
+                BindingBuilder.bind(createSeasonQueueV1).to(createSeasonExchangeV1).with("#"),
+                BindingBuilder.bind(updateSeasonQueueV1).to(updateSeasonExchangeV1).with("#"),
+                BindingBuilder.bind(deleteSeasonQueueV1).to(deleteSeasonExchangeV1).with("#")
         );
     }
     
     // consumer
     @Bean
     public IntegrationFlow createSeasonFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_SEASON_QUEUE_NAME_REQUEST))
-                .handle(this.messageCreateSeasonHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, CREATE_SEASON_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageCreateSeasonHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow updateSeasonFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_SEASON_QUEUE_NAME_REQUEST))
-                .handle(this.messageUpdateSeasonHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, UPDATE_SEASON_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageUpdateSeasonHandlerV1::handle)
                 .get();
     }
     
 
     @Bean
     public IntegrationFlow deleteSeasonFlow(final ConnectionFactory connectionFactory) {
-        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_SEASON_QUEUE_NAME_REQUEST))
-                .handle(this.messageDeleteSeasonHandler::handle)
+        return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, DELETE_SEASON_QUEUE_NAME_REQUEST_V1))
+                .handle(this.messageDeleteSeasonHandlerV1::handle)
                 .get();
     }
     
@@ -104,7 +104,7 @@ public class RabbitMQSeasonConfiguration {
     @ServiceActivator(inputChannel = "createSeasonAsyncOutboundChannel")
     public AmqpOutboundEndpoint createSeasonOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(CREATE_SEASON_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(CREATE_SEASON_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -119,7 +119,7 @@ public class RabbitMQSeasonConfiguration {
     @ServiceActivator(inputChannel = "updateSeasonAsyncOutboundChannel")
     public AmqpOutboundEndpoint updateSeasonOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(UPDATE_SEASON_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(UPDATE_SEASON_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
@@ -134,7 +134,7 @@ public class RabbitMQSeasonConfiguration {
     @ServiceActivator(inputChannel = "deleteSeasonAsyncOutboundChannel")
     public AmqpOutboundEndpoint deleteSeasonOutbound(final AmqpTemplate amqpTemplate) {
         AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-        outbound.setExchangeName(DELETE_SEASON_EXCHANGE_NAME_REQUEST);
+        outbound.setExchangeName(DELETE_SEASON_EXCHANGE_NAME_REQUEST_V1);
         outbound.setRoutingKey("#");
         return outbound;
     }
