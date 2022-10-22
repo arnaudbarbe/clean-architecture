@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.client.async;
+package fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1;
 
 import java.util.UUID;
 
@@ -10,13 +10,13 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
 @MessagingGateway
 public interface PlayerPublisherService {
 
-    @Gateway(requestChannel = "createPlayerAsyncOutboundChannel")
+    @Gateway(requestChannel = "createPlayerV1AsyncOutboundChannel")
     void createPlayerAsync(PlayerDto player);
         
-    @Gateway(requestChannel = "updatePlayerAsyncOutboundChannel")
+    @Gateway(requestChannel = "updatePlayerV1AsyncOutboundChannel")
     void updatePlayerAsync(PlayerDto player);
         
-    @Gateway(requestChannel = "deletePlayerAsyncOutboundChannel")
+    @Gateway(requestChannel = "deletePlayerV1AsyncOutboundChannel")
     void deletePlayerAsync(UUID id);
         
 }

@@ -7,13 +7,8 @@ import java.util.UUID;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -21,15 +16,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.AbstractTest;
-import fr.arnaud.cleanarchitecture.CleanArchitectureApplication;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 
 
-
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = CleanArchitectureApplication.class)
-@ActiveProfiles({"test"})
-@AutoConfigureMockMvc
 public class SeasonControllerTest extends AbstractTest {
 
     private ObjectMapper mapper = new Jackson2ObjectMapperBuilder()

@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.client.async;
+package fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1;
 
 import java.util.UUID;
 
@@ -10,13 +10,13 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 @MessagingGateway
 public interface SeasonPublisherService {
 
-    @Gateway(requestChannel = "createSeasonAsyncOutboundChannel")
+    @Gateway(requestChannel = "createSeasonV1AsyncOutboundChannel")
     void createSeasonAsync(SeasonDto seasonDto);
 
-    @Gateway(requestChannel = "updateSeasonAsyncOutboundChannel")
+    @Gateway(requestChannel = "updateSeasonV1AsyncOutboundChannel")
     void updateSeasonAsync(SeasonDto seasonDto);
 
-    @Gateway(requestChannel = "deleteSeasonAsyncOutboundChannel")
+    @Gateway(requestChannel = "deleteSeasonV1AsyncOutboundChannel")
     void deleteLeagueAsync(UUID id);
         
 }

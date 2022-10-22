@@ -12,13 +12,13 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.datastax.driver.core.Cluster;
@@ -30,15 +30,15 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import fr.arnaud.cleanarchitecture.infrastructure.client.async.ChampionshipPublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.async.LeaguePublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.async.MatchPublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.async.PlayerPublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.async.SeasonPublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.async.TeamPublisherService;
+import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.ChampionshipPublisherService;
+import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.LeaguePublisherService;
+import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.MatchPublisherService;
+import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.PlayerPublisherService;
+import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.SeasonPublisherService;
+import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.TeamPublisherService;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = CleanArchitectureApplication.class)
 @ActiveProfiles({"test"})
 @AutoConfigureMockMvc
@@ -140,14 +140,18 @@ public abstract class AbstractTest {
 			session.execute("truncate clean.player");
 			
 		} catch (Exception e) {
-			session.close();
-			cluster.close();
+			if (session != null) {
+				session.close();
+			}
+			if (cluster != null) {
+				cluster.close();
+			}
 		}
 		
 		//mongo		
 		try (MongoClient mongoClient = MongoClients.create("mongodb://" + this.mongoHost + ":" + this.mongoPort)) {
             MongoDatabase database = mongoClient.getDatabase(this.mongoDatabase);
-            MongoCollection collection = database.getCollection("match");
+            MongoCollection<Document> collection = database.getCollection("match");
             collection.deleteMany(new Document());
         }
 	}
