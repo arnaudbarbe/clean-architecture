@@ -18,6 +18,7 @@ public class DomainMatchService implements MatchService {
 
     @Override
     public UUID createMatch(final Match match) {
+        log.info("Create match {}", match);
         this.matchRepository.save(match);
 
         return match.getId();
@@ -25,21 +26,25 @@ public class DomainMatchService implements MatchService {
 
     @Override
     public void deleteMatch(final UUID id) {
+        log.info("Delete match {}", id);
         this.matchRepository.delete(id);
     }
 
     @Override
     public Match getMatch(final UUID id) {
+        log.info("Get match {}", id);
         return this.matchRepository.findById(id);
     }
 
 	@Override
 	public List<Match> getMatchs() {
+        log.info("Get matchs");
 		return this.matchRepository.findAll();
 	}
 
     @Override
     public void updateMatch(final UUID id, final Match match) {
+        log.info("Update match {} {}", id, match);
         this.matchRepository.update(id, match);
     }
 }

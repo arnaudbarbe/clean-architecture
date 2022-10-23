@@ -19,6 +19,7 @@ public class DomainChampionshipService implements ChampionshipService {
     @Override
     public UUID createChampionship(final Championship championship) {
         
+        log.info("Create championship {}", championship);
         this.championshipRepository.save(championship);
 
         return championship.getId();
@@ -26,21 +27,26 @@ public class DomainChampionshipService implements ChampionshipService {
 
     @Override
     public void deleteChampionship(final UUID id) {
+        log.info("Delete championship {}", id);          
+
         this.championshipRepository.delete(id);
     }
 
     @Override
     public Championship getChampionship(final UUID id) {
+        log.info("Get championship {}", id);
         return this.championshipRepository.findById(id);
     }
 
 	@Override
 	public List<Championship> getChampionships() {
+        log.info("Get championships");
 		return this.championshipRepository.findAll();
 	}
 
     @Override
     public void updateChampionship(final UUID id, final Championship championship) {
+        log.info("Update championship {} {}", id, championship);
         this.championshipRepository.update(id, championship);
     }
 }

@@ -18,6 +18,7 @@ public class DomainLeagueService implements LeagueService {
 
     @Override
     public UUID createLeague(final League league) {
+        log.info("Create league {}", league);
         this.leagueRepository.save(league);
 
         return league.getId();
@@ -25,21 +26,25 @@ public class DomainLeagueService implements LeagueService {
 
     @Override
     public void deleteLeague(final UUID id) {
+        log.info("Delete league {}", id);
         this.leagueRepository.delete(id);
     }
 
     @Override
     public League getLeague(final UUID id) {
+        log.info("Get league {}", id);
         return this.leagueRepository.findById(id);
     }
 
 	@Override
 	public List<League> getLeagues() {
+        log.info("Get leagues");
 		return this.leagueRepository.findAll();
 	}
 
     @Override
     public void updateLeague(final UUID id, final League league) {
+        log.info("Update league {} {}", id, league);
         this.leagueRepository.update(id, league);
     }
 }

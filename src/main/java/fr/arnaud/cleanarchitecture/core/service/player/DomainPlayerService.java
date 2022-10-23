@@ -18,6 +18,7 @@ public class DomainPlayerService implements PlayerService {
 
     @Override
     public UUID createPlayer(final Player player) {
+        log.info("Create player {}", player);
         this.playerRepository.save(player);
 
         return player.getId();
@@ -25,21 +26,25 @@ public class DomainPlayerService implements PlayerService {
 
     @Override
     public void deletePlayer(final UUID id) {
+        log.info("Delete player {}", id);
         this.playerRepository.delete(id);
     }
 
     @Override
     public Player getPlayer(final UUID id) {
+        log.info("Get player {}", id);
         return this.playerRepository.findById(id);
     }
 
 	@Override
 	public List<Player> getPlayers() {
+        log.info("Get players");
 		return this.playerRepository.findAll();
 	}
 
 	@Override
 	public void updatePlayer(final UUID id, final Player player) {
+        log.info("Update player {} {}", id, player);
         this.playerRepository.update(id, player);
 	}
 }
