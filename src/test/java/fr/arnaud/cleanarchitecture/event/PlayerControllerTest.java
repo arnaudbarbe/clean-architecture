@@ -32,7 +32,7 @@ public class PlayerControllerTest extends AbstractTest {
     	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
         String json = this.mapper.writeValueAsString(player);
         
-        this.playerPublisherService.createPlayerAsync(player);
+        this.playerPublisher.createPlayerAsync(player);
         Thread.sleep(2000);
 
         //check if player was correctly created
@@ -41,7 +41,7 @@ public class PlayerControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"firstName\":\"arnaud\",\"lastName\":\"barbe\"}"));
 
         //delete the player
-        this.playerPublisherService.deletePlayerAsync(uuid);
+        this.playerPublisher.deletePlayerAsync(uuid);
         Thread.sleep(2000);
 
         //verify that the player is correctly deleted
@@ -55,14 +55,14 @@ public class PlayerControllerTest extends AbstractTest {
         json = this.mapper.writeValueAsString(player1);
  
     	//create 2 players
-        this.playerPublisherService.createPlayerAsync(player1);
+        this.playerPublisher.createPlayerAsync(player1);
         
     	uuid = UUID.randomUUID();
     	PlayerDto player2 = new PlayerDto(uuid, "christophe", "lambert");
         
         json = this.mapper.writeValueAsString(player2);
  
-        this.playerPublisherService.createPlayerAsync(player2);
+        this.playerPublisher.createPlayerAsync(player2);
         Thread.sleep(2000);
         //check if getPlayers return 2 players
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players")
@@ -71,8 +71,8 @@ public class PlayerControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.playerPublisherService.deletePlayerAsync(player1.id());
-        this.playerPublisherService.deletePlayerAsync(player2.id());
+        this.playerPublisher.deletePlayerAsync(player1.id());
+        this.playerPublisher.deletePlayerAsync(player2.id());
 
     }
 }

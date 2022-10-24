@@ -30,14 +30,14 @@ public class LeagueEventTest extends AbstractTest {
     public void crudLeague() throws Exception {
     	
         //delete unknown object
-        this.leaguePublisherService.deleteLeagueAsync(UUID.randomUUID());
+        this.leaguePublisher.deleteLeagueAsync(UUID.randomUUID());
         
         //create one league
         UUID uuid = UUID.randomUUID();
     	LeagueDto league = new LeagueDto(uuid, "Afebas");
         String json = this.mapper.writeValueAsString(league);
         
-        this.leaguePublisherService.createLeagueAsync(league);
+        this.leaguePublisher.createLeagueAsync(league);
         Thread.sleep(2000);
         
        //check if league was correctly created
@@ -50,7 +50,7 @@ public class LeagueEventTest extends AbstractTest {
         
         json = this.mapper.writeValueAsString(league);
         
-        this.leaguePublisherService.updateLeagueAsync(league);
+        this.leaguePublisher.updateLeagueAsync(league);
         Thread.sleep(2000);
         
         //check if championship was correctly updated
@@ -59,7 +59,7 @@ public class LeagueEventTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(json));
        
         //delete the league
-        this.leaguePublisherService.deleteLeagueAsync(uuid);
+        this.leaguePublisher.deleteLeagueAsync(uuid);
         Thread.sleep(2000);
         
         //verify that the league is correctly deleted
@@ -73,14 +73,14 @@ public class LeagueEventTest extends AbstractTest {
         json = this.mapper.writeValueAsString(league1);
  
     	//create 2 leagues
-        this.leaguePublisherService.createLeagueAsync(league1);
+        this.leaguePublisher.createLeagueAsync(league1);
         
     	uuid = UUID.randomUUID();
     	LeagueDto league2 = new LeagueDto(uuid, "FBEP");
         
         json = this.mapper.writeValueAsString(league2);
  
-        this.leaguePublisherService.createLeagueAsync(league2);
+        this.leaguePublisher.createLeagueAsync(league2);
         Thread.sleep(2000);
         
         //check if getLeagues return 2 leagues
@@ -90,8 +90,8 @@ public class LeagueEventTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.leaguePublisherService.deleteLeagueAsync(league1.id());
-        this.leaguePublisherService.deleteLeagueAsync(league2.id());
+        this.leaguePublisher.deleteLeagueAsync(league1.id());
+        this.leaguePublisher.deleteLeagueAsync(league2.id());
         Thread.sleep(2000);
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues")

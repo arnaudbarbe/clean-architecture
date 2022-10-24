@@ -34,26 +34,26 @@ public class ChampionshipEventTest extends AbstractTest {
     public void crudChampionship() throws Exception {
     	
         //delete unknown object
-        this.championshipPublisherService.deleteChampionshipAsync(UUID.randomUUID());
+        this.championshipPublisher.deleteChampionshipAsync(UUID.randomUUID());
         
         UUID uuid = UUID.randomUUID();
     	LeagueDto league = new LeagueDto(uuid, "Afebas");
-        this.leaguePublisherService.createLeagueAsync(league);
+        this.leaguePublisher.createLeagueAsync(league);
 
         uuid = UUID.randomUUID();
     	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
-        this.playerPublisherService.createPlayerAsync(player);
+        this.playerPublisher.createPlayerAsync(player);
         
         uuid = UUID.randomUUID();
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
-        this.seasonPublisherService.createSeasonAsync(season);
+        this.seasonPublisher.createSeasonAsync(season);
         
         //create one championship
         uuid = UUID.randomUUID();
     	ChampionshipDto championship = new ChampionshipDto(uuid, "France", player, season, league);
         String json = this.mapper.writeValueAsString(championship);
         
-        this.championshipPublisherService.createChampionshipAsync(championship);
+        this.championshipPublisher.createChampionshipAsync(championship);
         Thread.sleep(2000);
         
        //check if championship was correctly created
@@ -66,7 +66,7 @@ public class ChampionshipEventTest extends AbstractTest {
         
         json = this.mapper.writeValueAsString(championship);
         
-        this.championshipPublisherService.updateChampionshipAsync(championship);
+        this.championshipPublisher.updateChampionshipAsync(championship);
         Thread.sleep(2000);
         
         //check if championship was correctly updated
@@ -75,7 +75,7 @@ public class ChampionshipEventTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(json));
        
         //delete the championship
-        this.championshipPublisherService.deleteChampionshipAsync(uuid);
+        this.championshipPublisher.deleteChampionshipAsync(uuid);
         Thread.sleep(2000);
         
         //verify that the championship is correctly deleted
@@ -89,14 +89,14 @@ public class ChampionshipEventTest extends AbstractTest {
         json = this.mapper.writeValueAsString(championship1);
  
     	//create 2 championships
-        this.championshipPublisherService.createChampionshipAsync(championship1);
+        this.championshipPublisher.createChampionshipAsync(championship1);
         
     	uuid = UUID.randomUUID();
     	ChampionshipDto championship2 = new ChampionshipDto(uuid, "Belgium", player, season, league);
         
         json = this.mapper.writeValueAsString(championship2);
  
-        this.championshipPublisherService.createChampionshipAsync(championship2);
+        this.championshipPublisher.createChampionshipAsync(championship2);
         Thread.sleep(2000);
         
         //check if getChampionships return 2 championships
@@ -106,8 +106,8 @@ public class ChampionshipEventTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.championshipPublisherService.deleteChampionshipAsync(championship1.id());
-        this.championshipPublisherService.deleteChampionshipAsync(championship2.id());
+        this.championshipPublisher.deleteChampionshipAsync(championship1.id());
+        this.championshipPublisher.deleteChampionshipAsync(championship2.id());
         Thread.sleep(2000);
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships")

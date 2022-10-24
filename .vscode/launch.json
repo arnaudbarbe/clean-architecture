@@ -7,7 +7,7 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "fr.arnaud.cleanarchitecture.CleanArchitectureApplication",
             "projectName": "clean-architecture",
-            "args": "--spring.profiles.active=Test",     // <-- Choice 1. via commandline  args
+            "args": "--spring.profiles.active=Test",
             "envFile": "${workspaceFolder}/.env"
         }
     ]

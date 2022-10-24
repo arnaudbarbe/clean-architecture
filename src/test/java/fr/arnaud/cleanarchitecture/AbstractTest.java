@@ -30,12 +30,12 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.ChampionshipPublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.LeaguePublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.MatchPublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.PlayerPublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.SeasonPublisherService;
-import fr.arnaud.cleanarchitecture.infrastructure.client.publisher.v1.TeamPublisherService;
+import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.ChampionshipPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.LeaguePublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.MatchPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.PlayerPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.SeasonPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.TeamPublisher;
 
 
 @ExtendWith(SpringExtension.class)
@@ -51,22 +51,22 @@ public abstract class AbstractTest {
 	protected MockMvc mockMvc;
 
 	@Autowired
-	protected PlayerPublisherService playerPublisherService;
+	protected PlayerPublisher playerPublisher;
 
 	@Autowired
-	protected LeaguePublisherService leaguePublisherService;
+	protected LeaguePublisher leaguePublisher;
 
 	@Autowired
-	protected SeasonPublisherService seasonPublisherService;
+	protected SeasonPublisher seasonPublisher;
 
 	@Autowired
-	protected ChampionshipPublisherService championshipPublisherService;
+	protected ChampionshipPublisher championshipPublisher;
 
 	@Autowired
-	protected MatchPublisherService matchPublisherService;
+	protected MatchPublisher matchPublisher;
 
 	@Autowired
-	protected TeamPublisherService teamPublisherService;
+	protected TeamPublisher teamPublisher;
 
 	@Value("${spring.datasource.url}")
 	protected String sqlUrl;
