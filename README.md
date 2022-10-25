@@ -29,6 +29,7 @@ Personal implementation of a clean architecture
     * dto (versionned Data Transfert Object used in consumer and controller classes)
   * gateway (entry point to other system)
   * persistence (repositories for each storage system)
+  * publisher (MOM client to create/update/delete entities)
 
 ## event driven
 
