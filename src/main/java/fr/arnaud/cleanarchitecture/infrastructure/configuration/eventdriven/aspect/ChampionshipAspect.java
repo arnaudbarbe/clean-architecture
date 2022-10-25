@@ -6,15 +6,15 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.entity.Championship;
 import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.Event;
-import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.publisher.ChampionshipEventPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.ChampionshipEventPublisher;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
 
 @Aspect
-@Configuration
+@Component
 public class ChampionshipAspect {
 	
 	private final ChampionshipEventPublisher championshipEventPublisher;
@@ -35,8 +35,8 @@ public class ChampionshipAspect {
     	this.championshipEventPublisher.createChampionshipEvent(event);
     }
 
-	@After("execution(* fr.arnaud.cleanarchitecture.core.service.championship.DomainChampionshipService.updateChampionship(..)) && args(championship)")
-    public void eventAfterUpdateChampionship(final JoinPoint joinPoint, final Championship championship) {
+	@After("execution(* fr.arnaud.cleanarchitecture.core.service.championship.DomainChampionshipService.updateChampionship(..)) && args(id, championship)")
+    public void eventAfterUpdateChampionship(final JoinPoint joinPoint, final UUID id, final Championship championship) {
 
     	Event<ChampionshipDto> event = 
     			new Event<>(

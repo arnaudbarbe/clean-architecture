@@ -1,10 +1,8 @@
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.event.v1;
 
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.amqp.outbound.AmqpOutboundEndpoint;
@@ -15,12 +13,6 @@ import org.springframework.messaging.MessageChannel;
 @Configuration
 public class RabbitMQMatchEventConfiguration {
 
-	private static final String CREATE_LEAGUE_EVENT_QUEUE_NAME = "event.v1.createMatch";
-    
-	private static final String UPDATE_LEAGUE_EVENT_QUEUE_NAME = "event.v1.updateMatch";
-
-	private static final String DELETE_LEAGUE_EVENT_QUEUE_NAME = "event.v1.deleteMatch";
-
 	private static final String CREATE_LEAGUE_EVENT_EXCHANGE_NAME = "event.v1.createMatch";
 	
 	private static final String UPDATE_LEAGUE_EVENT_EXCHANGE_NAME = "event.v1.updateMatch";
@@ -30,24 +22,14 @@ public class RabbitMQMatchEventConfiguration {
     @Bean
     public Declarables matchEventDeclarables() {
     	
-    	Queue createMatchRequestQueue = new Queue(CREATE_LEAGUE_EVENT_QUEUE_NAME, true, false, false);
-    	Queue updateMatchRequestQueue = new Queue(UPDATE_LEAGUE_EVENT_QUEUE_NAME, true, false, false);
-    	Queue deleteMatchRequestQueue = new Queue(DELETE_LEAGUE_EVENT_QUEUE_NAME, true, false, false);
-
     	DirectExchange createMatchExchangeRequest = new DirectExchange(CREATE_LEAGUE_EVENT_EXCHANGE_NAME, true, false);
     	DirectExchange updateMatchExchangeRequest = new DirectExchange(UPDATE_LEAGUE_EVENT_EXCHANGE_NAME, true, false);
     	DirectExchange deleteMatchExchangeRequest = new DirectExchange(DELETE_LEAGUE_EVENT_EXCHANGE_NAME, true, false);
         
         return new Declarables(
-        		createMatchRequestQueue,
-        		updateMatchRequestQueue,
-        		deleteMatchRequestQueue,
         		createMatchExchangeRequest,
         		updateMatchExchangeRequest,
-        		deleteMatchExchangeRequest,
-                BindingBuilder.bind(createMatchRequestQueue).to(createMatchExchangeRequest).with("#"),
-                BindingBuilder.bind(updateMatchRequestQueue).to(updateMatchExchangeRequest).with("#"),
-                BindingBuilder.bind(deleteMatchRequestQueue).to(deleteMatchExchangeRequest).with("#")
+        		deleteMatchExchangeRequest
         );
     }
     

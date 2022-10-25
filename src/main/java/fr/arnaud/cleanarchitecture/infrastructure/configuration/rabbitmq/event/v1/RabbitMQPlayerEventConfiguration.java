@@ -1,10 +1,8 @@
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.event.v1;
 
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.amqp.outbound.AmqpOutboundEndpoint;
@@ -15,12 +13,6 @@ import org.springframework.messaging.MessageChannel;
 @Configuration
 public class RabbitMQPlayerEventConfiguration {
 
-    private static final String CREATE_PLAYER_EVENT_QUEUE_NAME = "event.v1.createPlayer";
-    
-    private static final String UPDATE_PLAYER_EVENT_QUEUE_NAME = "event.v1.updatePlayer";
-
-    private static final String DELETE_PLAYER_EVENT_QUEUE_NAME = "event.v1.deletePlayer";
-
     private static final String CREATE_PLAYER_EVENT_EXCHANGE_NAME = "event.v1.createPlayer";
 
     private static final String UPDATE_PLAYER_EVENT_EXCHANGE_NAME = "event.v1.updatePlayer";
@@ -30,24 +22,14 @@ public class RabbitMQPlayerEventConfiguration {
     @Bean
     public Declarables playerEventDeclarables() {
     	
-    	Queue createPlayerRequestQueue = new Queue(CREATE_PLAYER_EVENT_QUEUE_NAME, true, false, false);
-    	Queue updatePlayerRequestQueue = new Queue(UPDATE_PLAYER_EVENT_QUEUE_NAME, true, false, false);
-    	Queue deletePlayerRequestQueue = new Queue(DELETE_PLAYER_EVENT_QUEUE_NAME, true, false, false);
-
     	DirectExchange createPlayerExchange = new DirectExchange(CREATE_PLAYER_EVENT_EXCHANGE_NAME, true, false);
     	DirectExchange updatePlayerExchange = new DirectExchange(UPDATE_PLAYER_EVENT_EXCHANGE_NAME, true, false);
     	DirectExchange deletePlayerExchange = new DirectExchange(DELETE_PLAYER_EVENT_EXCHANGE_NAME, true, false);
 
         return new Declarables(
-        		createPlayerRequestQueue,
-        		updatePlayerRequestQueue,
-        		deletePlayerRequestQueue,
         		createPlayerExchange,
         		updatePlayerExchange,
-        		deletePlayerExchange,
-                BindingBuilder.bind(createPlayerRequestQueue).to(createPlayerExchange).with("#"),
-                BindingBuilder.bind(updatePlayerRequestQueue).to(updatePlayerExchange).with("#"),
-                BindingBuilder.bind(deletePlayerRequestQueue).to(deletePlayerExchange).with("#")
+        		deletePlayerExchange
         );
     }
     

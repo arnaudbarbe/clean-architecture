@@ -6,16 +6,16 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.entity.Match;
 import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.Event;
-import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.publisher.MatchEventPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.MatchEventPublisher;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.MatchDto;
 
 
 @Aspect
-@Configuration
+@Component
 public class MatchAspect {
     
 	private final MatchEventPublisher matchEventPublisher;
@@ -36,8 +36,8 @@ public class MatchAspect {
     	this.matchEventPublisher.createMatchEvent(event);
     }
 
-    @After("execution(* fr.arnaud.cleanarchitecture.core.service.match.DomainMatchService.updateMatch(..)) && args(match)")
-    public void eventAfterUpdateMatch(final JoinPoint joinPoint, final Match match) {
+    @After("execution(* fr.arnaud.cleanarchitecture.core.service.match.DomainMatchService.updateMatch(..)) && args(id, match)")
+    public void eventAfterUpdateMatch(final JoinPoint joinPoint, final UUID id, final Match match) {
 
     	Event<MatchDto> event = 
     			new Event<>(

@@ -38,8 +38,21 @@ public class PlayerControllerTest extends AbstractTest {
         //check if player was correctly created
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"firstName\":\"arnaud\",\"lastName\":\"barbe\"}"));
+            .andExpect(MockMvcResultMatchers.content().string(json));
 
+        
+        
+        player = new PlayerDto(uuid, "arnaud", "barbe2");
+        
+        json = this.mapper.writeValueAsString(player);
+        
+        this.playerPublisher.updatePlayerAsync(player);
+        Thread.sleep(2000);
+       
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().string(json));
+        
         //delete the player
         this.playerPublisher.deletePlayerAsync(uuid);
         Thread.sleep(2000);

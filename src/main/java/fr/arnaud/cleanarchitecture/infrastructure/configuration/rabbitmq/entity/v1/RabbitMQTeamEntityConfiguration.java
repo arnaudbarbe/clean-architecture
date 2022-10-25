@@ -47,20 +47,20 @@ public class RabbitMQTeamEntityConfiguration {
     	Queue updateTeamRequestQueue = new Queue(UPDATE_TEAM_QUEUE_NAME, true, false, false);
     	Queue deleteTeamRequestQueue = new Queue(DELETE_TEAM_QUEUE_NAME, true, false, false);
 
-    	DirectExchange createTeamExchangeRequest = new DirectExchange(CREATE_TEAM_EXCHANGE_NAME, true, false);
-    	DirectExchange updateTeamExchangeRequest = new DirectExchange(UPDATE_TEAM_EXCHANGE_NAME, true, false);
-    	DirectExchange deleteTeamExchangeRequest = new DirectExchange(DELETE_TEAM_EXCHANGE_NAME, true, false);
+    	DirectExchange createTeamExchange = new DirectExchange(CREATE_TEAM_EXCHANGE_NAME, true, false);
+    	DirectExchange updateTeamExchange = new DirectExchange(UPDATE_TEAM_EXCHANGE_NAME, true, false);
+    	DirectExchange deleteTeamExchange = new DirectExchange(DELETE_TEAM_EXCHANGE_NAME, true, false);
         
         return new Declarables(
         		createTeamRequestQueue,
         		updateTeamRequestQueue,
         		deleteTeamRequestQueue,
-        		createTeamExchangeRequest,
-        		updateTeamExchangeRequest,
-        		deleteTeamExchangeRequest,
-                BindingBuilder.bind(createTeamRequestQueue).to(createTeamExchangeRequest).with("#"),
-                BindingBuilder.bind(updateTeamRequestQueue).to(updateTeamExchangeRequest).with("#"),
-                BindingBuilder.bind(deleteTeamRequestQueue).to(deleteTeamExchangeRequest).with("#")
+        		createTeamExchange,
+        		updateTeamExchange,
+        		deleteTeamExchange,
+                BindingBuilder.bind(createTeamRequestQueue).to(createTeamExchange).with("#"),
+                BindingBuilder.bind(updateTeamRequestQueue).to(updateTeamExchange).with("#"),
+                BindingBuilder.bind(deleteTeamRequestQueue).to(deleteTeamExchange).with("#")
         );
     }
     

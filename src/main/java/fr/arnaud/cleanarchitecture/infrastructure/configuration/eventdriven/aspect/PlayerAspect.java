@@ -6,16 +6,16 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.entity.Player;
 import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.Event;
-import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.publisher.PlayerEventPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.PlayerEventPublisher;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
 
 
 @Aspect
-@Configuration
+@Component
 public class PlayerAspect {
     
 	private final PlayerEventPublisher playerEventPublisher;
@@ -36,8 +36,8 @@ public class PlayerAspect {
     	this.playerEventPublisher.createPlayerEvent(event);
     }
 
-    @After("execution(* fr.arnaud.cleanarchitecture.core.service.player.DomainPlayerService.updatePlayer(..)) && args(player)")
-    public void eventAfterUpdatePlayer(final JoinPoint joinPoint, final Player player) {
+    @After("execution(* fr.arnaud.cleanarchitecture.core.service.player.DomainPlayerService.updatePlayer(..)) && args(id, player)")
+    public void eventAfterUpdatePlayer(final JoinPoint joinPoint, final UUID id, final Player player) {
 
     	Event<PlayerDto> event = 
     			new Event<>(

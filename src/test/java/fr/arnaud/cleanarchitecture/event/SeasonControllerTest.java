@@ -41,6 +41,16 @@ public class SeasonControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(json));
 
+        season = new SeasonDto(uuid, "2025/2026", LocalDateTime.of(2025, 9, 1, 0, 0, 0), LocalDateTime.of(2026, 6, 30, 0, 0, 0));
+        json = this.mapper.writeValueAsString(season);
+        
+        this.seasonPublisher.updateSeasonAsync(season);
+        Thread.sleep(2000);
+       
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().string(json));
+
         //delete the season
         this.seasonPublisher.deleteLeagueAsync(uuid);
         Thread.sleep(2000);

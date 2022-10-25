@@ -6,16 +6,16 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.entity.League;
 import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.Event;
-import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.publisher.LeagueEventPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.LeagueEventPublisher;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 
 
 @Aspect
-@Configuration
+@Component
 public class LeagueAspect {
     
 	private final LeagueEventPublisher leagueEventPublisher;
@@ -36,8 +36,8 @@ public class LeagueAspect {
     	this.leagueEventPublisher.createLeagueEvent(event);
     }
 	
-    @After("execution(* fr.arnaud.cleanarchitecture.core.service.league.DomainLeagueService.updateLeague(..)) && args(league)")
-    public void eventAfterUpdateLeague(final JoinPoint joinPoint, final League league) {
+    @After("execution(* fr.arnaud.cleanarchitecture.core.service.league.DomainLeagueService.updateLeague(..)) && args(id, league)")
+    public void eventAfterUpdateLeague(final JoinPoint joinPoint, final UUID id, final League league) {
 
     	Event<LeagueDto> event = 
     			new Event<>(

@@ -1,10 +1,8 @@
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.event.v1;
 
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.amqp.outbound.AmqpOutboundEndpoint;
@@ -15,12 +13,6 @@ import org.springframework.messaging.MessageChannel;
 @Configuration
 public class RabbitMQChampionshipEventConfiguration {
 
-	private static final String CREATE_CHAMPIONSHIP_EVENT_QUEUE_NAME = "event.v1.createChampionship";
-    
-	private static final String UPDATE_CHAMPIONSHIP_EVENT_QUEUE_NAME = "event.v1.updateChampionship";
-
-	private static final String DELETE_CHAMPIONSHIP_EVENT_QUEUE_NAME = "event.v1.deleteChampionship";
-
 	private static final String CREATE_CHAMPIONSHIP_EVENT_EXCHANGE_NAME = "event.v1.createChampionship";
 	
 	private static final String UPDATE_CHAMPIONSHIP_EVENT_EXCHANGE_NAME = "event.v1.updateChampionship";
@@ -30,24 +22,14 @@ public class RabbitMQChampionshipEventConfiguration {
     @Bean
     public Declarables championshipEventDeclarables() {
     	
-    	Queue createChampionshipRequestQueue = new Queue(CREATE_CHAMPIONSHIP_EVENT_QUEUE_NAME, true, false, false);
-    	Queue updateChampionshipRequestQueue = new Queue(UPDATE_CHAMPIONSHIP_EVENT_QUEUE_NAME, true, false, false);
-    	Queue deleteChampionshipRequestQueue = new Queue(DELETE_CHAMPIONSHIP_EVENT_QUEUE_NAME, true, false, false);
-
     	DirectExchange createChampionshipExchangeRequest = new DirectExchange(CREATE_CHAMPIONSHIP_EVENT_EXCHANGE_NAME, true, false);
     	DirectExchange updateChampionshipExchangeRequest = new DirectExchange(UPDATE_CHAMPIONSHIP_EVENT_EXCHANGE_NAME, true, false);
     	DirectExchange deleteChampionshipExchangeRequest = new DirectExchange(DELETE_CHAMPIONSHIP_EVENT_EXCHANGE_NAME, true, false);
         
         return new Declarables(
-        		createChampionshipRequestQueue,
-        		updateChampionshipRequestQueue,
-        		deleteChampionshipRequestQueue,
         		createChampionshipExchangeRequest,
         		updateChampionshipExchangeRequest,
-        		deleteChampionshipExchangeRequest,
-                BindingBuilder.bind(createChampionshipRequestQueue).to(createChampionshipExchangeRequest).with("#"),
-                BindingBuilder.bind(updateChampionshipRequestQueue).to(updateChampionshipExchangeRequest).with("#"),
-                BindingBuilder.bind(deleteChampionshipRequestQueue).to(deleteChampionshipExchangeRequest).with("#")
+        		deleteChampionshipExchangeRequest
         );
     }
     
