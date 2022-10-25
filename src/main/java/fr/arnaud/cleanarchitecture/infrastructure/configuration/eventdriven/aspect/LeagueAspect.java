@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.entity.League;
 import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.Event;
-import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.LeagueEventPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1.LeagueEventPublisher;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 
 

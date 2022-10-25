@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher;
+package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1;
 
 import java.util.UUID;
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.entity.Championship;
 import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.Event;
-import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.ChampionshipEventPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1.ChampionshipEventPublisher;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
 
 @Aspect
