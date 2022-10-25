@@ -3,7 +3,11 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.match.v1;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -67,8 +71,14 @@ public class MatchController {
 
 	@Tags({ 
 		@Tag(name="Match")})
-    public UUID createMatch(@RequestBody final MatchDto match) {
-        return this.matchService.createMatch(match.toEntity());
+    public UUID createMatch(
+    		final HttpServletResponse response, 
+    		final HttpServletRequest request,
+    		@RequestBody final MatchDto match) {
+		
+		UUID id = this.matchService.createMatch(match.toEntity());
+		response.setHeader(HttpHeaders.LOCATION, "/v1/matchs" + id);
+		return id;
     }
 
 	

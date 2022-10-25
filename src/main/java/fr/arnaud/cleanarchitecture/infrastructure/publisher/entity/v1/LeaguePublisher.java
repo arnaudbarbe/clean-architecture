@@ -11,11 +11,11 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 public interface LeaguePublisher {
 
     @Gateway(requestChannel = "createLeagueV1OutboundChannel")
-    void createLeagueAsync(LeagueDto league);
+    void createLeague(LeagueDto league);
     
     @Gateway(requestChannel = "updateLeagueV1OutboundChannel")
-    void updateLeagueAsync(LeagueDto league);
+    void updateLeague(LeagueDto league);
 
     @Gateway(requestChannel = "deleteLeagueV1OutboundChannel")
-    void deleteLeagueAsync(UUID id);
+    void deleteLeague(UUID id);
 }

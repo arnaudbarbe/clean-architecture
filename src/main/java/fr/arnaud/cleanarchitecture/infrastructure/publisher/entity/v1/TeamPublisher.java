@@ -11,11 +11,11 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.TeamDto;
 public interface TeamPublisher {
 
     @Gateway(requestChannel = "createTeamV1OutboundChannel")
-    void createTeamAsync(TeamDto team);
+    void createTeam(TeamDto team);
     
     @Gateway(requestChannel = "updateTeamV1OutboundChannel")
-    void updateTeamAsync(TeamDto team);
+    void updateTeam(TeamDto team);
 
     @Gateway(requestChannel = "deleteTeamV1OutboundChannel")
-    void deleteTeamAsync(UUID id);
+    void deleteTeam(UUID id);
 }

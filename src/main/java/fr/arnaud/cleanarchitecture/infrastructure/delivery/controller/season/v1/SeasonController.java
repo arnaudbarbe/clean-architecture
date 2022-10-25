@@ -3,7 +3,11 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.season.v1
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -67,8 +71,14 @@ public class SeasonController {
 
 	@Tags({ 
 		@Tag(name="Season")})
-    public UUID createSeason(@RequestBody final SeasonDto season) {
-        return this.seasonService.createSeason(season.toEntity());
+    public UUID createSeason(
+    		final HttpServletResponse response, 
+    		final HttpServletRequest request,
+    		@RequestBody final SeasonDto season) {
+		
+		UUID id = this.seasonService.createSeason(season.toEntity());
+		response.setHeader(HttpHeaders.LOCATION, "/v1/seasons" + id);		
+        return id;
     }
 
 	

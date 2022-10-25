@@ -36,38 +36,38 @@ public class MatchEventTest extends AbstractTest {
     public void crudMatch() throws Exception {
     	
         //delete unknown object
-        this.matchPublisher.deleteMatchAsync(UUID.randomUUID());
+        this.matchPublisher.deleteMatch(UUID.randomUUID());
         Thread.sleep(2000);
 
     	UUID uuid = UUID.randomUUID();
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
-        this.seasonPublisher.createSeasonAsync(season);
+        this.seasonPublisher.createSeason(season);
         Thread.sleep(2000);
 
     	uuid = UUID.randomUUID();
     	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
-        this.playerPublisher.createPlayerAsync(player);
+        this.playerPublisher.createPlayer(player);
         Thread.sleep(2000);
 
     	uuid = UUID.randomUUID();
     	LeagueDto league = new LeagueDto(uuid, "Afebas");
-    	this.leaguePublisher.createLeagueAsync(league);
+    	this.leaguePublisher.createLeague(league);
         Thread.sleep(2000);
 
     	ChampionshipDto championship = new ChampionshipDto(uuid, "France", player, season, league);
-        this.championshipPublisher.createChampionshipAsync(championship);
+        this.championshipPublisher.createChampionship(championship);
         Thread.sleep(2000);
 
         uuid = UUID.randomUUID();
     	TeamDto team1 = new TeamDto(uuid, "Poule o pot", championship);
          
-        this.teamPublisher.createTeamAsync(team1);
+        this.teamPublisher.createTeam(team1);
         Thread.sleep(2000);
 
         uuid = UUID.randomUUID();
     	TeamDto team2 = new TeamDto(uuid, "Swimming Poule", championship);
         
-    	this.teamPublisher.createTeamAsync(team2);
+    	this.teamPublisher.createTeam(team2);
         Thread.sleep(2000);
 
         //create one match
@@ -75,7 +75,7 @@ public class MatchEventTest extends AbstractTest {
     	MatchDto match = new MatchDto(uuid, LocalDateTime.now(), championship, team1, team2, 10, 2);
         String json = this.mapper.writeValueAsString(match);
         
-        this.matchPublisher.createMatchAsync(match);
+        this.matchPublisher.createMatch(match);
         Thread.sleep(2000);
         
        //check if match was correctly created
@@ -88,7 +88,7 @@ public class MatchEventTest extends AbstractTest {
         
         json = this.mapper.writeValueAsString(match);
         
-        this.matchPublisher.updateMatchAsync(match);
+        this.matchPublisher.updateMatch(match);
         Thread.sleep(2000);
         
         //check if championship was correctly updated
@@ -97,7 +97,7 @@ public class MatchEventTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(json));
        
         //delete the match
-        this.matchPublisher.deleteMatchAsync(uuid);
+        this.matchPublisher.deleteMatch(uuid);
         Thread.sleep(2000);
         
         //verify that the match is correctly deleted
@@ -111,7 +111,7 @@ public class MatchEventTest extends AbstractTest {
         json = this.mapper.writeValueAsString(match1);
  
     	//create 2 matchs
-        this.matchPublisher.createMatchAsync(match1);
+        this.matchPublisher.createMatch(match1);
         Thread.sleep(2000);
 
     	uuid = UUID.randomUUID();
@@ -119,7 +119,7 @@ public class MatchEventTest extends AbstractTest {
         
         json = this.mapper.writeValueAsString(match2);
  
-        this.matchPublisher.createMatchAsync(match2);
+        this.matchPublisher.createMatch(match2);
         Thread.sleep(2000);
         
         //check if getMatchs return 2 matchs
@@ -129,8 +129,8 @@ public class MatchEventTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.matchPublisher.deleteMatchAsync(match1.id());
-        this.matchPublisher.deleteMatchAsync(match2.id());
+        this.matchPublisher.deleteMatch(match1.id());
+        this.matchPublisher.deleteMatch(match2.id());
         Thread.sleep(2000);
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs")

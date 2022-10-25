@@ -3,7 +3,11 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.team.v1;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -67,8 +71,14 @@ public class TeamController {
 
 	@Tags({ 
 		@Tag(name="Team")})
-    public UUID createTeam(@RequestBody final TeamDto team) {
-        return this.teamService.createTeam(team.toEntity());
+    public UUID createTeam(    		
+    		final HttpServletResponse response, 
+    		final HttpServletRequest request,
+    		@RequestBody final TeamDto team) {
+
+		UUID id = this.teamService.createTeam(team.toEntity());
+		response.setHeader(HttpHeaders.LOCATION, "/v1/teams" + id);		
+		return id;
     }
 
 	

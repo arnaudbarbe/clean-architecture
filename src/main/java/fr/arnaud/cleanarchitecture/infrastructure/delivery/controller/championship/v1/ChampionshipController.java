@@ -3,7 +3,11 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.champions
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +29,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
-
 @RestController
 @RequestMapping("/v1/championships")
 @Tag(name = "Championship", description = "The Championship API")
@@ -67,8 +70,14 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public UUID createChampionship(@RequestBody final ChampionshipDto championship) {
-        return this.championshipService.createChampionship(championship.toEntity());
+    public UUID createChampionship(
+    		final HttpServletResponse response, 
+    		final HttpServletRequest request,
+    		@RequestBody final ChampionshipDto championship) {
+		
+		UUID id = this.championshipService.createChampionship(championship.toEntity());
+		response.setHeader(HttpHeaders.LOCATION, "/v1/championships/" + id);
+        return id;
     }
 
 	

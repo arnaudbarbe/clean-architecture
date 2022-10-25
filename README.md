@@ -33,12 +33,13 @@ Personal implementation of a clean architecture
 
 ## event driven
 
-events are sent on create/update/delete operations
+events are sent on create/update/delete operations.
+We used Aspect annotation in infrastructure/configuration/eventdriven/aspect
 
 ## persistence
 
 I'm using postgres, mongodb and cassandra to persist data.
-This is just for fun, don't do this at home.
+This is just for fun, don't try this at home.
 
 ## Swagger
 
@@ -51,10 +52,12 @@ add HATEOAS support to return functionnalities like delete, etc..
 
 
 ## security 
+
 To be complete these web services need to be secure
 https://www.baeldung.com/security-spring
 
 ## SAGA or LRA support 
+
 add SEATA support ?
 
 ## Running tests

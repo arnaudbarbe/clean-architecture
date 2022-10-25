@@ -11,12 +11,12 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 public interface SeasonPublisher {
 
     @Gateway(requestChannel = "createSeasonV1OutboundChannel")
-    void createSeasonAsync(SeasonDto seasonDto);
+    void createSeason(SeasonDto seasonDto);
 
     @Gateway(requestChannel = "updateSeasonV1OutboundChannel")
-    void updateSeasonAsync(SeasonDto seasonDto);
+    void updateSeason(SeasonDto seasonDto);
 
     @Gateway(requestChannel = "deleteSeasonV1OutboundChannel")
-    void deleteLeagueAsync(UUID id);
+    void deleteLeague(UUID id);
         
 }

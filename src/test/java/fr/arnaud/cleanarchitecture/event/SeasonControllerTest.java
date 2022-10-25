@@ -33,7 +33,7 @@ public class SeasonControllerTest extends AbstractTest {
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
         String json = this.mapper.writeValueAsString(season);
         
-        this.seasonPublisher.createSeasonAsync(season);
+        this.seasonPublisher.createSeason(season);
         Thread.sleep(2000);
 
         //check if season was correcty created
@@ -44,7 +44,7 @@ public class SeasonControllerTest extends AbstractTest {
         season = new SeasonDto(uuid, "2025/2026", LocalDateTime.of(2025, 9, 1, 0, 0, 0), LocalDateTime.of(2026, 6, 30, 0, 0, 0));
         json = this.mapper.writeValueAsString(season);
         
-        this.seasonPublisher.updateSeasonAsync(season);
+        this.seasonPublisher.updateSeason(season);
         Thread.sleep(2000);
        
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
@@ -52,7 +52,7 @@ public class SeasonControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.content().string(json));
 
         //delete the season
-        this.seasonPublisher.deleteLeagueAsync(uuid);
+        this.seasonPublisher.deleteLeague(uuid);
         Thread.sleep(2000);
 
         //verify that the player is correctly deleted
@@ -66,14 +66,14 @@ public class SeasonControllerTest extends AbstractTest {
         json = this.mapper.writeValueAsString(season1);
  
     	//create 2 seasons
-        this.seasonPublisher.createSeasonAsync(season1);
+        this.seasonPublisher.createSeason(season1);
         
     	uuid = UUID.randomUUID();
     	SeasonDto season2 = new SeasonDto(uuid, "2023/2024", LocalDateTime.of(2023, 9, 1, 0, 0, 0), LocalDateTime.of(2024, 6, 30, 0, 0, 0));
         
         json = this.mapper.writeValueAsString(season2);
  
-        this.seasonPublisher.createSeasonAsync(season2);
+        this.seasonPublisher.createSeason(season2);
         Thread.sleep(2000);
         //check if getPlayers return 2 seasons
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons")
@@ -82,8 +82,8 @@ public class SeasonControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.seasonPublisher.deleteLeagueAsync(season1.id());
-        this.seasonPublisher.deleteLeagueAsync(season2.id());
+        this.seasonPublisher.deleteLeague(season1.id());
+        this.seasonPublisher.deleteLeague(season2.id());
 
     }
 }

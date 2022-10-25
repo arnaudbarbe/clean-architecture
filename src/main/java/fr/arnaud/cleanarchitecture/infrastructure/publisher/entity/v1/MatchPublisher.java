@@ -11,11 +11,11 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.MatchDto;
 public interface MatchPublisher {
 
     @Gateway(requestChannel = "createMatchV1OutboundChannel")
-    void createMatchAsync(MatchDto match);
+    void createMatch(MatchDto match);
     
     @Gateway(requestChannel = "updateMatchV1OutboundChannel")
-    void updateMatchAsync(MatchDto match);
+    void updateMatch(MatchDto match);
 
     @Gateway(requestChannel = "deleteMatchV1OutboundChannel")
-    void deleteMatchAsync(UUID id);
+    void deleteMatch(UUID id);
 }

@@ -11,12 +11,12 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
 public interface PlayerPublisher {
 
     @Gateway(requestChannel = "createPlayerV1OutboundChannel")
-    void createPlayerAsync(PlayerDto player);
+    void createPlayer(PlayerDto player);
         
     @Gateway(requestChannel = "updatePlayerV1OutboundChannel")
-    void updatePlayerAsync(PlayerDto player);
+    void updatePlayer(PlayerDto player);
         
     @Gateway(requestChannel = "deletePlayerV1OutboundChannel")
-    void deletePlayerAsync(UUID id);
+    void deletePlayer(UUID id);
         
 }

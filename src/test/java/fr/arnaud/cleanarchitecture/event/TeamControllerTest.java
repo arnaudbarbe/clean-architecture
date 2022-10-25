@@ -35,40 +35,40 @@ public class TeamControllerTest extends AbstractTest {
     public void crudTeam() throws Exception {
     	
         //delete unknown object
-    	this.teamPublisher.deleteTeamAsync(UUID.randomUUID());
+    	this.teamPublisher.deleteTeam(UUID.randomUUID());
 
     	//create one team
     	UUID uuid = UUID.randomUUID();
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
     	String json = this.mapper.writeValueAsString(season);
-    	this.seasonPublisher.createSeasonAsync(season);
+    	this.seasonPublisher.createSeason(season);
         Thread.sleep(2000);
         
     	uuid = UUID.randomUUID();
     	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
     	json = this.mapper.writeValueAsString(player);
-    	this.playerPublisher.createPlayerAsync(player);
+    	this.playerPublisher.createPlayer(player);
         Thread.sleep(2000);
 
     	uuid = UUID.randomUUID();
     	LeagueDto league = new LeagueDto(uuid, "Afebas");
     	uuid = UUID.randomUUID();
     	json = this.mapper.writeValueAsString(league);
-    	this.leaguePublisher.createLeagueAsync(league);
+    	this.leaguePublisher.createLeague(league);
         Thread.sleep(2000);
         
     	ChampionshipDto championship = new ChampionshipDto(uuid, "France", player, season, league);
     	
         json = this.mapper.writeValueAsString(championship);
         
-        this.championshipPublisher.createChampionshipAsync(championship);
+        this.championshipPublisher.createChampionship(championship);
         Thread.sleep(2000);
    	
         uuid = UUID.randomUUID();
     	TeamDto team = new TeamDto(uuid, "Poule", championship);
         json = this.mapper.writeValueAsString(team);
         
-        this.teamPublisher.createTeamAsync(team);
+        this.teamPublisher.createTeam(team);
         Thread.sleep(2000);
 
         //check if team was correctly created
@@ -81,7 +81,7 @@ public class TeamControllerTest extends AbstractTest {
         
         json = this.mapper.writeValueAsString(team);
         
-        this.teamPublisher.updateTeamAsync(team);
+        this.teamPublisher.updateTeam(team);
         Thread.sleep(2000);
         
         //check if team was correctly updated
@@ -90,7 +90,7 @@ public class TeamControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(json));
 
         //delete the team
-        this.teamPublisher.deleteTeamAsync(uuid);        
+        this.teamPublisher.deleteTeam(uuid);        
         Thread.sleep(2000);
 
         //verify that the team is correctly deleted
@@ -104,7 +104,7 @@ public class TeamControllerTest extends AbstractTest {
         json = this.mapper.writeValueAsString(team1);
  
     	//create 2 teams
-        this.teamPublisher.createTeamAsync(team1);
+        this.teamPublisher.createTeam(team1);
         Thread.sleep(2000);
         
     	uuid = UUID.randomUUID();
@@ -112,7 +112,7 @@ public class TeamControllerTest extends AbstractTest {
         
         json = this.mapper.writeValueAsString(team2);
  
-        this.teamPublisher.createTeamAsync(team2);
+        this.teamPublisher.createTeam(team2);
         Thread.sleep(2000);
        
         //check if getTeams return 2 teams
@@ -122,8 +122,8 @@ public class TeamControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.teamPublisher.deleteTeamAsync(team1.id());
-        this.teamPublisher.deleteTeamAsync(team2.id());
+        this.teamPublisher.deleteTeam(team1.id());
+        this.teamPublisher.deleteTeam(team2.id());
         Thread.sleep(2000);
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams")

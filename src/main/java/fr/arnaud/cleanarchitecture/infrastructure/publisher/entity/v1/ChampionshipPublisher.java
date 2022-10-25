@@ -11,11 +11,11 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDt
 public interface ChampionshipPublisher {
 
     @Gateway(requestChannel = "createChampionshipV1OutboundChannel")
-    void createChampionshipAsync(ChampionshipDto championship);
+    void createChampionship(ChampionshipDto championship);
     
     @Gateway(requestChannel = "updateChampionshipV1OutboundChannel")
-    void updateChampionshipAsync(ChampionshipDto championship);
+    void updateChampionship(ChampionshipDto championship);
 
     @Gateway(requestChannel = "deleteChampionshipV1OutboundChannel")
-    void deleteChampionshipAsync(UUID id);
+    void deleteChampionship(UUID id);
 }
