@@ -11,17 +11,28 @@ Personal implementation of a clean architecture
   * service (Business rules)
   * use case (Business rules too but use case oriented)
 * infrastructure (technical part)
-  * client
-    * sync (sync client like codegen generated code)
-    * async (async client)
+  * client (client like codegen generated code)
   * configuration (configuration for each framework/persistence/etc...)
+    * advice (Exception processor)
+    * cassandra 
+    * cors
+    * eventdriven (aspect classes around services classes to throw messages on create/update/delete)
+    * mongo
+    * postgres
+    * rabbitmq (event and service exchange/queue configurations)
+    * service
+    * swagger
   * delivery (entry point from other system)
-    * consumer (MOM consumers)
+    * consumer (MOM consumers/handlers)
     * controller (REST controller)
-    * task (cron task to execute async process)
+    * task (cron task to execute scheduled process)
     * dto (versionned Data Transfert Object used in consumer and controller classes)
   * gateway (entry point to other system)
   * persistence (repositories for each storage system)
+
+## event driven
+
+events are sent on create/update/delete operations
 
 ## persistence
 
