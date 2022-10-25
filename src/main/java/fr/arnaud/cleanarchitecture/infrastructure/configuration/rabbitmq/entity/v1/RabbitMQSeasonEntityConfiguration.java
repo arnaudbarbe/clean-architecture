@@ -19,17 +19,17 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQSeasonEntityConfiguration {
 
-	public static final String CREATE_SEASON_QUEUE_NAME = "entity.v1.createSeason";
+	public static final String CREATE_SEASON_QUEUE_NAME = "entity.v1.season.create";
     
-	public static final String UPDATE_SEASON_QUEUE_NAME = "entity.v1.updateSeason";
+	public static final String UPDATE_SEASON_QUEUE_NAME = "entity.v1.season.update";
 
-	public static final String DELETE_SEASON_QUEUE_NAME = "entity.v1.deleteSeason";
+	public static final String DELETE_SEASON_QUEUE_NAME = "entity.v1.season.delete";
 
-	public static final String CREATE_SEASON_EXCHANGE_NAME = "entity.v1.createSeason";
+	public static final String CREATE_SEASON_EXCHANGE_NAME = "entity.v1.season.create";
 
-	public static final String UPDATE_SEASON_EXCHANGE_NAME = "entity.v1.updateSeason";
+	public static final String UPDATE_SEASON_EXCHANGE_NAME = "entity.v1.season.update";
 
-	public static final String DELETE_SEASON_EXCHANGE_NAME = "entity.v1.deleteSeason";
+	public static final String DELETE_SEASON_EXCHANGE_NAME = "entity.v1.season.delete";
 
     @Autowired
     MessageCreateSeasonHandler messageCreateSeasonHandler;

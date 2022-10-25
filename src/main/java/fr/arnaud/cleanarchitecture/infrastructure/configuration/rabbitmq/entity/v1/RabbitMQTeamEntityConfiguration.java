@@ -19,17 +19,17 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQTeamEntityConfiguration {
 
-	public static final String CREATE_TEAM_QUEUE_NAME = "entity.v1.createTeam";
+	public static final String CREATE_TEAM_QUEUE_NAME = "entity.v1.team.create";
     
-	public static final String UPDATE_TEAM_QUEUE_NAME = "entity.v1.updateTeam";
+	public static final String UPDATE_TEAM_QUEUE_NAME = "entity.v1.team.update";
 
-	public static final String DELETE_TEAM_QUEUE_NAME = "entity.v1.deleteTeam";
+	public static final String DELETE_TEAM_QUEUE_NAME = "entity.v1.team.delete";
 
-	public static final String CREATE_TEAM_EXCHANGE_NAME = "entity.v1.createTeam";
+	public static final String CREATE_TEAM_EXCHANGE_NAME = "entity.v1.team.create";
 	
-	public static final String UPDATE_TEAM_EXCHANGE_NAME = "entity.v1.updateTeam";
+	public static final String UPDATE_TEAM_EXCHANGE_NAME = "entity.v1.team.update";
     
-	public static final String DELETE_TEAM_EXCHANGE_NAME = "entity.v1.deleteTeam";
+	public static final String DELETE_TEAM_EXCHANGE_NAME = "entity.v1.team.delete";
 
     @Autowired
     MessageCreateTeamHandler messageCreateTeamHandler;

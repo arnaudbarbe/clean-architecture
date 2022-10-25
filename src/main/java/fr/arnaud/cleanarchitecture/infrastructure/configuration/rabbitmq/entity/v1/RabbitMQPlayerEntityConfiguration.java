@@ -19,17 +19,17 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQPlayerEntityConfiguration {
 
-	public static final String CREATE_PLAYER_QUEUE_NAME = "entity.v1.createPlayer";
+	public static final String CREATE_PLAYER_QUEUE_NAME = "entity.v1.player.create";
     
-	public static final String UPDATE_PLAYER_QUEUE_NAME = "entity.v1.updatePlayer";
+	public static final String UPDATE_PLAYER_QUEUE_NAME = "entity.v1.player.update";
 
-	public static final String DELETE_PLAYER_QUEUE_NAME = "entity.v1.deletePlayer";
+	public static final String DELETE_PLAYER_QUEUE_NAME = "entity.v1.player.delete";
 
-	public static final String CREATE_PLAYER_EXCHANGE_NAME = "entity.v1.createPlayer";
+	public static final String CREATE_PLAYER_EXCHANGE_NAME = "entity.v1.player.create";
 
-	public static final String UPDATE_PLAYER_EXCHANGE_NAME = "entity.v1.updatePlayer";
+	public static final String UPDATE_PLAYER_EXCHANGE_NAME = "entity.v1.player.update";
 
-	public static final String DELETE_PLAYER_EXCHANGE_NAME = "entity.v1.deletePlayer";
+	public static final String DELETE_PLAYER_EXCHANGE_NAME = "entity.v1.player.delete";
 
     @Autowired
     MessageCreatePlayerHandler messageCreatePlayerHandler;

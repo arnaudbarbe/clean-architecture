@@ -19,17 +19,17 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQMatchEntityConfiguration {
 
-	public static final String CREATE_LEAGUE_QUEUE_NAME = "entity.v1.createMatch";
+	public static final String CREATE_LEAGUE_QUEUE_NAME = "entity.v1.match.create";
     
-	public static final String UPDATE_LEAGUE_QUEUE_NAME = "entity.v1.updateMatch";
+	public static final String UPDATE_LEAGUE_QUEUE_NAME = "entity.v1.match.update";
 
-	public static final String DELETE_LEAGUE_QUEUE_NAME = "entity.v1.deleteMatch";
+	public static final String DELETE_LEAGUE_QUEUE_NAME = "entity.v1.match.delete";
 
-	public static final String CREATE_LEAGUE_EXCHANGE_NAME = "entity.v1.createMatch";
+	public static final String CREATE_LEAGUE_EXCHANGE_NAME = "entity.v1.match.create";
 	
-	public static final String UPDATE_LEAGUE_EXCHANGE_NAME = "entity.v1.updateMatch";
+	public static final String UPDATE_LEAGUE_EXCHANGE_NAME = "entity.v1.match.update";
     
-	public static final String DELETE_LEAGUE_EXCHANGE_NAME = "entity.v1.deleteMatch";
+	public static final String DELETE_LEAGUE_EXCHANGE_NAME = "entity.v1.match.delete";
 
     @Autowired
     MessageCreateMatchHandler messageCreateMatchHandler;

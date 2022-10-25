@@ -19,17 +19,17 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.consumer.handler.v1.M
 @Configuration
 public class RabbitMQChampionshipEntityConfiguration {
 
-	public static final String CREATE_CHAMPIONSHIP_QUEUE_NAME = "entity.v1.createChampionship";
+	public static final String CREATE_CHAMPIONSHIP_QUEUE_NAME = "entity.v1.championship.create";
     
-	public static final String UPDATE_CHAMPIONSHIP_QUEUE_NAME = "entity.v1.updateChampionship";
+	public static final String UPDATE_CHAMPIONSHIP_QUEUE_NAME = "entity.v1.championship.update";
 
-	public static final String DELETE_CHAMPIONSHIP_QUEUE_NAME = "entity.v1.deleteChampionship";
+	public static final String DELETE_CHAMPIONSHIP_QUEUE_NAME = "entity.v1.championship.delete";
 
-	public static final String CREATE_CHAMPIONSHIP_EXCHANGE_NAME = "entity.v1.createChampionship";
+	public static final String CREATE_CHAMPIONSHIP_EXCHANGE_NAME = "entity.v1.championship.create";
 	
-	public static final String UPDATE_CHAMPIONSHIP_EXCHANGE_NAME = "entity.v1.updateChampionship";
+	public static final String UPDATE_CHAMPIONSHIP_EXCHANGE_NAME = "entity.v1.championship.update";
     
-	public static final String DELETE_CHAMPIONSHIP_EXCHANGE_NAME = "entity.v1.deleteChampionship";
+	public static final String DELETE_CHAMPIONSHIP_EXCHANGE_NAME = "entity.v1.championship.delete";
 
     @Autowired
     MessageCreateChampionshipHandler messageCreateChampionshipHandler;

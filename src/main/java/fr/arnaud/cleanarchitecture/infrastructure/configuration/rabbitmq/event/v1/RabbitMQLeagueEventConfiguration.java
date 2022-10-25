@@ -13,11 +13,11 @@ import org.springframework.messaging.MessageChannel;
 @Configuration
 public class RabbitMQLeagueEventConfiguration {
 
-	private static final String CREATE_LEAGUE_EVENT_EXCHANGE_NAME = "event.v1.createLeague";
+	private static final String CREATE_LEAGUE_EVENT_EXCHANGE_NAME = "event.v1.league.create";
 	
-	private static final String UPDATE_LEAGUE_EVENT_EXCHANGE_NAME = "event.v1.updateLeague";
+	private static final String UPDATE_LEAGUE_EVENT_EXCHANGE_NAME = "event.v1.league.update";
     
-	private static final String DELETE_LEAGUE_EVENT_EXCHANGE_NAME = "event.v1.deleteLeague";
+	private static final String DELETE_LEAGUE_EVENT_EXCHANGE_NAME = "event.v1.league.delete";
 
     @Bean
     public Declarables leagueEventDeclarables() {

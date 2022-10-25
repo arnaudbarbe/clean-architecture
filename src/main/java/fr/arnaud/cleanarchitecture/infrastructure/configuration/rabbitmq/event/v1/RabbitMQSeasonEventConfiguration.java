@@ -13,11 +13,11 @@ import org.springframework.messaging.MessageChannel;
 @Configuration
 public class RabbitMQSeasonEventConfiguration {
 
-    private static final String CREATE_SEASON_EVENT_EXCHANGE_NAME = "event.v1.createSeason";
+    private static final String CREATE_SEASON_EVENT_EXCHANGE_NAME = "event.v1.season.create";
 
-    private static final String UPDATE_SEASON_EVENT_EXCHANGE_NAME = "event.v1.updateSeason";
+    private static final String UPDATE_SEASON_EVENT_EXCHANGE_NAME = "event.v1.season.update";
 
-    private static final String DELETE_SEASON_EVENT_EXCHANGE_NAME = "event.v1.deleteSeason";
+    private static final String DELETE_SEASON_EVENT_EXCHANGE_NAME = "event.v1.season.delete";
 
     @Bean
     public Declarables seasonEventDeclarables() {
