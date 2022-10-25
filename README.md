@@ -46,10 +46,17 @@ This is just for fun, don't try this at home.
 Swagger is available under
 http://localhost:8080/swagger-ui/index.html
 
+## resilience
+
+add an gateway to an external service to add response caching and circuit breaker
+add circuit breaker on controller
+add exponential back off on consumer
+
+use resillience4j
+
 ## HATEOAS
 
 add HATEOAS support to return functionnalities like delete, etc..
-
 
 ## security 
 
