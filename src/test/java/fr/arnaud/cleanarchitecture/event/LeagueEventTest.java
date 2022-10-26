@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.event;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import java.util.UUID;
@@ -8,6 +9,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -54,10 +57,14 @@ public class LeagueEventTest extends AbstractTest {
         Thread.sleep(2000);
         
         //check if championship was correctly updated
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
-       
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(league, this.mapper.readValue(contentAsString, LeagueDto.class));
+
         //delete the league
         this.leaguePublisher.deleteLeague(uuid);
         Thread.sleep(2000);
@@ -90,8 +97,8 @@ public class LeagueEventTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.leaguePublisher.deleteLeague(league1.id());
-        this.leaguePublisher.deleteLeague(league2.id());
+        this.leaguePublisher.deleteLeague(league1.getId());
+        this.leaguePublisher.deleteLeague(league2.getId());
         Thread.sleep(2000);
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues")

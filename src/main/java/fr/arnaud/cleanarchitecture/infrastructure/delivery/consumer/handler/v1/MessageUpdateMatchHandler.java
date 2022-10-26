@@ -21,7 +21,7 @@ public class MessageUpdateMatchHandler implements GenericHandler<MatchDto>{
 
 	@Override
 	public Object handle(final MatchDto match, final MessageHeaders headers) {
-		this.matchService.updateMatch(match.id(), match.toEntity());
+		this.matchService.updateMatch(match.getId(), match.toEntity());
 		return null;
 	}
 }

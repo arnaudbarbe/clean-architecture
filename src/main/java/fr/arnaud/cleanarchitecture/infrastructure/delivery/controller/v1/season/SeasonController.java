@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.player.v1;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.season;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.service.player.PlayerService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
+import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,15 +31,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/v1/players")
-@Tag(name = "Player", description = "The Player API")
-public class PlayerController {
+@RequestMapping("/v1/seasons")
+@Tag(name = "Season", description = "The Season API")
+public class SeasonController {
 
-    private final PlayerService playerService;
+    private final SeasonService seasonService;
 
     @Autowired
-    public PlayerController(final PlayerService playerService) {
-        this.playerService = playerService;
+    public SeasonController(final SeasonService seasonService) {
+        this.seasonService = seasonService;
     }
 
     
@@ -56,8 +56,8 @@ public class PlayerController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 
 	@Operation(
-			summary = "Create a player", 
-			description = "Create an player bla bla")
+			summary = "Create a season", 
+			description = "Create an season bla bla")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -70,14 +70,14 @@ public class PlayerController {
     		)
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public UUID createPlayer(
+		@Tag(name="Season")})
+    public UUID createSeason(
     		final HttpServletResponse response, 
     		final HttpServletRequest request,
-    		@RequestBody final PlayerDto player) {
+    		@RequestBody final SeasonDto season) {
 		
-		UUID id = this.playerService.createPlayer(player.toEntity());
-		response.setHeader(HttpHeaders.LOCATION, "/v1/players" + id);		
+		UUID id = this.seasonService.createSeason(season.toEntity());
+		response.setHeader(HttpHeaders.LOCATION, "/v1/seasons" + id);		
         return id;
     }
 
@@ -90,14 +90,14 @@ public class PlayerController {
 	
 	
 	@PutMapping(
-			value = "/{playerId}", 
+			value = "/{seasonId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "update a Player", 
-			description = "update a Player")
+			summary = "update a Season", 
+			description = "update a Season")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -105,9 +105,9 @@ public class PlayerController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public void updatePlayer(@PathVariable final UUID playerId, @RequestBody final PlayerDto player) {
-        this.playerService.updatePlayer(playerId, player.toEntity());
+		@Tag(name="Season")})
+    public void updateSeason(@PathVariable final UUID seasonId, @RequestBody final SeasonDto season) {
+        this.seasonService.updateSeason(seasonId, season.toEntity());
     }
 
 	
@@ -118,13 +118,13 @@ public class PlayerController {
 	
 	
 	@DeleteMapping(
-			value = "/{playerId}")
+			value = "/{seasonId}")
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "Delete a player", 
-			description = "Delete a player by its identifier")
+			summary = "Delete a season", 
+			description = "Delete a season by its identifier")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -132,9 +132,9 @@ public class PlayerController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public void deletePlayer(@PathVariable final UUID playerId) {
-        this.playerService.deletePlayer(playerId);
+		@Tag(name="Season")})
+    public void deleteSeason(@PathVariable final UUID seasonId) {
+        this.seasonService.deleteSeason(seasonId);
     }
 
   
@@ -146,14 +146,14 @@ public class PlayerController {
 	
 	
 	@GetMapping(
-			value = "/{playerId}", 
+			value = "/{seasonId}", 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.OK)
 
 	@Operation(
-			summary = "Get a Player", 
-			description = "Get a Player")
+			summary = "Get a Season", 
+			description = "Get a Season")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -161,9 +161,9 @@ public class PlayerController {
 					description = "successful operation") })
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public PlayerDto getPlayer(@PathVariable final UUID playerId) {
-        return PlayerDto.fromEntity(this.playerService.getPlayer(playerId));
+		@Tag(name="Season")})
+    public SeasonDto getSeason(@PathVariable final UUID seasonId) {
+        return SeasonDto.fromEntity(this.seasonService.getSeason(seasonId));
     }	
 	
 	
@@ -178,8 +178,8 @@ public class PlayerController {
 	@ResponseStatus(code = HttpStatus.OK)
 
     @Operation(
-    		summary = "Get all Player",
-    		description = "Get all Player")
+    		summary = "Get all Season",
+    		description = "Get all Season")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -187,8 +187,8 @@ public class PlayerController {
     				description = "successful operation")})
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public List<PlayerDto> getPlayers() {
-        return this.playerService.getPlayers().stream().map(PlayerDto::fromEntity).toList();
+		@Tag(name="Season")})
+    public List<SeasonDto> getSeasons() {
+        return this.seasonService.getSeasons().stream().map(SeasonDto::fromEntity).toList();
     }
 }

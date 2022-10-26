@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.league.v1;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.player;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.service.league.LeagueService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
+import fr.arnaud.cleanarchitecture.core.service.player.PlayerService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,15 +31,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/v1/leagues")
-@Tag(name = "League", description = "The League API")
-public class LeagueController {
+@RequestMapping("/v1/players")
+@Tag(name = "Player", description = "The Player API")
+public class PlayerController {
 
-    private final LeagueService leagueService;
+    private final PlayerService playerService;
 
     @Autowired
-    public LeagueController(final LeagueService leagueService) {
-        this.leagueService = leagueService;
+    public PlayerController(final PlayerService playerService) {
+        this.playerService = playerService;
     }
 
     
@@ -56,8 +56,8 @@ public class LeagueController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 
 	@Operation(
-			summary = "Create a league", 
-			description = "Create an league bla bla")
+			summary = "Create a player", 
+			description = "Create an player bla bla")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -70,15 +70,15 @@ public class LeagueController {
     		)
 
 	@Tags({ 
-		@Tag(name="League")})
-    public UUID createLeague(    		
+		@Tag(name="Player")})
+    public UUID createPlayer(
     		final HttpServletResponse response, 
     		final HttpServletRequest request,
-    		@RequestBody final LeagueDto league) {
+    		@RequestBody final PlayerDto player) {
 		
-		UUID id = this.leagueService.createLeague(league.toEntity());
-		response.setHeader(HttpHeaders.LOCATION, "/v1/leagues" + id);
-		return id;
+		UUID id = this.playerService.createPlayer(player.toEntity());
+		response.setHeader(HttpHeaders.LOCATION, "/v1/players" + id);		
+        return id;
     }
 
 	
@@ -90,14 +90,14 @@ public class LeagueController {
 	
 	
 	@PutMapping(
-			value = "/{leagueId}", 
+			value = "/{playerId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "update a League", 
-			description = "update a League")
+			summary = "update a Player", 
+			description = "update a Player")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -105,9 +105,9 @@ public class LeagueController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="League")})
-    public void updateLeague(@PathVariable final UUID leagueId, @RequestBody final LeagueDto league) {
-        this.leagueService.updateLeague(leagueId, league.toEntity());
+		@Tag(name="Player")})
+    public void updatePlayer(@PathVariable final UUID playerId, @RequestBody final PlayerDto player) {
+        this.playerService.updatePlayer(playerId, player.toEntity());
     }
 
 	
@@ -118,13 +118,13 @@ public class LeagueController {
 	
 	
 	@DeleteMapping(
-			value = "/{leagueId}")
+			value = "/{playerId}")
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "Delete a league", 
-			description = "Delete a league by its identifier")
+			summary = "Delete a player", 
+			description = "Delete a player by its identifier")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -132,9 +132,9 @@ public class LeagueController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="League")})
-    public void deleteLeague(@PathVariable final UUID leagueId) {
-        this.leagueService.deleteLeague(leagueId);
+		@Tag(name="Player")})
+    public void deletePlayer(@PathVariable final UUID playerId) {
+        this.playerService.deletePlayer(playerId);
     }
 
   
@@ -146,14 +146,14 @@ public class LeagueController {
 	
 	
 	@GetMapping(
-			value = "/{leagueId}", 
+			value = "/{playerId}", 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.OK)
 
 	@Operation(
-			summary = "Get a League", 
-			description = "Get a League")
+			summary = "Get a Player", 
+			description = "Get a Player")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -161,9 +161,9 @@ public class LeagueController {
 					description = "successful operation") })
 
 	@Tags({ 
-		@Tag(name="League")})
-    public LeagueDto getLeague(@PathVariable final UUID leagueId) {
-        return LeagueDto.fromEntity(this.leagueService.getLeague(leagueId));
+		@Tag(name="Player")})
+    public PlayerDto getPlayer(@PathVariable final UUID playerId) {
+        return PlayerDto.fromEntity(this.playerService.getPlayer(playerId));
     }	
 	
 	
@@ -178,8 +178,8 @@ public class LeagueController {
 	@ResponseStatus(code = HttpStatus.OK)
 
     @Operation(
-    		summary = "Get all League",
-    		description = "Get all League")
+    		summary = "Get all Player",
+    		description = "Get all Player")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -187,8 +187,8 @@ public class LeagueController {
     				description = "successful operation")})
 
 	@Tags({ 
-		@Tag(name="League")})
-    public List<LeagueDto> getLeagues() {
-        return this.leagueService.getLeagues().stream().map(LeagueDto::fromEntity).toList();
+		@Tag(name="Player")})
+    public List<PlayerDto> getPlayers() {
+        return this.playerService.getPlayers().stream().map(PlayerDto::fromEntity).toList();
     }
 }

@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import java.util.UUID;
@@ -8,6 +9,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -59,10 +62,14 @@ public class LeagueControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isNoContent());
         
         //check if championship was correctly updated
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
        
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(league, this.mapper.readValue(contentAsString, LeagueDto.class));
+
         //delete the league
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + uuid.toString()));
 
@@ -101,8 +108,8 @@ public class LeagueControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league1.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league2.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league1.getId().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/leagues/" + league2.getId().toString()));
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues")
         		.contentType(MediaType.APPLICATION_JSON)

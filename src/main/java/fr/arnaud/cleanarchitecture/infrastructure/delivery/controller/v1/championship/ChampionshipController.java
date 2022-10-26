@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.championship.v1;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.championship;
 
 import java.util.List;
 import java.util.UUID;
@@ -59,15 +59,15 @@ public class ChampionshipController {
 			description = "Create an championship bla bla")
 
     @ApiResponses(
-    		value = {@ApiResponse(
-    				responseCode = "201", 
-    				description = "created",
-    						content = @Content(
-    						        schema = @Schema(implementation = UUID.class, example = "f67546f1-5a47-4e86-b7a9-dbae57fbbb57")
-    						)
-    				)}
+    		value = {
+    			@ApiResponse(
+	    			responseCode = "201", 
+	    			description = "created",
+					content = @Content(
+							schema = @Schema(implementation = UUID.class, example = "f67546f1-5a47-4e86-b7a9-dbae57fbbb57")
+					)
+    			)}
     		)
-
 	@Tags({ 
 		@Tag(name="Championship")})
     public UUID createChampionship(

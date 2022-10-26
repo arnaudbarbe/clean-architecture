@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -87,9 +90,13 @@ public class TeamControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
         //check if team was correctly created
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(team, this.mapper.readValue(contentAsString, TeamDto.class));
 
         //update the team
         team = new TeamDto(uuid, "PouPoule", championship);
@@ -103,9 +110,12 @@ public class TeamControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isNoContent());
         
         //check if team was correctly updated
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+        result = resultActions.andReturn();
+        contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(team, this.mapper.readValue(contentAsString, TeamDto.class));
 
         //delete the team
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + uuid.toString()));
@@ -146,8 +156,8 @@ public class TeamControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team1.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team2.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team1.getId().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team2.getId().toString()));
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams")
         		.contentType(MediaType.APPLICATION_JSON)

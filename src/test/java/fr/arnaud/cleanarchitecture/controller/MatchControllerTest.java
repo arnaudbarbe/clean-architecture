@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -122,9 +125,14 @@ public class MatchControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isNoContent());
         
         //check if match was correctly updated
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(match, this.mapper.readValue(contentAsString, MatchDto.class));
+
 
         //delete the match
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + uuid.toString()));
@@ -165,8 +173,8 @@ public class MatchControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
         //delete the match
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + aller.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + retour.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + aller.getId().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + retour.getId().toString()));
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs")
         		.contentType(MediaType.APPLICATION_JSON)

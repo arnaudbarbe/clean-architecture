@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import java.time.LocalDateTime;
@@ -8,12 +9,10 @@ import java.util.UUID;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.AbstractTest;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
@@ -21,10 +20,6 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 
 public class SeasonControllerTest extends AbstractTest {
 
-    private ObjectMapper mapper = new Jackson2ObjectMapperBuilder()
-            .serializers(LOCAL_DATETIME_SERIALIZER)
-            .serializationInclusion(JsonInclude.Include.NON_NULL).build();
-    
     @Test
     public void crudSeason() throws Exception {
     	
@@ -43,9 +38,14 @@ public class SeasonControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
         //check if season was correcty created
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(season, this.mapper.readValue(contentAsString, SeasonDto.class));
+
         
         //update the season
         season = new SeasonDto(uuid, "2021/2022", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
@@ -59,9 +59,13 @@ public class SeasonControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isNoContent());
         
         //check if season was correctly updated
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        result = resultActions.andReturn();
+        contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(season, this.mapper.readValue(contentAsString, SeasonDto.class));
 
          //delete the season
         this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + uuid.toString()));
@@ -101,8 +105,8 @@ public class SeasonControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season1.id().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season2.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season1.getId().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season2.getId().toString()));
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons")
         		.contentType(MediaType.APPLICATION_JSON)

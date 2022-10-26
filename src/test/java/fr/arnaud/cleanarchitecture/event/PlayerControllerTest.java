@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.event;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import java.util.UUID;
@@ -8,6 +9,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -36,11 +39,14 @@ public class PlayerControllerTest extends AbstractTest {
         Thread.sleep(2000);
 
         //check if player was correctly created
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
 
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
         
+        assertEquals(player, this.mapper.readValue(contentAsString, PlayerDto.class));
+
         
         player = new PlayerDto(uuid, "arnaud", "barbe2");
         
@@ -49,10 +55,14 @@ public class PlayerControllerTest extends AbstractTest {
         this.playerPublisher.updatePlayer(player);
         Thread.sleep(2000);
        
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().string(json));
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
+        .andExpect(MockMvcResultMatchers.status().isOk());
         
+        result = resultActions.andReturn();
+        contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(player, this.mapper.readValue(contentAsString, PlayerDto.class));
+
         //delete the player
         this.playerPublisher.deletePlayer(uuid);
         Thread.sleep(2000);
@@ -84,8 +94,8 @@ public class PlayerControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.playerPublisher.deletePlayer(player1.id());
-        this.playerPublisher.deletePlayer(player2.id());
+        this.playerPublisher.deletePlayer(player1.getId());
+        this.playerPublisher.deletePlayer(player2.getId());
 
     }
 }

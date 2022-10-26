@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Cluster.Builder;
 import com.datastax.driver.core.Session;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -47,6 +48,8 @@ public abstract class AbstractTest {
 	public static final LocalDateTime FIXED_DATE = LocalDateTime.now();
 	public static LocalDateTimeSerializer LOCAL_DATETIME_SERIALIZER = new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT));
 
+	protected ObjectMapper mapper = new ObjectMapper();
+	
 	@Autowired
 	protected MockMvc mockMvc;
 

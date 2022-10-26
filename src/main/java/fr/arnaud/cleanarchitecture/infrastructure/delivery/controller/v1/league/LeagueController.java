@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.season.v1;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.league;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
+import fr.arnaud.cleanarchitecture.core.service.league.LeagueService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,15 +31,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/v1/seasons")
-@Tag(name = "Season", description = "The Season API")
-public class SeasonController {
+@RequestMapping("/v1/leagues")
+@Tag(name = "League", description = "The League API")
+public class LeagueController {
 
-    private final SeasonService seasonService;
+    private final LeagueService leagueService;
 
     @Autowired
-    public SeasonController(final SeasonService seasonService) {
-        this.seasonService = seasonService;
+    public LeagueController(final LeagueService leagueService) {
+        this.leagueService = leagueService;
     }
 
     
@@ -56,8 +56,8 @@ public class SeasonController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 
 	@Operation(
-			summary = "Create a season", 
-			description = "Create an season bla bla")
+			summary = "Create a league", 
+			description = "Create an league bla bla")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -70,15 +70,15 @@ public class SeasonController {
     		)
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public UUID createSeason(
+		@Tag(name="League")})
+    public UUID createLeague(    		
     		final HttpServletResponse response, 
     		final HttpServletRequest request,
-    		@RequestBody final SeasonDto season) {
+    		@RequestBody final LeagueDto league) {
 		
-		UUID id = this.seasonService.createSeason(season.toEntity());
-		response.setHeader(HttpHeaders.LOCATION, "/v1/seasons" + id);		
-        return id;
+		UUID id = this.leagueService.createLeague(league.toEntity());
+		response.setHeader(HttpHeaders.LOCATION, "/v1/leagues" + id);
+		return id;
     }
 
 	
@@ -90,14 +90,14 @@ public class SeasonController {
 	
 	
 	@PutMapping(
-			value = "/{seasonId}", 
+			value = "/{leagueId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "update a Season", 
-			description = "update a Season")
+			summary = "update a League", 
+			description = "update a League")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -105,9 +105,9 @@ public class SeasonController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public void updateSeason(@PathVariable final UUID seasonId, @RequestBody final SeasonDto season) {
-        this.seasonService.updateSeason(seasonId, season.toEntity());
+		@Tag(name="League")})
+    public void updateLeague(@PathVariable final UUID leagueId, @RequestBody final LeagueDto league) {
+        this.leagueService.updateLeague(leagueId, league.toEntity());
     }
 
 	
@@ -118,13 +118,13 @@ public class SeasonController {
 	
 	
 	@DeleteMapping(
-			value = "/{seasonId}")
+			value = "/{leagueId}")
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "Delete a season", 
-			description = "Delete a season by its identifier")
+			summary = "Delete a league", 
+			description = "Delete a league by its identifier")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -132,9 +132,9 @@ public class SeasonController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public void deleteSeason(@PathVariable final UUID seasonId) {
-        this.seasonService.deleteSeason(seasonId);
+		@Tag(name="League")})
+    public void deleteLeague(@PathVariable final UUID leagueId) {
+        this.leagueService.deleteLeague(leagueId);
     }
 
   
@@ -146,14 +146,14 @@ public class SeasonController {
 	
 	
 	@GetMapping(
-			value = "/{seasonId}", 
+			value = "/{leagueId}", 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.OK)
 
 	@Operation(
-			summary = "Get a Season", 
-			description = "Get a Season")
+			summary = "Get a League", 
+			description = "Get a League")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -161,9 +161,9 @@ public class SeasonController {
 					description = "successful operation") })
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public SeasonDto getSeason(@PathVariable final UUID seasonId) {
-        return SeasonDto.fromEntity(this.seasonService.getSeason(seasonId));
+		@Tag(name="League")})
+    public LeagueDto getLeague(@PathVariable final UUID leagueId) {
+        return LeagueDto.fromEntity(this.leagueService.getLeague(leagueId));
     }	
 	
 	
@@ -178,8 +178,8 @@ public class SeasonController {
 	@ResponseStatus(code = HttpStatus.OK)
 
     @Operation(
-    		summary = "Get all Season",
-    		description = "Get all Season")
+    		summary = "Get all League",
+    		description = "Get all League")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -187,8 +187,8 @@ public class SeasonController {
     				description = "successful operation")})
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public List<SeasonDto> getSeasons() {
-        return this.seasonService.getSeasons().stream().map(SeasonDto::fromEntity).toList();
+		@Tag(name="League")})
+    public List<LeagueDto> getLeagues() {
+        return this.leagueService.getLeagues().stream().map(LeagueDto::fromEntity).toList();
     }
 }

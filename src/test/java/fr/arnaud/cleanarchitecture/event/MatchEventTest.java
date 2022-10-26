@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.event;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -79,10 +82,14 @@ public class MatchEventTest extends AbstractTest {
         Thread.sleep(2000);
         
        //check if match was correctly created
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
 
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(match, this.mapper.readValue(contentAsString, MatchDto.class));
+ 
         //update the match
         match = new MatchDto(uuid, LocalDateTime.now(), championship, team1, team2, 10, 2);
         
@@ -92,10 +99,14 @@ public class MatchEventTest extends AbstractTest {
         Thread.sleep(2000);
         
         //check if championship was correctly updated
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
        
+        result = resultActions.andReturn();
+        contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(match, this.mapper.readValue(contentAsString, MatchDto.class));
+
         //delete the match
         this.matchPublisher.deleteMatch(uuid);
         Thread.sleep(2000);
@@ -129,8 +140,8 @@ public class MatchEventTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.matchPublisher.deleteMatch(match1.id());
-        this.matchPublisher.deleteMatch(match2.id());
+        this.matchPublisher.deleteMatch(match1.getId());
+        this.matchPublisher.deleteMatch(match2.getId());
         Thread.sleep(2000);
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs")

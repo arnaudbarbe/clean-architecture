@@ -4,13 +4,31 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
+import org.springframework.hateoas.RepresentationModel;
 
-public record ChampionshipDto(
-		@NotNull UUID id, 
-		@NotNull String name, 
-		@NotNull PlayerDto player, 
-		@NotNull SeasonDto season, 
-		@NotNull LeagueDto league)  implements Dto {
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
+
+@Getter
+@ToString 
+@EqualsAndHashCode(callSuper = true, of= {"id", "name"})
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class ChampionshipDto extends RepresentationModel<ChampionshipDto> implements Dto {
+	
+	private static final long serialVersionUID = 1L;
+	
+	@NotNull UUID id; 
+	@NotNull String name; 
+	@NotNull PlayerDto player; 
+	@NotNull SeasonDto season; 
+	@NotNull LeagueDto league;
 
 	public fr.arnaud.cleanarchitecture.core.entity.Championship toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entity.Championship.builder()

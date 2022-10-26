@@ -21,7 +21,7 @@ public class MessageUpdateSeasonHandler implements GenericHandler<SeasonDto>{
 
 	@Override
 	public Object handle(final SeasonDto season, final MessageHeaders headers) {
-		this.seasonService.updateSeason(season.id(), season.toEntity());
+		this.seasonService.updateSeason(season.getId(), season.toEntity());
 		return null;
 	}
 }

@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.match.v1;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.match;
 
 import java.util.List;
 import java.util.UUID;

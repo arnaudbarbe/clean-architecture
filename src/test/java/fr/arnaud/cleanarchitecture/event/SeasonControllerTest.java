@@ -1,5 +1,6 @@
 package fr.arnaud.cleanarchitecture.event;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,8 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -37,9 +40,14 @@ public class SeasonControllerTest extends AbstractTest {
         Thread.sleep(2000);
 
         //check if season was correcty created
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string(json));
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(season, this.mapper.readValue(contentAsString, SeasonDto.class));
+
 
         season = new SeasonDto(uuid, "2025/2026", LocalDateTime.of(2025, 9, 1, 0, 0, 0), LocalDateTime.of(2026, 6, 30, 0, 0, 0));
         json = this.mapper.writeValueAsString(season);
@@ -47,9 +55,13 @@ public class SeasonControllerTest extends AbstractTest {
         this.seasonPublisher.updateSeason(season);
         Thread.sleep(2000);
        
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().string(json));
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        result = resultActions.andReturn();
+        contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(season, this.mapper.readValue(contentAsString, SeasonDto.class));
 
         //delete the season
         this.seasonPublisher.deleteLeague(uuid);
@@ -82,8 +94,8 @@ public class SeasonControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.seasonPublisher.deleteLeague(season1.id());
-        this.seasonPublisher.deleteLeague(season2.id());
+        this.seasonPublisher.deleteLeague(season1.getId());
+        this.seasonPublisher.deleteLeague(season2.getId());
 
     }
 }
