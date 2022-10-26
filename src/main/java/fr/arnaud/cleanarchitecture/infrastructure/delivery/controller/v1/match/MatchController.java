@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -163,7 +164,11 @@ public class MatchController {
 	@Tags({ 
 		@Tag(name="Match")})
     public MatchDto getMatch(@PathVariable final UUID matchId) {
-        return MatchDto.fromEntity(this.matchService.getMatch(matchId));
+        MatchDto dto = MatchDto.fromEntity(this.matchService.getMatch(matchId));
+		if (dto != null) {
+			dto.add(WebMvcLinkBuilder.linkTo(MatchController.class).slash(dto.getId()).withSelfRel());
+		}
+		return dto;
     }	
 	
 	

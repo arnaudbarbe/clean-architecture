@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -161,7 +162,11 @@ public class ChampionshipController {
 	@Tags({ 
 		@Tag(name="Championship")})
     public ChampionshipDto getChampionship(@PathVariable final UUID championshipId) {
-        return ChampionshipDto.fromEntity(this.championshipService.getChampionship(championshipId));
+		ChampionshipDto dto = ChampionshipDto.fromEntity(this.championshipService.getChampionship(championshipId));
+		if (dto != null) {
+			dto.add(WebMvcLinkBuilder.linkTo(ChampionshipController.class).slash(dto.getId()).withSelfRel());
+		}
+		return dto;
     }	
 	
 	

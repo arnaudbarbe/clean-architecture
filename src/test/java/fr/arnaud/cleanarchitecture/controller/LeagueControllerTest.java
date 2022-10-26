@@ -46,10 +46,14 @@ public class LeagueControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
         //check if league was correctly created
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.content().string("{\"id\":\"" + uuid.toString()  + "\",\"name\":\"Afebas\"}"));
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
+            .andExpect(MockMvcResultMatchers.status().isOk());
 
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+        
+        assertEquals(league, this.mapper.readValue(contentAsString, LeagueDto.class));
+        
         //update the league
         league = new LeagueDto(uuid, "FFB");
         
@@ -62,11 +66,11 @@ public class LeagueControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isNoContent());
         
         //check if championship was correctly updated
-        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk());
        
-        MvcResult result = resultActions.andReturn();
-        String contentAsString = result.getResponse().getContentAsString();
+        result = resultActions.andReturn();
+        contentAsString = result.getResponse().getContentAsString();
         
         assertEquals(league, this.mapper.readValue(contentAsString, LeagueDto.class));
 

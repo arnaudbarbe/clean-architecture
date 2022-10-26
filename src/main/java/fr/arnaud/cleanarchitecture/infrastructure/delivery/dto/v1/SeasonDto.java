@@ -23,7 +23,7 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @ToString 
-@EqualsAndHashCode(callSuper = true, of= {"id", "name", "startDate", "endDate"})
+@EqualsAndHashCode(callSuper = true, of= {"id", "name"})
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @FieldDefaults(level = AccessLevel.PRIVATE)

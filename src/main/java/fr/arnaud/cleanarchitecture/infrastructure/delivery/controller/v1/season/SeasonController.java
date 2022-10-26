@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -163,7 +164,11 @@ public class SeasonController {
 	@Tags({ 
 		@Tag(name="Season")})
     public SeasonDto getSeason(@PathVariable final UUID seasonId) {
-        return SeasonDto.fromEntity(this.seasonService.getSeason(seasonId));
+        SeasonDto dto = SeasonDto.fromEntity(this.seasonService.getSeason(seasonId));
+		if (dto != null) {
+			dto.add(WebMvcLinkBuilder.linkTo(SeasonController.class).slash(dto.getId()).withSelfRel());
+		}
+		return dto;
     }	
 	
 	
