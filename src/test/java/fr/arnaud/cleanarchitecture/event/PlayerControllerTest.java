@@ -94,8 +94,8 @@ public class PlayerControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.playerPublisher.deletePlayer(player1.getId());
-        this.playerPublisher.deletePlayer(player2.getId());
+        this.playerPublisher.deletePlayer(player1.id());
+        this.playerPublisher.deletePlayer(player2.id());
 
     }
 }

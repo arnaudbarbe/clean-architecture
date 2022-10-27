@@ -42,7 +42,7 @@ public class MatchControllerTest extends AbstractTest {
 
     	//create one 
     	UUID uuid = UUID.randomUUID();
-    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
     	String json = this.mapper.writeValueAsString(season);
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
         .content(json)
@@ -114,7 +114,7 @@ public class MatchControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.status().isOk());
 
         //update the match
-        match = new MatchDto(uuid, LocalDateTime.now(), championship, team1, team2, 8, 3);
+        match = new MatchDto(uuid, LocalDateTime.now().withNano(0), championship, team1, team2, 8, 3);
         
         json = this.mapper.writeValueAsString(match);
         
@@ -173,8 +173,8 @@ public class MatchControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
         //delete the match
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + aller.getId().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + retour.getId().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + aller.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/matchs/" + retour.id().toString()));
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs")
         		.contentType(MediaType.APPLICATION_JSON)

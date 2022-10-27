@@ -4,28 +4,9 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.hateoas.RepresentationModel;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
-
-@Getter
-@ToString 
-@EqualsAndHashCode(callSuper = true, of= {"id", "name"})
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class LeagueDto extends RepresentationModel<LeagueDto> implements Dto {
-
-	private static final long serialVersionUID = 1L;
-
-	@NotNull UUID id;
-	@NotNull String name;
+public record LeagueDto(
+		@NotNull UUID id, 
+		@NotNull String name) implements Dto {
 
 	public fr.arnaud.cleanarchitecture.core.entity.League toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entity.League.builder()

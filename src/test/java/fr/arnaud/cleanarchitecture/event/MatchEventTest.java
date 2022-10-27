@@ -43,7 +43,7 @@ public class MatchEventTest extends AbstractTest {
         Thread.sleep(2000);
 
     	UUID uuid = UUID.randomUUID();
-    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
         this.seasonPublisher.createSeason(season);
         Thread.sleep(2000);
 
@@ -75,7 +75,7 @@ public class MatchEventTest extends AbstractTest {
 
         //create one match
         uuid = UUID.randomUUID();
-    	MatchDto match = new MatchDto(uuid, LocalDateTime.now(), championship, team1, team2, 10, 2);
+    	MatchDto match = new MatchDto(uuid, LocalDateTime.now().withNano(0), championship, team1, team2, 10, 2);
         String json = this.mapper.writeValueAsString(match);
         
         this.matchPublisher.createMatch(match);
@@ -91,7 +91,7 @@ public class MatchEventTest extends AbstractTest {
         assertEquals(match, this.mapper.readValue(contentAsString, MatchDto.class));
  
         //update the match
-        match = new MatchDto(uuid, LocalDateTime.now(), championship, team1, team2, 10, 2);
+        match = new MatchDto(uuid, LocalDateTime.now().withNano(0), championship, team1, team2, 10, 2);
         
         json = this.mapper.writeValueAsString(match);
         
@@ -117,7 +117,7 @@ public class MatchEventTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	MatchDto match1 = new MatchDto(uuid, LocalDateTime.now(), championship, team1, team2, 10, 2);
+    	MatchDto match1 = new MatchDto(uuid, LocalDateTime.now().withNano(0), championship, team1, team2, 10, 2);
         
         json = this.mapper.writeValueAsString(match1);
  
@@ -126,7 +126,7 @@ public class MatchEventTest extends AbstractTest {
         Thread.sleep(2000);
 
     	uuid = UUID.randomUUID();
-    	MatchDto match2 = new MatchDto(uuid, LocalDateTime.now(), championship, team2, team1, 4, 8);
+    	MatchDto match2 = new MatchDto(uuid, LocalDateTime.now().withNano(0), championship, team2, team1, 4, 8);
         
         json = this.mapper.writeValueAsString(match2);
  
@@ -140,8 +140,8 @@ public class MatchEventTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.matchPublisher.deleteMatch(match1.getId());
-        this.matchPublisher.deleteMatch(match2.getId());
+        this.matchPublisher.deleteMatch(match1.id());
+        this.matchPublisher.deleteMatch(match2.id());
         Thread.sleep(2000);
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs")

@@ -21,7 +21,7 @@ public class MessageUpdateChampionshipHandler implements GenericHandler<Champion
 
 	@Override
 	public Object handle(final ChampionshipDto championship, final MessageHeaders headers) {
-		this.championshipService.updateChampionship(championship.getId(), championship.toEntity());
+		this.championshipService.updateChampionship(championship.id(), championship.toEntity());
 		return null;
 	}
 }

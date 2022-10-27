@@ -21,7 +21,7 @@ public class MessageUpdateLeagueHandler implements GenericHandler<LeagueDto>{
 
 	@Override
 	public Object handle(final LeagueDto league, final MessageHeaders headers) {
-		this.leagueService.updateLeague(league.getId(), league.toEntity());
+		this.leagueService.updateLeague(league.id(), league.toEntity());
 		return null;
 	}
 }

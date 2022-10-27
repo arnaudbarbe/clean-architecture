@@ -48,12 +48,12 @@ http://localhost:8080/swagger-ui/index.html
 
 ## HATEOAS
 
-add HATEOAS support to return functionnalities like delete, etc..
+HATEOAS return link to delete, update, get and getAll on getOne and getAll operations
 
 ## resilience
 
-add an gateway to an external service to add response caching and circuit breaker
-add circuit breaker on controller
+add Circuit Breaker, Bulk Head, Cache on gateway
+add Rate Limit on controller
 add exponential back off on consumer
 
 use resillience4j

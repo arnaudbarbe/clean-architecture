@@ -42,7 +42,7 @@ public class TeamControllerTest extends AbstractTest {
 
     	//create one team
     	UUID uuid = UUID.randomUUID();
-    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
     	String json = this.mapper.writeValueAsString(season);
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
         .content(json)
@@ -156,8 +156,8 @@ public class TeamControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team1.getId().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team2.getId().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team1.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/teams/" + team2.id().toString()));
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams")
         		.contentType(MediaType.APPLICATION_JSON)

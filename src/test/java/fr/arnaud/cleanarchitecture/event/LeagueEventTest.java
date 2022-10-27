@@ -101,8 +101,8 @@ public class LeagueEventTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.leaguePublisher.deleteLeague(league1.getId());
-        this.leaguePublisher.deleteLeague(league2.getId());
+        this.leaguePublisher.deleteLeague(league1.id());
+        this.leaguePublisher.deleteLeague(league2.id());
         Thread.sleep(2000);
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/leagues")

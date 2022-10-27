@@ -48,7 +48,7 @@ public class ChampionshipEventTest extends AbstractTest {
         this.playerPublisher.createPlayer(player);
         
         uuid = UUID.randomUUID();
-    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
         this.seasonPublisher.createSeason(season);
         
         //create one championship
@@ -117,8 +117,8 @@ public class ChampionshipEventTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.championshipPublisher.deleteChampionship(championship1.getId());
-        this.championshipPublisher.deleteChampionship(championship2.getId());
+        this.championshipPublisher.deleteChampionship(championship1.id());
+        this.championshipPublisher.deleteChampionship(championship2.id());
         Thread.sleep(2000);
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships")

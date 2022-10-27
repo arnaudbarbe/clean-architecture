@@ -3,14 +3,13 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.champi
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.arnaud.cleanarchitecture.core.entity.Championship;
 import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.ChampionshipModel;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,6 +37,11 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 public class ChampionshipController {
 
     private final ChampionshipService championshipService;
+    
+    public static final String CREATE_RELATION = "create";
+    public static final String UPDATE_RELATION = "update";
+    public static final String GETALL_RELATION = "getAll";
+    public static final String DELETE_RELATION = "delete";
 
     @Autowired
     public ChampionshipController(final ChampionshipService championshipService) {
@@ -71,14 +77,16 @@ public class ChampionshipController {
     		)
 	@Tags({ 
 		@Tag(name="Championship")})
-    public UUID createChampionship(
-    		final HttpServletResponse response, 
-    		final HttpServletRequest request,
-    		@RequestBody final ChampionshipDto championship) {
+    public ResponseEntity<UUID> createChampionship(@RequestBody final ChampionshipDto championship) {
 		
 		UUID id = this.championshipService.createChampionship(championship.toEntity());
-		response.setHeader(HttpHeaders.LOCATION, "/v1/championships/" + id);
-        return id;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set(HttpHeaders.LOCATION, "/v1/championships/" + id);
+		
+		return ResponseEntity
+	    	      .status(HttpStatus.CREATED)
+	    	      .headers(responseHeaders)
+	    	      .body(id);
     }
 
 	
@@ -106,8 +114,9 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public void updateChampionship(@PathVariable final UUID championshipId, @RequestBody final ChampionshipDto championship) {
+    public ResponseEntity<Void> updateChampionship(@PathVariable final UUID championshipId, @RequestBody final ChampionshipDto championship) {
         this.championshipService.updateChampionship(championshipId, championship.toEntity());
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 	
@@ -133,8 +142,9 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public void deleteChampionship(@PathVariable final UUID championshipId) {
+    public ResponseEntity<Void> deleteChampionship(@PathVariable final UUID championshipId) {
         this.championshipService.deleteChampionship(championshipId);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
   
@@ -161,12 +171,29 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public ChampionshipDto getChampionship(@PathVariable final UUID championshipId) {
-		ChampionshipDto dto = ChampionshipDto.fromEntity(this.championshipService.getChampionship(championshipId));
-		if (dto != null) {
-			dto.add(WebMvcLinkBuilder.linkTo(ChampionshipController.class).slash(dto.getId()).withSelfRel());
+    public ResponseEntity<ChampionshipModel> getChampionship(@PathVariable final UUID championshipId) {
+		Championship entity = this.championshipService.getChampionship(championshipId);
+		if (entity == null) {
+			return null;
+		} else {
+			
+			Link self = WebMvcLinkBuilder.linkTo(this.getClass()).slash(entity.getId()).withSelfRel();
+			Link create =  WebMvcLinkBuilder.linkTo(this.getClass()).withRel(CREATE_RELATION);
+			Link update =  WebMvcLinkBuilder.linkTo(this.getClass()).slash(entity.getId()).withRel(UPDATE_RELATION);
+			Link delete =  WebMvcLinkBuilder.linkTo(this.getClass()).slash(entity.getId()).withRel(DELETE_RELATION);
+			Link getAll =  WebMvcLinkBuilder.linkTo(this.getClass()).withRel(GETALL_RELATION);
+			
+			ChampionshipModel model = ChampionshipModel.fromEntity(entity)
+			.add(self)
+			.add(create)
+			.add(update)
+			.add(delete)
+			.add(getAll);
+			
+			return ResponseEntity
+		    	      .status(HttpStatus.OK)
+		    	      .body(model);
 		}
-		return dto;
     }	
 	
 	
@@ -191,7 +218,23 @@ public class ChampionshipController {
 
 	@Tags({ 
 		@Tag(name="Championship")})
-    public List<ChampionshipDto> getChampionships() {
-        return this.championshipService.getChampionships().stream().map(ChampionshipDto::fromEntity).toList();
+    public ResponseEntity<List<ChampionshipModel>> getChampionships() {
+		List<ChampionshipModel> models = this.championshipService.getChampionships().stream()
+        		.map(ChampionshipModel::fromEntity)
+        		//self
+        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).slash(model.getId()).withSelfRel()))
+        		//create
+        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).withRel(CREATE_RELATION)))
+        		//update
+        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).slash(model.getId()).withRel(UPDATE_RELATION)))
+        		//delete
+        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).slash(model.getId()).withRel(DELETE_RELATION)))
+        		//getAll
+        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).withRel(GETALL_RELATION)))
+        		.toList();
+
+		return ResponseEntity
+	    	      .status(HttpStatus.OK)
+	    	      .body(models);
     }
 }

@@ -21,7 +21,7 @@ public class MessageUpdatePlayerHandler implements GenericHandler<PlayerDto>{
 
 	@Override
 	public Object handle(final PlayerDto player, final MessageHeaders headers) {
-		this.playerService.updatePlayer(player.getId(), player.toEntity());
+		this.playerService.updatePlayer(player.id(), player.toEntity());
 		return null;
 	}
 }

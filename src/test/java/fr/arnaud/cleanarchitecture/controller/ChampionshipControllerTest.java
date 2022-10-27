@@ -40,7 +40,7 @@ public class ChampionshipControllerTest extends AbstractTest {
 
         //create one championship
         UUID uuid = UUID.randomUUID();
-    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
     	String json = this.mapper.writeValueAsString(season);
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
         .content(json)
@@ -145,9 +145,9 @@ public class ChampionshipControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
         
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship1.getId().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship2.getId().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship.getId().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship1.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship2.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/championships/" + championship.id().toString()));
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships")
         		.contentType(MediaType.APPLICATION_JSON)

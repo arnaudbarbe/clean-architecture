@@ -33,7 +33,7 @@ public class SeasonControllerTest extends AbstractTest {
     	
     	//create one season
         UUID uuid = UUID.randomUUID();
-    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0).withNano(0), LocalDateTime.of(2023, 6, 30, 0, 0, 0).withNano(0));
         String json = this.mapper.writeValueAsString(season);
         
         this.seasonPublisher.createSeason(season);
@@ -49,7 +49,7 @@ public class SeasonControllerTest extends AbstractTest {
         assertEquals(season, this.mapper.readValue(contentAsString, SeasonDto.class));
 
 
-        season = new SeasonDto(uuid, "2025/2026", LocalDateTime.of(2025, 9, 1, 0, 0, 0), LocalDateTime.of(2026, 6, 30, 0, 0, 0));
+        season = new SeasonDto(uuid, "2025/2026", LocalDateTime.of(2025, 9, 1, 0, 0, 0).withNano(0), LocalDateTime.of(2026, 6, 30, 0, 0, 0).withNano(0));
         json = this.mapper.writeValueAsString(season);
         
         this.seasonPublisher.updateSeason(season);
@@ -73,7 +73,7 @@ public class SeasonControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	SeasonDto season1 = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season1 = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0).withNano(0), LocalDateTime.of(2023, 6, 30, 0, 0, 0).withNano(0));
         
         json = this.mapper.writeValueAsString(season1);
  
@@ -81,7 +81,7 @@ public class SeasonControllerTest extends AbstractTest {
         this.seasonPublisher.createSeason(season1);
         
     	uuid = UUID.randomUUID();
-    	SeasonDto season2 = new SeasonDto(uuid, "2023/2024", LocalDateTime.of(2023, 9, 1, 0, 0, 0), LocalDateTime.of(2024, 6, 30, 0, 0, 0));
+    	SeasonDto season2 = new SeasonDto(uuid, "2023/2024", LocalDateTime.of(2023, 9, 1, 0, 0, 0).withNano(0), LocalDateTime.of(2024, 6, 30, 0, 0, 0).withNano(0));
         
         json = this.mapper.writeValueAsString(season2);
  
@@ -94,8 +94,8 @@ public class SeasonControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.seasonPublisher.deleteLeague(season1.getId());
-        this.seasonPublisher.deleteLeague(season2.getId());
+        this.seasonPublisher.deleteLeague(season1.id());
+        this.seasonPublisher.deleteLeague(season2.id());
 
     }
 }

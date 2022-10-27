@@ -28,7 +28,7 @@ public class SeasonControllerTest extends AbstractTest {
 
     	//create one season
         UUID uuid = UUID.randomUUID();
-    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
         String json = this.mapper.writeValueAsString(season);
         
         this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
@@ -48,7 +48,7 @@ public class SeasonControllerTest extends AbstractTest {
 
         
         //update the season
-        season = new SeasonDto(uuid, "2021/2022", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+        season = new SeasonDto(uuid, "2021/2022", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
         
         json = this.mapper.writeValueAsString(season);
         
@@ -76,7 +76,7 @@ public class SeasonControllerTest extends AbstractTest {
             .andExpect(MockMvcResultMatchers.content().string(""));
 
     	uuid = UUID.randomUUID();
-    	SeasonDto season1 = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0));
+    	SeasonDto season1 = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
         
         json = this.mapper.writeValueAsString(season1);
  
@@ -88,7 +88,7 @@ public class SeasonControllerTest extends AbstractTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         
     	uuid = UUID.randomUUID();
-    	SeasonDto season2 = new SeasonDto(uuid, "2023/2024", LocalDateTime.of(2023, 9, 1, 0, 0, 0), LocalDateTime.of(2024, 6, 30, 0, 0, 0));
+    	SeasonDto season2 = new SeasonDto(uuid, "2023/2024", LocalDateTime.of(2023, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2024, 6, 30, 0, 0, 0, 0));
         
         json = this.mapper.writeValueAsString(season2);
  
@@ -105,8 +105,8 @@ public class SeasonControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season1.getId().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season2.getId().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season1.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/seasons/" + season2.id().toString()));
         
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons")
         		.contentType(MediaType.APPLICATION_JSON)

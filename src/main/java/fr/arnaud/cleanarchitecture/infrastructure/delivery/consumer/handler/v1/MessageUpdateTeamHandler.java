@@ -21,7 +21,7 @@ public class MessageUpdateTeamHandler implements GenericHandler<TeamDto>{
 
 	@Override
 	public Object handle(final TeamDto team, final MessageHeaders headers) {
-		this.teamService.updateTeam(team.getId(), team.toEntity());
+		this.teamService.updateTeam(team.id(), team.toEntity());
 		return null;
 	}
 }

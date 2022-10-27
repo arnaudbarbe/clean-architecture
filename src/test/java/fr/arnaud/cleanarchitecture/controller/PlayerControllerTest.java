@@ -112,8 +112,8 @@ public class PlayerControllerTest extends AbstractTest {
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player1.getId().toString()));
-        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player2.getId().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player1.id().toString()));
+        this.mockMvc.perform(MockMvcRequestBuilders.delete("/v1/players/" + player2.id().toString()));
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players")
         		.contentType(MediaType.APPLICATION_JSON)
