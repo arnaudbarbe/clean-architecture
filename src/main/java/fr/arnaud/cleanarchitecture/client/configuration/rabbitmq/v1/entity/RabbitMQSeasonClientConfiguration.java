@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.entity.v1;
+package fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.entity;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.context.annotation.Bean;

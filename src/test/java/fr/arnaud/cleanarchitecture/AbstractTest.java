@@ -32,12 +32,12 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.ChampionshipPublisher;
-import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.LeaguePublisher;
-import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.MatchPublisher;
-import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.PlayerPublisher;
-import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.SeasonPublisher;
-import fr.arnaud.cleanarchitecture.infrastructure.publisher.entity.v1.TeamPublisher;
+import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.ChampionshipPublisher;
+import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.LeaguePublisher;
+import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.MatchPublisher;
+import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.PlayerPublisher;
+import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.SeasonPublisher;
+import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.TeamPublisher;
 
 
 @ExtendWith(SpringExtension.class)
