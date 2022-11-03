@@ -61,9 +61,11 @@ use resillience4j
 ## security 
 
 An instance of Keycloak was added
+
 admin interface is available at http://localhost:8080/
-user : admin
-password : admin
+
+* user : admin
+* password : admin
 
 2 users exist
 - user: user1, password: user1
