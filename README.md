@@ -60,7 +60,7 @@ use resillience4j
 
 ## security 
 
-An instance of Keycloak was added
+An instance of Keycloak was added in docker compose file
 
 admin interface is available at http://localhost:8080/
 
