@@ -60,8 +60,14 @@ use resillience4j
 
 ## security 
 
-To be complete these web services need to be secure
-https://www.baeldung.com/security-spring
+An instance of Keycloak was added
+admin interface is available at http://localhost:8080/
+user : admin
+password : admin
+
+2 users exist
+- user: user1, password: user1
+- user: admin1, password: admin1
 
 ## SAGA or LRA support 
 
