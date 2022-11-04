@@ -34,40 +34,32 @@ class SecurityConfig {
         
 	        .antMatchers(HttpMethod.POST, "/auth**").permitAll()
 
-	        .antMatchers(HttpMethod.DELETE, "/v1/championship/{championshipId}").hasAnyRole(Role.ADMIN.name())
+	        .antMatchers(HttpMethod.DELETE, "/v1/championships/{championshipId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.DELETE, "/v1/leagues/{leagueId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.DELETE, "/v1/matchs/{matchId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.DELETE, "/v1/players/{playerId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.DELETE, "/v1/seasons/{seasonId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.DELETE, "/v1/teams/{teamId}").hasAnyRole(Role.ADMIN.name())
 	        
-	        .antMatchers(HttpMethod.PUT, "/v1/championship/{championshipId}").hasAnyRole(Role.ADMIN.name())
+	        .antMatchers(HttpMethod.PUT, "/v1/championships/{championshipId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.PUT, "/v1/leagues/{leagueId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.PUT, "/v1/matchs/{matchId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.PUT, "/v1/players/{playerId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.PUT, "/v1/seasons/{seasonId}").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.PUT, "/v1/teams/{teamId}").hasAnyRole(Role.ADMIN.name())
 	        
-	        .antMatchers(HttpMethod.POST, "/v1/championship").hasAnyRole(Role.ADMIN.name())
+	        .antMatchers(HttpMethod.POST, "/v1/championships").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.POST, "/v1/leagues").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.POST, "/v1/matchs").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.POST, "/v1/players").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.POST, "/v1/seasons").hasAnyRole(Role.ADMIN.name())
 	        .antMatchers(HttpMethod.POST, "/v1/teams").hasAnyRole(Role.ADMIN.name())
         
-	        .antMatchers(HttpMethod.GET, "/v1/championship*").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
-	        .antMatchers(HttpMethod.GET, "/v1/leagues*").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
-	        .antMatchers(HttpMethod.GET, "/v1/matchs*").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
-	        .antMatchers(HttpMethod.GET, "/v1/players*").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
-	        .antMatchers(HttpMethod.GET, "/v1/seasons*").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
-	        .antMatchers(HttpMethod.GET, "/v1/teams*").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
-	        
+	        .antMatchers(HttpMethod.GET, "/v1/**").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
 	       
 
 	        ;
         
-	    http.csrf().disable();
-	        
         http.formLogin().disable();
         
         return http.build();
