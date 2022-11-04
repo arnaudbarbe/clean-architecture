@@ -113,7 +113,7 @@ public abstract class AbstractTest {
 			
 	@BeforeEach
 	public void setUp() throws SQLException {
-		cleanDatabase();
+		cleanDatabases();
 	}
 	
 	@AfterEach
@@ -152,7 +152,7 @@ public abstract class AbstractTest {
     	return token;
 	}
 	
-	private void cleanDatabase() throws SQLException {
+	private void cleanDatabases() throws SQLException {
 
 		// sql
 		DataSource dataSource = setupDataSource(this.sqlUrl, this.sqlUserName, this.sqlPassword);

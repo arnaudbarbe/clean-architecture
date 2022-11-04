@@ -63,6 +63,8 @@ services:
       - 8080:8080
     depends_on:
       - postgres
+    volumes:
+      - ./realm.json:/tmp/realm.json
     environment:
       DB_VENDOR: POSTGRES
       DB_ADDR: postgres
@@ -71,7 +73,9 @@ services:
       DB_SCHEMA: public
       DB_PASSWORD: keycloak
       KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: admin    
+      KEYCLOAK_PASSWORD: admin   
+      KEYCLOAK_IMPORT: /tmp/realm.json
+       
 networks:
   clean:
 
