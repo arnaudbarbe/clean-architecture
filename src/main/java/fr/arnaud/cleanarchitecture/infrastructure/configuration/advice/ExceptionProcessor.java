@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.datastax.oss.driver.api.core.servererrors.UnauthorizedException;
 
 import fr.arnaud.cleanarchitecture.core.entity.DomainError;
-import fr.arnaud.cleanarchitecture.core.exception.BadCurrentPasswordException;
+import fr.arnaud.cleanarchitecture.core.exception.BadCredentialsException;
 import fr.arnaud.cleanarchitecture.core.exception.BadParameterException;
 import fr.arnaud.cleanarchitecture.core.exception.BadUuidException;
 import fr.arnaud.cleanarchitecture.core.exception.DomainException;
@@ -22,6 +22,7 @@ import fr.arnaud.cleanarchitecture.core.exception.EntityAlreadyExistException;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
 import fr.arnaud.cleanarchitecture.core.exception.ForbiddenException;
 import fr.arnaud.cleanarchitecture.core.exception.NotAllowedException;
+import fr.arnaud.cleanarchitecture.core.exception.UserAlreadyExistException;
 import fr.arnaud.cleanarchitecture.core.exception.ValidationException;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -53,9 +54,9 @@ public class ExceptionProcessor  {
 		LOGGER.error("handleConflict", ex);
 		return new DomainError(DomainError.ErrorCodes.BAD_REQUEST, ex.getMessage());
 	}
-
+	
 	@ExceptionHandler({
-		BadCurrentPasswordException.class})
+		BadCredentialsException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	@ApiResponse(
@@ -63,12 +64,12 @@ public class ExceptionProcessor  {
 			description = "Bad Request",
 			content = @Content(
 					mediaType = MediaType.APPLICATION_JSON_VALUE,
-			        schema = @Schema(implementation = DomainError.class, example = "{\r\n  \"code\": \"BAD_CURRENT_PASSWORD\",\r\n  \"message\": \"Current password doesn't match!\"\r\n}")
+			        schema = @Schema(implementation = DomainError.class, example = "{\r\n  \"code\": \"BAD_CREDENTIALS\",\r\n  \"message\": \"user or password does not match !\"\r\n}")
 			)
 		)
-	public DomainError badCurrentPasswordWsException(final BadCurrentPasswordException ex) {
+	public DomainError badCurrentPasswordWsException(final BadCredentialsException ex) {
 		LOGGER.error("badCurrentPasswordWsException", ex);
-		return new DomainError(DomainError.ErrorCodes.BAD_CURRENT_PASSWORD, "Current password doesn't match!");
+		return new DomainError(DomainError.ErrorCodes.BAD_CREDENTIALS, "user or password does not match !");
 	}
 
 	@ExceptionHandler({
@@ -176,6 +177,7 @@ public class ExceptionProcessor  {
 	}
 
 	@ExceptionHandler({
+		UserAlreadyExistException.class,
 		EntityAlreadyExistException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
 	@ResponseBody

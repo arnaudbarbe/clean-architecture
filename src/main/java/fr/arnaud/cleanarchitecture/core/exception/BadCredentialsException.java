@@ -1,11 +1,11 @@
 package fr.arnaud.cleanarchitecture.core.exception;
 
-public class DomainException extends RuntimeException {
+public class BadCredentialsException extends RuntimeException {
 
 
 	private static final long serialVersionUID = 1L;
 
-	public DomainException(final String message) {
+	public BadCredentialsException(final String message) {
         super(message);
     }
 }

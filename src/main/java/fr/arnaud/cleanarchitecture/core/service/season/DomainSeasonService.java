@@ -3,11 +3,14 @@ package fr.arnaud.cleanarchitecture.core.service.season;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import fr.arnaud.cleanarchitecture.core.entity.Season;
 import fr.arnaud.cleanarchitecture.core.repository.SeasonRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Transactional
 public class DomainSeasonService implements SeasonService {
 
     private final SeasonRepository seasonRepository;

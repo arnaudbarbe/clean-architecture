@@ -44,12 +44,16 @@ public class TeamControllerTest extends AbstractTest {
     	UUID uuid = UUID.randomUUID();
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
     	String json = this.mapper.writeValueAsString(season);
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
+    	ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/v1/seasons")
         .content(json)
         .contentType(MediaType.APPLICATION_JSON)
-        .accept(MediaType.APPLICATION_JSON))
-        .andExpect(MockMvcResultMatchers.status().isCreated());
-        
+        .accept(MediaType.APPLICATION_JSON));
+    	
+    	MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+    	resultActions.andExpect(MockMvcResultMatchers.status().isCreated());
+    	
     	uuid = UUID.randomUUID();
     	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
     	json = this.mapper.writeValueAsString(player);
@@ -90,11 +94,11 @@ public class TeamControllerTest extends AbstractTest {
         .andExpect(MockMvcResultMatchers.status().isCreated());
 
         //check if team was correctly created
-        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
             .andExpect(MockMvcResultMatchers.status().isOk());
         
-        MvcResult result = resultActions.andReturn();
-        String contentAsString = result.getResponse().getContentAsString();
+        result = resultActions.andReturn();
+        contentAsString = result.getResponse().getContentAsString();
         
         assertEquals(team, this.mapper.readValue(contentAsString, TeamDto.class));
 

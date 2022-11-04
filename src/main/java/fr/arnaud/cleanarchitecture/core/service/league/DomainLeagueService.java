@@ -3,11 +3,14 @@ package fr.arnaud.cleanarchitecture.core.service.league;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import fr.arnaud.cleanarchitecture.core.entity.League;
 import fr.arnaud.cleanarchitecture.core.repository.LeagueRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Transactional
 public class DomainLeagueService implements LeagueService {
 
     private final LeagueRepository leagueRepository;

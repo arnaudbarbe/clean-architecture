@@ -3,11 +3,14 @@ package fr.arnaud.cleanarchitecture.core.service.player;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import fr.arnaud.cleanarchitecture.core.entity.Player;
 import fr.arnaud.cleanarchitecture.core.repository.PlayerRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Transactional
 public class DomainPlayerService implements PlayerService {
 
     private final PlayerRepository playerRepository;

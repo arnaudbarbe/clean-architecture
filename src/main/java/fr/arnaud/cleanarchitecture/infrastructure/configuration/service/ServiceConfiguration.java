@@ -30,6 +30,7 @@ import fr.arnaud.cleanarchitecture.core.service.season.DomainSeasonService;
 import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
 import fr.arnaud.cleanarchitecture.core.service.team.DomainTeamService;
 import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
+import fr.arnaud.cleanarchitecture.infrastructure.service.AuthService;
 
 @Configuration
 @ComponentScan(basePackageClasses = CleanArchitectureApplication.class)
@@ -67,6 +68,11 @@ public class ServiceConfiguration {
     @Bean
     TeamService teamService(final TeamRepository teamRepository) {
         return new DomainTeamService(teamRepository);
+    }
+    
+    @Bean
+    AuthService authService() {
+        return new AuthService();
     }
     
     @Bean

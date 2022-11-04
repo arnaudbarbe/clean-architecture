@@ -39,19 +39,39 @@ services:
       - clean
 
   rabbitmq:
-      container_name: rabbitmq_clean
-      hostname: "rabbitmq"
-      image: rabbitmq:3.8.11-management-alpine
-      networks:
-          - clean
-      ports:
-          - 5672:5672
-          - 15672:15672
-      volumes:
-          - rabbitmq-etc:/etc/rabbitmq
-          - rabbitmq-data:/var/lib/rabbitmq
-          - rabbitmq-log:/var/log/rabbitmq
+    container_name: rabbitmq_clean
+    hostname: "rabbitmq"
+    image: rabbitmq:3.8.11-management-alpine
+    networks:
+      - clean
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq-etc:/etc/rabbitmq
+      - rabbitmq-data:/var/lib/rabbitmq
+      - rabbitmq-log:/var/log/rabbitmq
 
+  keycloak:
+    container_name: keycloak_clean
+    image: quay.io/keycloak/keycloak:legacy
+    networks:
+      - clean
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: keycloak
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin    
 networks:
   clean:
 

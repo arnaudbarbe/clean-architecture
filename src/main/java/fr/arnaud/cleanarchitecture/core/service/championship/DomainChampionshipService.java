@@ -3,11 +3,14 @@ package fr.arnaud.cleanarchitecture.core.service.championship;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import fr.arnaud.cleanarchitecture.core.entity.Championship;
 import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Transactional
 public class DomainChampionshipService implements ChampionshipService {
 
     private final ChampionshipRepository championshipRepository;
