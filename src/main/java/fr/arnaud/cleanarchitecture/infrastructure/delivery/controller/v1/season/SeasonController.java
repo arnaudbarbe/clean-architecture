@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.entity.Season;
 import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.LinkController;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.SeasonModel;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +33,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 @RestController
 @RequestMapping("/v1/seasons")
 @Tag(name = "Season", description = "The Season API")
-public class SeasonController extends LinkController {
+public class SeasonController extends ToolsController {
 
     private final SeasonService seasonService;
 
@@ -75,12 +74,10 @@ public class SeasonController extends LinkController {
     public ResponseEntity<UUID> createSeason(@RequestBody final SeasonDto season) {
 		
 		UUID id = this.seasonService.createSeason(season.toEntity());
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set(HttpHeaders.LOCATION, "/v1/seasons" + id);		
 		
 		return ResponseEntity
 	    	      .status(HttpStatus.CREATED)
-	    	      .headers(responseHeaders)
+	    	      .headers(getLocationHeader("/v1/seasons" + id))
 	    	      .body(id);
     }
 

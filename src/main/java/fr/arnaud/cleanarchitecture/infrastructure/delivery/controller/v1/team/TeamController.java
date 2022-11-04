@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.entity.Team;
 import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.LinkController;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.TeamModel;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.TeamDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +33,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 @RestController
 @RequestMapping("/v1/teams")
 @Tag(name = "Team", description = "The Team API")
-public class TeamController extends LinkController {
+public class TeamController extends ToolsController {
 
     private final TeamService teamService;
 
@@ -75,12 +74,10 @@ public class TeamController extends LinkController {
     public ResponseEntity<UUID> createTeam( @RequestBody final TeamDto team) {
 
 		UUID id = this.teamService.createTeam(team.toEntity());
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set(HttpHeaders.LOCATION, "/v1/teams" + id);		
 		
 		return ResponseEntity
 	    	      .status(HttpStatus.CREATED)
-	    	      .headers(responseHeaders)
+	    	      .headers(getLocationHeader("/v1/teams" + id))
 	    	      .body(id);
     }
 

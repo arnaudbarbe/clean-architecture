@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.entity.Championship;
 import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.LinkController;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.ChampionshipModel;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +34,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 @RestController
 @RequestMapping("/v1/championships")
 @Tag(name = "Championship", description = "The Championship API")
-public class ChampionshipController extends LinkController {
+public class ChampionshipController extends ToolsController {
 
     private final ChampionshipService championshipService;
     
@@ -77,12 +76,10 @@ public class ChampionshipController extends LinkController {
     public ResponseEntity<UUID> createChampionship(@RequestBody final ChampionshipDto championship) {
 		
 		UUID id = this.championshipService.createChampionship(championship.toEntity());
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set(HttpHeaders.LOCATION, "/v1/championships/" + id);
 		
 		return ResponseEntity
 	    	      .status(HttpStatus.CREATED)
-	    	      .headers(responseHeaders)
+	    	      .headers(getLocationHeader("/v1/championships/" + id))
 	    	      .body(id);
     }
 
@@ -94,6 +91,14 @@ public class ChampionshipController extends LinkController {
 	
 	
 	
+
+
+
+
+
+
+
+
 	@PutMapping(
 			value = "/{championshipId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)

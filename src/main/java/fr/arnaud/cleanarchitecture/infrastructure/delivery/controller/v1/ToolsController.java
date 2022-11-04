@@ -6,8 +6,9 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.HttpHeaders;
 
-public abstract class LinkController {
+public abstract class ToolsController {
 	
     //HATEOAS relation name
     private static final String CREATE_RELATION = "create";
@@ -33,5 +34,11 @@ public abstract class LinkController {
 
 	protected Link getGetAllLink() {
 		return WebMvcLinkBuilder.linkTo(this.getClass()).withRel(GETALL_RELATION);
+	}
+	
+	protected HttpHeaders getLocationHeader(String location) {
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.set(HttpHeaders.LOCATION, location);
+		return responseHeaders;
 	}
 }
