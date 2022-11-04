@@ -3,6 +3,7 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,15 +12,17 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-public record SeasonDto(@NotNull UUID id, @NotNull String name, 
+public record SeasonDto(
+        @NotNull @NotEmpty UUID id, 
+        @NotNull @NotEmpty String name, 
 	    @JsonSerialize(using = LocalDateTimeSerializer.class)
 	    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") 
-		@NotNull LocalDateTime startDate, 
+		@NotNull @NotEmpty LocalDateTime startDate, 
 	    @JsonSerialize(using = LocalDateTimeSerializer.class)
 	    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") 
-		@NotNull LocalDateTime endDate) implements Dto {
+		@NotNull @NotEmpty LocalDateTime endDate) implements Dto {
 	
 	public fr.arnaud.cleanarchitecture.core.entity.Season toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entity.Season.builder()

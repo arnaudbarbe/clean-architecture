@@ -2,15 +2,16 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1;
 
 import java.util.UUID;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
 public record ChampionshipDto(
-		@NotNull UUID id, 
-		@NotNull String name, 
-		@NotNull PlayerDto player, 
-		@NotNull SeasonDto season, 
-		@NotNull LeagueDto league)  implements Dto {
+		@NotNull @NotEmpty UUID id, 
+		@NotNull @NotEmpty String name, 
+		@NotNull @NotEmpty PlayerDto player, 
+		@NotNull @NotEmpty SeasonDto season, 
+		@NotNull @NotEmpty LeagueDto league)  implements Dto {
 
 	public fr.arnaud.cleanarchitecture.core.entity.Championship toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entity.Championship.builder()

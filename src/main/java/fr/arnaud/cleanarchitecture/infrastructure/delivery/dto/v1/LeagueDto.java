@@ -2,11 +2,12 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1;
 
 import java.util.UUID;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public record LeagueDto(
-		@NotNull UUID id, 
-		@NotNull String name) implements Dto {
+		@NotNull @NotEmpty UUID id, 
+		@NotNull @NotEmpty String name) implements Dto {
 
 	public fr.arnaud.cleanarchitecture.core.entity.League toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entity.League.builder()

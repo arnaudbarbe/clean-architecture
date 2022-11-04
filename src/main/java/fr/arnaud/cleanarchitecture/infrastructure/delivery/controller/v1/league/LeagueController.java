@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.arnaud.cleanarchitecture.core.entity.League;
 import fr.arnaud.cleanarchitecture.core.service.league.LeagueService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.LinkController;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.LeagueModel;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,14 +34,9 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 @RestController
 @RequestMapping("/v1/leagues")
 @Tag(name = "League", description = "The League API")
-public class LeagueController {
+public class LeagueController extends LinkController {
 
     private final LeagueService leagueService;
-
-    public static final String CREATE_RELATION = "create";
-    public static final String UPDATE_RELATION = "update";
-    public static final String GETALL_RELATION = "getAll";
-    public static final String DELETE_RELATION = "delete";
 
     @Autowired
     public LeagueController(final LeagueService leagueService) {
@@ -178,18 +172,13 @@ public class LeagueController {
 		if (entity == null) {
 			return null;
 		} else {
-			Link self = WebMvcLinkBuilder.linkTo(this.getClass()).slash(entity.getId()).withSelfRel();
-			Link create =  WebMvcLinkBuilder.linkTo(this.getClass()).withRel(CREATE_RELATION);
-			Link update =  WebMvcLinkBuilder.linkTo(this.getClass()).slash(entity.getId()).withRel(UPDATE_RELATION);
-			Link delete =  WebMvcLinkBuilder.linkTo(this.getClass()).slash(entity.getId()).withRel(DELETE_RELATION);
-			Link getAll =  WebMvcLinkBuilder.linkTo(this.getClass()).withRel(GETALL_RELATION);
 			
 			LeagueModel model = LeagueModel.fromEntity(entity)
-					.add(self)
-					.add(create)
-					.add(update)
-					.add(delete)
-					.add(getAll);
+					.add(getSelfLink(entity.getId()))
+					.add(getCreateLink())
+					.add(getUpdateLink(entity.getId()))
+					.add(getDeleteLink(entity.getId()))
+					.add(getGetAllLink());
 			
 			return ResponseEntity
 		    	      .status(HttpStatus.OK)
@@ -222,16 +211,11 @@ public class LeagueController {
     public ResponseEntity<List<LeagueModel>> getLeagues() {
 		List<LeagueModel> models = this.leagueService.getLeagues().stream()
         		.map(LeagueModel::fromEntity)
-        		//self
-        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).slash(model.getId()).withSelfRel()))
-        		//create
-        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).withRel(CREATE_RELATION)))
-        		//update
-        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).slash(model.getId()).withRel(UPDATE_RELATION)))
-        		//delete
-        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).slash(model.getId()).withRel(DELETE_RELATION)))
-        		//getAll
-        		.map(model -> model.add(WebMvcLinkBuilder.linkTo(this.getClass()).withRel(GETALL_RELATION)))
+        		.map(model -> model.add(getSelfLink(model.getId())))
+        		.map(model -> model.add(getCreateLink()))
+        		.map(model -> model.add(getUpdateLink(model.getId())))
+        		.map(model -> model.add(getDeleteLink(model.getId())))
+        		.map(model -> model.add(getGetAllLink()))
         		.toList();
 
 		return ResponseEntity

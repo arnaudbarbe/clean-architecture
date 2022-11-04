@@ -3,6 +3,7 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,14 +14,15 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 
 
-public record MatchDto(@NotNull UUID id, 
+public record MatchDto(
+        @NotNull @NotEmpty UUID id, 
 		@JsonSerialize(using = LocalDateTimeSerializer.class)
 		@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") 
-		@NotNull LocalDateTime when, 
-		@NotNull ChampionshipDto championship, 
-		@NotNull TeamDto homeTeam, 
-		@NotNull TeamDto outsideTeam, 
+		@NotNull @NotEmpty LocalDateTime when, 
+		@NotNull @NotEmpty ChampionshipDto championship, 
+		@NotNull @NotEmpty TeamDto homeTeam, 
+		@NotNull @NotEmpty TeamDto outsideTeam, 
 		int scoreHomeTeam, 
 		int scoreOutsideTeam) implements Dto {
 

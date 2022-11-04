@@ -2,12 +2,13 @@ package fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1;
 
 import java.util.UUID;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public record PlayerDto(
-		@NotNull UUID id, 
-		@NotNull String firstName, 
-		@NotNull String lastName) implements Dto {
+		@NotNull @NotEmpty UUID id, 
+		@NotNull @NotEmpty String firstName, 
+		@NotNull @NotEmpty String lastName) implements Dto {
 
 	public fr.arnaud.cleanarchitecture.core.entity.Player toEntity() {
 		return fr.arnaud.cleanarchitecture.core.entity.Player.builder()

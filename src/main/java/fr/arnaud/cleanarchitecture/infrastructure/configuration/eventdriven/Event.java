@@ -1,6 +1,7 @@
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,10 @@ import lombok.experimental.FieldDefaults;
 @ToString(of= {"status", "content"})
 public class Event<C> implements Serializable {
 
-	
+    private static final long serialVersionUID = 1L;
+
+    public final Date created = new Date();
+    
 	public enum StandardStatus {
 		CREATED,
 		UPDATED, 
