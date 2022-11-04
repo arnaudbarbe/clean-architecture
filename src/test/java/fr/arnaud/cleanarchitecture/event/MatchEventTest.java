@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.AbstractTest;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.TokenDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.MatchDto;
@@ -38,6 +39,8 @@ public class MatchEventTest extends AbstractTest {
     @Test
     public void crudMatch() throws Exception {
     	
+    	TokenDto userToken = loginUser();
+
         //delete unknown object
         this.matchPublisher.deleteMatch(UUID.randomUUID());
         Thread.sleep(2000);
@@ -82,7 +85,9 @@ public class MatchEventTest extends AbstractTest {
         Thread.sleep(2000);
         
        //check if match was correctly created
-        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/matchs/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk());
 
         MvcResult result = resultActions.andReturn();
@@ -99,7 +104,9 @@ public class MatchEventTest extends AbstractTest {
         Thread.sleep(2000);
         
         //check if championship was correctly updated
-        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/matchs/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk());
        
         result = resultActions.andReturn();
@@ -112,7 +119,9 @@ public class MatchEventTest extends AbstractTest {
         Thread.sleep(2000);
         
         //verify that the match is correctly deleted
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs/" + uuid.toString()))
+        this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/matchs/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(""));
 
@@ -134,21 +143,25 @@ public class MatchEventTest extends AbstractTest {
         Thread.sleep(2000);
         
         //check if getMatchs return 2 matchs
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs")
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON))
-        		.andExpect(jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        this.mockMvc.perform(MockMvcRequestBuilders
+    		.get("/v1/matchs")
+    		.contentType(MediaType.APPLICATION_JSON)
+    		.accept(MediaType.APPLICATION_JSON)
+    		.headers(getHeaders(userToken)))
+    		.andExpect(jsonPath("$", Matchers.hasSize(2)))
+            .andExpect(MockMvcResultMatchers.status().isOk());
         
         this.matchPublisher.deleteMatch(match1.id());
         this.matchPublisher.deleteMatch(match2.id());
         Thread.sleep(2000);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/matchs")
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON))
-        		.andExpect(jsonPath("$", Matchers.hasSize(0)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        this.mockMvc.perform(MockMvcRequestBuilders
+    		.get("/v1/matchs")
+    		.contentType(MediaType.APPLICATION_JSON)
+    		.accept(MediaType.APPLICATION_JSON)
+    		.headers(getHeaders(userToken)))
+    		.andExpect(jsonPath("$", Matchers.hasSize(0)))
+            .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
 }

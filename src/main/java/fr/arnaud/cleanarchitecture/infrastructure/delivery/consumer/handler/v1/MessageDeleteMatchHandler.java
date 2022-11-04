@@ -8,7 +8,9 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.match.MatchService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MessageDeleteMatchHandler implements GenericHandler<UUID>{
 
@@ -22,10 +24,11 @@ public class MessageDeleteMatchHandler implements GenericHandler<UUID>{
 
 	@Override
 	public Object handle(final UUID id, final MessageHeaders headers) {
-		this.matchService.deleteMatch(id);
+		try {
+			this.matchService.deleteMatch(id);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 		return null;
 	}
-      
-    
-
 }

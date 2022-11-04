@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.AbstractTest;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.TokenDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
 
 
@@ -30,6 +31,8 @@ public class PlayerControllerTest extends AbstractTest {
     @Test
     public void crudPlayer() throws Exception {
     	
+    	TokenDto userToken = loginUser();
+
     	//create one player
         UUID uuid = UUID.randomUUID();
     	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
@@ -39,7 +42,9 @@ public class PlayerControllerTest extends AbstractTest {
         Thread.sleep(2000);
 
         //check if player was correctly created
-        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/players/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk());
 
         MvcResult result = resultActions.andReturn();
@@ -55,8 +60,10 @@ public class PlayerControllerTest extends AbstractTest {
         this.playerPublisher.updatePlayer(player);
         Thread.sleep(2000);
        
-        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
-        .andExpect(MockMvcResultMatchers.status().isOk());
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/players/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
+        	.andExpect(MockMvcResultMatchers.status().isOk());
         
         result = resultActions.andReturn();
         contentAsString = result.getResponse().getContentAsString();
@@ -68,7 +75,9 @@ public class PlayerControllerTest extends AbstractTest {
         Thread.sleep(2000);
 
         //verify that the player is correctly deleted
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players/" + uuid.toString()))
+        this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/players/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(""));
 
@@ -88,9 +97,11 @@ public class PlayerControllerTest extends AbstractTest {
         this.playerPublisher.createPlayer(player2);
         Thread.sleep(2000);
         //check if getPlayers return 2 players
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/players")
+        this.mockMvc.perform(MockMvcRequestBuilders
+        		.get("/v1/players")
         		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON))
+        		.accept(MediaType.APPLICATION_JSON)
+        		.headers(getHeaders(userToken)))
         		.andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         

@@ -39,3 +39,4 @@ build/
 /bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+/.temp-clean-architecture - CleanArchitectureApplication-classpath-arg-1667553398478.txt

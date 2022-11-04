@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.AbstractTest;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.TokenDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
@@ -36,21 +37,26 @@ public class ChampionshipEventTest extends AbstractTest {
     @Test
     public void crudChampionship() throws Exception {
     	
+    	TokenDto userToken = loginUser();
+
         //delete unknown object
         this.championshipPublisher.deleteChampionship(UUID.randomUUID());
         
         UUID uuid = UUID.randomUUID();
     	LeagueDto league = new LeagueDto(uuid, "Afebas");
         this.leaguePublisher.createLeague(league);
+        Thread.sleep(2000);
 
         uuid = UUID.randomUUID();
     	PlayerDto player = new PlayerDto(uuid, "arnaud", "barbe");
         this.playerPublisher.createPlayer(player);
-        
+        Thread.sleep(2000);
+       
         uuid = UUID.randomUUID();
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0, 0), LocalDateTime.of(2023, 6, 30, 0, 0, 0, 0));
         this.seasonPublisher.createSeason(season);
-        
+        Thread.sleep(2000);
+       
         //create one championship
         uuid = UUID.randomUUID();
     	ChampionshipDto championship = new ChampionshipDto(uuid, "France", player, season, league);
@@ -60,7 +66,9 @@ public class ChampionshipEventTest extends AbstractTest {
         Thread.sleep(2000);
         
        //check if championship was correctly created
-        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships/" + uuid.toString()))
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/championships/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk());
         
         MvcResult result = resultActions.andReturn();
@@ -77,7 +85,9 @@ public class ChampionshipEventTest extends AbstractTest {
         Thread.sleep(2000);
         
         //check if championship was correctly updated
-        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships/" + uuid.toString()))
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/championships/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk());
         
         result = resultActions.andReturn();
@@ -90,7 +100,9 @@ public class ChampionshipEventTest extends AbstractTest {
         Thread.sleep(2000);
         
         //verify that the championship is correctly deleted
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships/" + uuid.toString()))
+        this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/championships/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(""));
 
@@ -101,7 +113,8 @@ public class ChampionshipEventTest extends AbstractTest {
  
     	//create 2 championships
         this.championshipPublisher.createChampionship(championship1);
-        
+        Thread.sleep(2000);
+
     	uuid = UUID.randomUUID();
     	ChampionshipDto championship2 = new ChampionshipDto(uuid, "Belgium", player, season, league);
         
@@ -111,21 +124,25 @@ public class ChampionshipEventTest extends AbstractTest {
         Thread.sleep(2000);
         
         //check if getChampionships return 2 championships
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships")
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON))
-        		.andExpect(jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/championships")
+    		.contentType(MediaType.APPLICATION_JSON)
+    		.accept(MediaType.APPLICATION_JSON)
+    		.headers(getHeaders(userToken)))
+    		.andExpect(jsonPath("$", Matchers.hasSize(2)))
+            .andExpect(MockMvcResultMatchers.status().isOk());
         
         this.championshipPublisher.deleteChampionship(championship1.id());
         this.championshipPublisher.deleteChampionship(championship2.id());
         Thread.sleep(2000);
         
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/championships")
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON))
-        		.andExpect(jsonPath("$", Matchers.hasSize(0)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        this.mockMvc.perform(MockMvcRequestBuilders
+    		.get("/v1/championships")
+    		.contentType(MediaType.APPLICATION_JSON)
+    		.accept(MediaType.APPLICATION_JSON)
+    		.headers(getHeaders(userToken)))
+    		.andExpect(jsonPath("$", Matchers.hasSize(0)))
+            .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
 }

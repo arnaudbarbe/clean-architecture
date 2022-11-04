@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.league.LeagueService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MessageCreateLeagueHandler implements GenericHandler<LeagueDto>{
 
@@ -21,7 +23,11 @@ public class MessageCreateLeagueHandler implements GenericHandler<LeagueDto>{
 
 	@Override
 	public Object handle(final LeagueDto league, final MessageHeaders headers) {
-		this.leagueService.createLeague(league.toEntity());
+		try {
+			this.leagueService.createLeague(league.toEntity());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 		return null;
 	}
 }

@@ -47,7 +47,12 @@ public class CassandraDbPlayerRepository implements PlayerRepository {
 
     @Override
 	public void delete(final UUID id) {
-        this.playerRepository.deleteById(id);
+        Optional<PlayerEntity> playerEntity = this.playerRepository.findById(id);
+        if (playerEntity.isPresent()) {
+    		this.playerRepository.deleteById(id);
+		} else {
+			throw new EntityNotFoundException("Player with id " + id);
+		}
 	}
 
 	@Override

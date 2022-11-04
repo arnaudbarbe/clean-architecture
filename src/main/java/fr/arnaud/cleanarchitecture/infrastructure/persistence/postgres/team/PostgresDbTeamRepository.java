@@ -57,7 +57,9 @@ public class PostgresDbTeamRepository implements TeamRepository {
 	public void delete(final UUID id) {
 		try {
 			this.teamRepository.deleteById(id);
-		} catch(EmptyResultDataAccessException e) {}
+		} catch(EmptyResultDataAccessException e) {
+			throw new EntityNotFoundException("Season with id " + id);
+		}
 	}
 
 	@Override

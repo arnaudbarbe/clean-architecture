@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.keycloak:keycloak-spring-boot-starter:20.0.0'
 	implementation 'org.keycloak:keycloak-admin-client:20.0.0'
 	
+	implementation 'com.auth0:java-jwt:4.2.1'
 	implementation 'commons-io:commons-io:2.11.0'
 	implementation 'org.apache.commons:commons-collections4:4.4'
 	implementation 'commons-validator:commons-validator:1.7'

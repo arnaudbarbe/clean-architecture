@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.TeamDto;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MessageCreateTeamHandler implements GenericHandler<TeamDto>{
 
@@ -21,7 +23,11 @@ public class MessageCreateTeamHandler implements GenericHandler<TeamDto>{
 
 	@Override
 	public Object handle(final TeamDto team, final MessageHeaders headers) {
-		this.teamService.createTeam(team.toEntity());
+		try {
+			this.teamService.createTeam(team.toEntity());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 		return null;
 	}
 }

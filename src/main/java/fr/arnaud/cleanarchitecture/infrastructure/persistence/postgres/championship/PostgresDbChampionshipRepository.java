@@ -57,7 +57,9 @@ public class PostgresDbChampionshipRepository implements ChampionshipRepository 
 	public void delete(final UUID id) {
 		try {
 			this.championshipRepository.deleteById(id);
-		} catch(EmptyResultDataAccessException e) {}
+		} catch(EmptyResultDataAccessException e) {
+			throw new EntityNotFoundException("Championship with id " + id);
+		}
 	}
 
 	@Override

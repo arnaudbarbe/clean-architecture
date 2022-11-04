@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.player.PlayerService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MessageCreatePlayerHandler implements GenericHandler<PlayerDto>{
-
 
 	private PlayerService playerService;
 	
@@ -22,7 +23,11 @@ public class MessageCreatePlayerHandler implements GenericHandler<PlayerDto>{
 
 	@Override
 	public Object handle(final PlayerDto player, final MessageHeaders headers) {
-		this.playerService.createPlayer(player.toEntity());
+		try {
+			this.playerService.createPlayer(player.toEntity());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 		return null;
 	}
 }

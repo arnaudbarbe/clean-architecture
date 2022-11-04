@@ -8,7 +8,9 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MessageDeleteTeamHandler implements GenericHandler<UUID>{
 
@@ -22,10 +24,11 @@ public class MessageDeleteTeamHandler implements GenericHandler<UUID>{
 
 	@Override
 	public Object handle(final UUID id, final MessageHeaders headers) {
-		this.teamService.deleteTeam(id);
+		try {
+			this.teamService.deleteTeam(id);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 		return null;
 	}
-      
-    
-
 }

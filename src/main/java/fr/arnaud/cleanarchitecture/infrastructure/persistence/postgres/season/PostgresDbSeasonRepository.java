@@ -50,7 +50,9 @@ public class PostgresDbSeasonRepository implements SeasonRepository {
 	public void delete(final UUID id) {
 		try {
 			this.seasonRepository.deleteById(id);
-		} catch(EmptyResultDataAccessException e) {}
+		} catch(EmptyResultDataAccessException e) {
+			throw new EntityNotFoundException("Season with id " + id);
+		}
 	}
 
 	@Override

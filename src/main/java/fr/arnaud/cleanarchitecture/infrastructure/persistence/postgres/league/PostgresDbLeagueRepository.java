@@ -50,7 +50,9 @@ public class PostgresDbLeagueRepository implements LeagueRepository {
 	public void delete(final UUID id) {
 		try {
 	        this.leagueRepository.deleteById(id);
-		} catch(EmptyResultDataAccessException e) {}
+		} catch(EmptyResultDataAccessException e) {
+			throw new EntityNotFoundException("League with id " + id);
+		}
 	}
 
 	@Override

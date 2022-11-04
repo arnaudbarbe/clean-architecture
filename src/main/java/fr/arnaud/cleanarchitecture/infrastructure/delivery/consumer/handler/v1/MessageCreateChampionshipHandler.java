@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MessageCreateChampionshipHandler implements GenericHandler<ChampionshipDto>{
 
@@ -21,7 +23,11 @@ public class MessageCreateChampionshipHandler implements GenericHandler<Champion
 
 	@Override
 	public Object handle(final ChampionshipDto championship, final MessageHeaders headers) {
-		this.championshipService.createChampionship(championship.toEntity());
+		try {
+			this.championshipService.createChampionship(championship.toEntity());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 		return null;
 	}
 }

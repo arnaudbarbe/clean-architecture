@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.match.MatchService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.MatchDto;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MessageUpdateMatchHandler implements GenericHandler<MatchDto>{
 
@@ -21,7 +23,11 @@ public class MessageUpdateMatchHandler implements GenericHandler<MatchDto>{
 
 	@Override
 	public Object handle(final MatchDto match, final MessageHeaders headers) {
-		this.matchService.updateMatch(match.id(), match.toEntity());
+		try {
+			this.matchService.updateMatch(match.id(), match.toEntity());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 		return null;
 	}
 }

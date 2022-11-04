@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.AbstractTest;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.TokenDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 
 
@@ -31,6 +32,8 @@ public class SeasonControllerTest extends AbstractTest {
     @Test
     public void crudSeason() throws Exception {
     	
+    	TokenDto userToken = loginUser();
+
     	//create one season
         UUID uuid = UUID.randomUUID();
     	SeasonDto season = new SeasonDto(uuid, "2022/2023", LocalDateTime.of(2022, 9, 1, 0, 0, 0).withNano(0), LocalDateTime.of(2023, 6, 30, 0, 0, 0).withNano(0));
@@ -40,7 +43,9 @@ public class SeasonControllerTest extends AbstractTest {
         Thread.sleep(2000);
 
         //check if season was correcty created
-        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/seasons/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk());
         
         MvcResult result = resultActions.andReturn();
@@ -55,8 +60,10 @@ public class SeasonControllerTest extends AbstractTest {
         this.seasonPublisher.updateSeason(season);
         Thread.sleep(2000);
        
-        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
-        .andExpect(MockMvcResultMatchers.status().isOk());
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/seasons/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
+        	.andExpect(MockMvcResultMatchers.status().isOk());
 
         result = resultActions.andReturn();
         contentAsString = result.getResponse().getContentAsString();
@@ -68,7 +75,9 @@ public class SeasonControllerTest extends AbstractTest {
         Thread.sleep(2000);
 
         //verify that the player is correctly deleted
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons/" + uuid.toString()))
+        this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/seasons/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(""));
 
@@ -88,11 +97,13 @@ public class SeasonControllerTest extends AbstractTest {
         this.seasonPublisher.createSeason(season2);
         Thread.sleep(2000);
         //check if getPlayers return 2 seasons
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/seasons")
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON))
-        		.andExpect(jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        this.mockMvc.perform(MockMvcRequestBuilders
+    		.get("/v1/seasons")
+    		.contentType(MediaType.APPLICATION_JSON)
+    		.accept(MediaType.APPLICATION_JSON)
+    		.headers(getHeaders(userToken)))
+    		.andExpect(jsonPath("$", Matchers.hasSize(2)))
+            .andExpect(MockMvcResultMatchers.status().isOk());
         
         this.seasonPublisher.deleteLeague(season1.id());
         this.seasonPublisher.deleteLeague(season2.id());

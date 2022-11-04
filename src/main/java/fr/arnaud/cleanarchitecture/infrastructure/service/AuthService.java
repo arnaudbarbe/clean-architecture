@@ -6,6 +6,7 @@ import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +17,7 @@ import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Service
 public class AuthService {
 
 	@Value("${keycloak.realm}")

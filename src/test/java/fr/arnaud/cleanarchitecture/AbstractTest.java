@@ -17,15 +17,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Cluster.Builder;
 import com.datastax.driver.core.Session;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -38,6 +43,7 @@ import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.Ma
 import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.PlayerPublisher;
 import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.SeasonPublisher;
 import fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher.TeamPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.TokenDto;
 
 
 @ExtendWith(SpringExtension.class)
@@ -93,6 +99,18 @@ public abstract class AbstractTest {
 	@Value("${spring.data.mongodb.database}")
 	protected String mongoDatabase;
 			
+	@Value("${test.user.username}")
+	protected String username;
+			
+	@Value("${test.user.password}")
+	protected String userpassword;
+			
+	@Value("${test.admin.username}")
+	protected String adminname;
+			
+	@Value("${test.admin.password}")
+	protected String adminpassword;
+			
 	@BeforeEach
 	public void setUp() throws SQLException {
 		cleanDatabase();
@@ -100,6 +118,38 @@ public abstract class AbstractTest {
 	
 	@AfterEach
 	public void tearDown() throws SQLException {
+	}
+	
+	protected HttpHeaders getHeaders(TokenDto token) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token.currentToken());
+		return headers;
+	}
+
+	protected TokenDto loginUser() throws Exception {
+    	ObjectNode node = mapper.createObjectNode();
+    	node.put("username", username);
+    	node.put("password", userpassword);
+    	
+    	//login
+    	ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/auth/login").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(node)));
+    	String bodyResponse = resultActions.andReturn().getResponse().getContentAsString();
+
+    	TokenDto token = mapper.readValue(bodyResponse, TokenDto.class);
+    	return token;
+	}
+	
+	protected TokenDto loginAdmin() throws Exception {
+    	ObjectNode node = mapper.createObjectNode();
+    	node.put("username", adminname);
+    	node.put("password", adminpassword);
+    	
+    	//login
+    	ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/auth/login").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(node)));
+    	String bodyResponse = resultActions.andReturn().getResponse().getContentAsString();
+
+    	TokenDto token = mapper.readValue(bodyResponse, TokenDto.class);
+    	return token;
 	}
 	
 	private void cleanDatabase() throws SQLException {

@@ -59,7 +59,13 @@ public class MongoDbMatchRepository implements MatchRepository {
 
 	@Override
 	public void delete(final UUID id) {
-        this.matchRepository.deleteById(id);
+        Optional<MatchEntity> optionalMatchEntity = this.matchRepository.findById(id);
+        if (optionalMatchEntity.isPresent()) {
+			this.matchRepository.deleteById(id);
+        } else {
+        	throw new EntityNotFoundException("Match with id " + id);
+        }
+
 	}
 
 	@Override

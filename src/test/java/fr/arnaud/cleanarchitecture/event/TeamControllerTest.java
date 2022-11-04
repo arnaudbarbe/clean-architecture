@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.arnaud.cleanarchitecture.AbstractTest;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.TokenDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
@@ -37,6 +38,8 @@ public class TeamControllerTest extends AbstractTest {
     @Test
     public void crudTeam() throws Exception {
     	
+    	TokenDto userToken = loginUser();
+
         //delete unknown object
     	this.teamPublisher.deleteTeam(UUID.randomUUID());
 
@@ -75,7 +78,9 @@ public class TeamControllerTest extends AbstractTest {
         Thread.sleep(2000);
 
         //check if team was correctly created
-        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+        ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/teams/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk());
 
         MvcResult result = resultActions.andReturn();
@@ -92,7 +97,9 @@ public class TeamControllerTest extends AbstractTest {
         Thread.sleep(2000);
         
         //check if team was correctly updated
-        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/teams/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk());
         
         result = resultActions.andReturn();
@@ -105,7 +112,9 @@ public class TeamControllerTest extends AbstractTest {
         Thread.sleep(2000);
 
         //verify that the team is correctly deleted
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams/" + uuid.toString()))
+        this.mockMvc.perform(MockMvcRequestBuilders
+        	.get("/v1/teams/" + uuid.toString())
+        	.headers(getHeaders(userToken)))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().string(""));
 
@@ -127,21 +136,25 @@ public class TeamControllerTest extends AbstractTest {
         Thread.sleep(2000);
        
         //check if getTeams return 2 teams
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams")
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON))
-        		.andExpect(jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        this.mockMvc.perform(MockMvcRequestBuilders
+    		.get("/v1/teams")
+    		.contentType(MediaType.APPLICATION_JSON)
+    		.accept(MediaType.APPLICATION_JSON)
+    		.headers(getHeaders(userToken)))
+    		.andExpect(jsonPath("$", Matchers.hasSize(2)))
+            .andExpect(MockMvcResultMatchers.status().isOk());
         
         this.teamPublisher.deleteTeam(team1.id());
         this.teamPublisher.deleteTeam(team2.id());
         Thread.sleep(2000);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/v1/teams")
-        		.contentType(MediaType.APPLICATION_JSON)
-        		.accept(MediaType.APPLICATION_JSON))
-        		.andExpect(jsonPath("$", Matchers.hasSize(0)))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+        this.mockMvc.perform(MockMvcRequestBuilders
+    		.get("/v1/teams")
+    		.contentType(MediaType.APPLICATION_JSON)
+    		.accept(MediaType.APPLICATION_JSON)
+    		.headers(getHeaders(userToken)))
+    		.andExpect(jsonPath("$", Matchers.hasSize(0)))
+            .andExpect(MockMvcResultMatchers.status().isOk());
 
     }
 }

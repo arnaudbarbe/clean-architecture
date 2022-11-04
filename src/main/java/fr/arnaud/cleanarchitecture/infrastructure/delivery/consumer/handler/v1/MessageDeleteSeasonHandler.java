@@ -8,7 +8,9 @@ import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
 
 import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class MessageDeleteSeasonHandler implements GenericHandler<UUID>{
 
@@ -22,10 +24,11 @@ public class MessageDeleteSeasonHandler implements GenericHandler<UUID>{
 
 	@Override
 	public Object handle(final UUID id, final MessageHeaders headers) {
-		this.seasonService.deleteSeason(id);
+		try {
+			this.seasonService.deleteSeason(id);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 		return null;
 	}
-      
-    
-
 }
