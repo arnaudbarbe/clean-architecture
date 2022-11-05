@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.entity.League;
+import fr.arnaud.cleanarchitecture.core.model.League;
 
 public interface LeagueService {
 	

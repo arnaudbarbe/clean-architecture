@@ -30,8 +30,8 @@ public class ChampionshipModel extends RepresentationModel<ChampionshipModel> im
 	@NotNull SeasonModel season; 
 	@NotNull LeagueModel league;
 
-	public fr.arnaud.cleanarchitecture.core.entity.Championship toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.Championship.builder()
+	public fr.arnaud.cleanarchitecture.core.model.Championship toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.Championship.builder()
 				.id(this.id)
 				.name(this.name)
 				.player(this.player.toEntity())
@@ -40,7 +40,7 @@ public class ChampionshipModel extends RepresentationModel<ChampionshipModel> im
 				.build();
 	}
 	
-	public static ChampionshipModel fromEntity(final fr.arnaud.cleanarchitecture.core.entity.Championship championship) {
+	public static ChampionshipModel fromEntity(final fr.arnaud.cleanarchitecture.core.model.Championship championship) {
 		if (championship == null) {
 			return null;
 		} else {

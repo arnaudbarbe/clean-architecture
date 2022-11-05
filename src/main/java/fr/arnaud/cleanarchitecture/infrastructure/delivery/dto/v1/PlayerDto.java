@@ -10,14 +10,14 @@ public record PlayerDto(
 		@NotNull @NotEmpty String firstName, 
 		@NotNull @NotEmpty String lastName) implements Dto {
 
-	public fr.arnaud.cleanarchitecture.core.entity.Player toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.Player.builder()
+	public fr.arnaud.cleanarchitecture.core.model.Player toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.Player.builder()
 				.id(this.id)
 				.firstName(this.firstName)
 				.lastName(this.lastName).build();
 	}
 	
-	public static PlayerDto fromEntity(final fr.arnaud.cleanarchitecture.core.entity.Player player) {
+	public static PlayerDto fromEntity(final fr.arnaud.cleanarchitecture.core.model.Player player) {
 		if (player == null) {
 			return null;
 		} else {

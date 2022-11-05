@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import fr.arnaud.cleanarchitecture.core.entity.Player;
+import fr.arnaud.cleanarchitecture.core.model.Player;
 import fr.arnaud.cleanarchitecture.core.repository.PlayerRepository;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.core.entity;
+package fr.arnaud.cleanarchitecture.core.model;
 
 import java.util.UUID;
 

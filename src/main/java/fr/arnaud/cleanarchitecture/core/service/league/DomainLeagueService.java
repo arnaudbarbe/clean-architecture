@@ -7,8 +7,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import fr.arnaud.cleanarchitecture.core.entity.League;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
+import fr.arnaud.cleanarchitecture.core.model.League;
 import fr.arnaud.cleanarchitecture.core.repository.LeagueRepository;
 import lombok.extern.slf4j.Slf4j;
 

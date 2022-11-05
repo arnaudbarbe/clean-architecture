@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
-import fr.arnaud.cleanarchitecture.core.entity.Championship;
-import fr.arnaud.cleanarchitecture.core.entity.Player;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
+import fr.arnaud.cleanarchitecture.core.model.Championship;
+import fr.arnaud.cleanarchitecture.core.model.Player;
 import fr.arnaud.cleanarchitecture.core.repository.ChampionshipRepository;
 import fr.arnaud.cleanarchitecture.core.repository.PlayerRepository;
 

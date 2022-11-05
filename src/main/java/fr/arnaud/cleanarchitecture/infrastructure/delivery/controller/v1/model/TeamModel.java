@@ -28,14 +28,14 @@ public class TeamModel extends RepresentationModel<TeamModel> implements Model {
 	@NotNull String name;
 	@NotNull ChampionshipModel championship;
 
-	public fr.arnaud.cleanarchitecture.core.entity.Team toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.Team.builder()
+	public fr.arnaud.cleanarchitecture.core.model.Team toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.Team.builder()
 				.id(this.id)
 				.name(this.name)
 				.championship(this.championship.toEntity()).build();
 	}
 	
-	public static TeamModel fromEntity(final fr.arnaud.cleanarchitecture.core.entity.Team team) {
+	public static TeamModel fromEntity(final fr.arnaud.cleanarchitecture.core.model.Team team) {
 		if (team == null) {
 			return null;
 		} else {

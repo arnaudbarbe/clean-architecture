@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import fr.arnaud.cleanarchitecture.core.entity.Season;
+import fr.arnaud.cleanarchitecture.core.model.Season;
 import fr.arnaud.cleanarchitecture.core.repository.SeasonRepository;
 import lombok.extern.slf4j.Slf4j;
 

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.entity.Season;
+import fr.arnaud.cleanarchitecture.core.model.Season;
 import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.SeasonModel;

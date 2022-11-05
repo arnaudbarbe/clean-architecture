@@ -9,8 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import fr.arnaud.cleanarchitecture.core.entity.Championship;
-import fr.arnaud.cleanarchitecture.core.entity.Team;
+import fr.arnaud.cleanarchitecture.core.model.Championship;
+import fr.arnaud.cleanarchitecture.core.model.Team;
 import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.championship.ChampionshipEntity;
 import lombok.Getter;
 import lombok.Setter;

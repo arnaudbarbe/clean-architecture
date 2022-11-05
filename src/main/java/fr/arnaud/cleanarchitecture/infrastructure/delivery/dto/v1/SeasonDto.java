@@ -24,15 +24,15 @@ public record SeasonDto(
 		@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") 
 		@NotNull @NotEmpty LocalDateTime endDate) implements Dto {
 	
-	public fr.arnaud.cleanarchitecture.core.entity.Season toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.Season.builder()
+	public fr.arnaud.cleanarchitecture.core.model.Season toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.Season.builder()
 				.id(this.id)
 				.name(this.name)
 				.startDate(this.startDate)
 				.endDate(this.endDate).build();
 	}
 	
-	public static SeasonDto fromEntity(final fr.arnaud.cleanarchitecture.core.entity.Season season) {
+	public static SeasonDto fromEntity(final fr.arnaud.cleanarchitecture.core.model.Season season) {
 		if (season == null) {
 			return null;
 		} else {

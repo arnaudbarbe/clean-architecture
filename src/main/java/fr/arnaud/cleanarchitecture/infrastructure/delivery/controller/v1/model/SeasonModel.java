@@ -42,15 +42,15 @@ public class SeasonModel extends RepresentationModel<SeasonModel> implements Mod
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@NotNull LocalDateTime endDate;
 	
-	public fr.arnaud.cleanarchitecture.core.entity.Season toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.Season.builder()
+	public fr.arnaud.cleanarchitecture.core.model.Season toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.Season.builder()
 				.id(this.id)
 				.name(this.name)
 				.startDate(this.startDate)
 				.endDate(this.endDate).build();
 	}
 	
-	public static SeasonModel fromEntity(final fr.arnaud.cleanarchitecture.core.entity.Season season) {
+	public static SeasonModel fromEntity(final fr.arnaud.cleanarchitecture.core.model.Season season) {
 		if (season == null) {
 			return null;
 		} else {

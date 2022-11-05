@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import fr.arnaud.cleanarchitecture.core.entity.Team;
+import fr.arnaud.cleanarchitecture.core.model.Team;
 import fr.arnaud.cleanarchitecture.core.repository.TeamRepository;
 import lombok.extern.slf4j.Slf4j;
 

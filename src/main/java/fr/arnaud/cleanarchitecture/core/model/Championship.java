@@ -1,6 +1,5 @@
-package fr.arnaud.cleanarchitecture.core.entity;
+package fr.arnaud.cleanarchitecture.core.model;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
@@ -14,25 +13,22 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level=AccessLevel.PACKAGE)
 @Getter
-@EqualsAndHashCode(of= {"id"})
-@ToString(of= {"id"})
-@Builder(builderClassName = "MatchBuilder")
-public class Match {
-	
+@EqualsAndHashCode(of= {"id", "name"})
+@ToString(of= {"id", "name"})
+@Builder(builderClassName = "ChampionshipBuilder")
+public class Championship {
+
 	@NotNull 
 	final UUID id;
 	@NotNull 
-    final LocalDateTime when;
+	final String name;
 	@NotNull 
-	final Championship championship;
+	final Player player;
 	@NotNull 
-	final Team homeTeam;
+	final Season season;
 	@NotNull 
-	final Team outsideTeam;
-    
-	final int scoreHomeTeam;
-	final int scoreOutsideTeam;
-	
+	final League league;
+
 }

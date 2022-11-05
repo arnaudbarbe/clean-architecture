@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import fr.arnaud.cleanarchitecture.core.entity.Season;
+import fr.arnaud.cleanarchitecture.core.model.Season;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

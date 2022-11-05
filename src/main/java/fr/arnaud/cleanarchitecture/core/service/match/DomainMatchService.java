@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import fr.arnaud.cleanarchitecture.core.entity.Match;
+import fr.arnaud.cleanarchitecture.core.model.Match;
 import fr.arnaud.cleanarchitecture.core.repository.MatchRepository;
 import lombok.extern.slf4j.Slf4j;
 

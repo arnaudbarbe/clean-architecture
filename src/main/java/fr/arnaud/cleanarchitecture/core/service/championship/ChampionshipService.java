@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.entity.Championship;
+import fr.arnaud.cleanarchitecture.core.model.Championship;
 
 public interface ChampionshipService {
 	

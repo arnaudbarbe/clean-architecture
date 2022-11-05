@@ -10,14 +10,14 @@ public record TeamDto(
 		@NotNull @NotEmpty String name, 
 		@NotNull @NotEmpty ChampionshipDto championship) implements Dto {
 
-	public fr.arnaud.cleanarchitecture.core.entity.Team toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.Team.builder()
+	public fr.arnaud.cleanarchitecture.core.model.Team toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.Team.builder()
 				.id(this.id)
 				.name(this.name)
 				.championship(this.championship.toEntity()).build();
 	}
 	
-	public static TeamDto fromEntity(final fr.arnaud.cleanarchitecture.core.entity.Team team) {
+	public static TeamDto fromEntity(final fr.arnaud.cleanarchitecture.core.model.Team team) {
 		if (team == null) {
 			return null;
 		} else {

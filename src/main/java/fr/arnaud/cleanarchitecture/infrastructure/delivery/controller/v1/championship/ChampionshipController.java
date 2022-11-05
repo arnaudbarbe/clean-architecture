@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.entity.Championship;
+import fr.arnaud.cleanarchitecture.core.model.Championship;
 import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.ChampionshipModel;

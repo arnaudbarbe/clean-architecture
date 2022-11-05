@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
-import fr.arnaud.cleanarchitecture.core.entity.League;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
+import fr.arnaud.cleanarchitecture.core.model.League;
 import fr.arnaud.cleanarchitecture.core.repository.LeagueRepository;
 
 @Component

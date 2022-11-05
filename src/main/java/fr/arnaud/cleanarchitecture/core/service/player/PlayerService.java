@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import fr.arnaud.cleanarchitecture.core.entity.Player;
+import fr.arnaud.cleanarchitecture.core.model.Player;
 
 public interface PlayerService {
 	

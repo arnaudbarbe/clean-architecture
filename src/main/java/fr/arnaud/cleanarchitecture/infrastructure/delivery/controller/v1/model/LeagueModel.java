@@ -27,13 +27,13 @@ public class LeagueModel extends RepresentationModel<LeagueModel> implements Mod
 	@NotNull UUID id;
 	@NotNull String name;
 
-	public fr.arnaud.cleanarchitecture.core.entity.League toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.League.builder()
+	public fr.arnaud.cleanarchitecture.core.model.League toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.League.builder()
 				.id(this.id)
 				.name(this.name).build();
 	}
 	
-	public static LeagueModel fromEntity(final fr.arnaud.cleanarchitecture.core.entity.League league) {
+	public static LeagueModel fromEntity(final fr.arnaud.cleanarchitecture.core.model.League league) {
 		if (league == null) {
 			return null;
 		} else {

@@ -26,8 +26,8 @@ public record MatchDto(
 		int scoreHomeTeam, 
 		int scoreOutsideTeam) implements Dto {
 
-	public fr.arnaud.cleanarchitecture.core.entity.Match toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.Match.builder()
+	public fr.arnaud.cleanarchitecture.core.model.Match toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.Match.builder()
 				.id(this.id)
 				.when(this.when)
 				.championship(this.championship.toEntity())
@@ -37,7 +37,7 @@ public record MatchDto(
 				.scoreOutsideTeam(this.scoreOutsideTeam).build();
 	}
 	
-	public static MatchDto fromEntity(final fr.arnaud.cleanarchitecture.core.entity.Match match) {
+	public static MatchDto fromEntity(final fr.arnaud.cleanarchitecture.core.model.Match match) {
 		if (match == null) {
 			return null;
 		} else {

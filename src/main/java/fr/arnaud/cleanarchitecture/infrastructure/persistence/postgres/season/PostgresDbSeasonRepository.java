@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
-import fr.arnaud.cleanarchitecture.core.entity.Season;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
+import fr.arnaud.cleanarchitecture.core.model.Season;
 import fr.arnaud.cleanarchitecture.core.repository.SeasonRepository;
 
 @Component

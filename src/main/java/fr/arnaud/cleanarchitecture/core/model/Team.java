@@ -1,27 +1,31 @@
-package fr.arnaud.cleanarchitecture.core.entity;
+package fr.arnaud.cleanarchitecture.core.model;
 
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Getter
 @EqualsAndHashCode(of= {"id", "name"})
 @ToString(of= {"id", "name"})
-@Builder(builderClassName = "LeagueBuilder")
-public class League {
-
+@Builder(builderClassName = "TeamBuilder")
+public class Team {
+	
 	@NotNull 
-	final UUID id;
+	private UUID id;
 	@NotNull 
-	final String name;
+	private String name;
+	@NotNull 
+	private Championship championship;
 }

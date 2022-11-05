@@ -6,9 +6,9 @@ import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import fr.arnaud.cleanarchitecture.core.entity.Championship;
-import fr.arnaud.cleanarchitecture.core.entity.Match;
-import fr.arnaud.cleanarchitecture.core.entity.Team;
+import fr.arnaud.cleanarchitecture.core.model.Championship;
+import fr.arnaud.cleanarchitecture.core.model.Match;
+import fr.arnaud.cleanarchitecture.core.model.Team;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

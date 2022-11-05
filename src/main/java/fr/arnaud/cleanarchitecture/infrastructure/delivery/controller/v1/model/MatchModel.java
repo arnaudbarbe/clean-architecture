@@ -42,8 +42,8 @@ public class MatchModel extends RepresentationModel<MatchModel> implements Model
 	int scoreHomeTeam;
 	int scoreOutsideTeam;
 
-	public fr.arnaud.cleanarchitecture.core.entity.Match toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.Match.builder()
+	public fr.arnaud.cleanarchitecture.core.model.Match toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.Match.builder()
 				.id(this.id)
 				.when(this.when)
 				.championship(this.championship.toEntity())
@@ -53,7 +53,7 @@ public class MatchModel extends RepresentationModel<MatchModel> implements Model
 				.scoreOutsideTeam(this.scoreOutsideTeam).build();
 	}
 	
-	public static MatchModel fromEntity(final fr.arnaud.cleanarchitecture.core.entity.Match match) {
+	public static MatchModel fromEntity(final fr.arnaud.cleanarchitecture.core.model.Match match) {
 		if (match == null) {
 			return null;
 		} else {

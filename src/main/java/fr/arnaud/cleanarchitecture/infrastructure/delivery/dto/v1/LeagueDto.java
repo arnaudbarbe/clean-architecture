@@ -9,13 +9,13 @@ public record LeagueDto(
 		@NotNull @NotEmpty UUID id, 
 		@NotNull @NotEmpty String name) implements Dto {
 
-	public fr.arnaud.cleanarchitecture.core.entity.League toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.League.builder()
+	public fr.arnaud.cleanarchitecture.core.model.League toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.League.builder()
 				.id(this.id)
 				.name(this.name).build();
 	}
 	
-	public static LeagueDto fromEntity(final fr.arnaud.cleanarchitecture.core.entity.League league) {
+	public static LeagueDto fromEntity(final fr.arnaud.cleanarchitecture.core.model.League league) {
 		if (league == null) {
 			return null;
 		} else {

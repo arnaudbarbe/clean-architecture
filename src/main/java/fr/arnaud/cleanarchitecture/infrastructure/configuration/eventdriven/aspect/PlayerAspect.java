@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.arnaud.cleanarchitecture.core.entity.Player;
+import fr.arnaud.cleanarchitecture.core.model.Player;
 import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.Event;
 import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1.PlayerEventPublisher;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;

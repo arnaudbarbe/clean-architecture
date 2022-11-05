@@ -7,8 +7,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.arnaud.cleanarchitecture.core.entity.Player;
 import fr.arnaud.cleanarchitecture.core.exception.EntityNotFoundException;
+import fr.arnaud.cleanarchitecture.core.model.Player;
 import fr.arnaud.cleanarchitecture.core.repository.PlayerRepository;
 
 @Component

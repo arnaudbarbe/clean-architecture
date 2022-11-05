@@ -13,8 +13,8 @@ public record ChampionshipDto(
 		@NotNull @NotEmpty SeasonDto season, 
 		@NotNull @NotEmpty LeagueDto league)  implements Dto {
 
-	public fr.arnaud.cleanarchitecture.core.entity.Championship toEntity() {
-		return fr.arnaud.cleanarchitecture.core.entity.Championship.builder()
+	public fr.arnaud.cleanarchitecture.core.model.Championship toEntity() {
+		return fr.arnaud.cleanarchitecture.core.model.Championship.builder()
 				.id(this.id)
 				.name(this.name)
 				.player(this.player.toEntity())
@@ -23,7 +23,7 @@ public record ChampionshipDto(
 				.build();
 	}
 	
-	public static ChampionshipDto fromEntity(final fr.arnaud.cleanarchitecture.core.entity.Championship championship) {
+	public static ChampionshipDto fromEntity(final fr.arnaud.cleanarchitecture.core.model.Championship championship) {
 		if (championship == null) {
 			return null;
 		} else {
