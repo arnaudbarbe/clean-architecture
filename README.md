@@ -3,7 +3,7 @@
 Personal implementation of a clean architecture
 
 Table of contents
-1.1. [folders organization](folders organization)
+1.1. [folders organization](#folders organization)
 1.2. [Running tests](Running tests)
 ## Features added
 ### event sourcing
