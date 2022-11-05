@@ -68,7 +68,7 @@ admin interface is available at http://localhost:8080/
 - user: user1, password: user1, role: USER
 - user: admin1, password: admin1, role: ADMIN
 
-##coming soon
+## coming soon
 ### resilience
 
 add Circuit Breaker, Bulk Head, Cache on gateway
