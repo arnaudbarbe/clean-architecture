@@ -72,6 +72,7 @@ admin interface is available at http://localhost:8080/
 ### Code coverage
 
 add a test code coverage report
+https://openclover.org/index
 
 ### resilience
 
