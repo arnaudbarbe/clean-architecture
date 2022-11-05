@@ -36,10 +36,56 @@ You need to start containers in src/main/resources/dockercompose/docker-compose.
 before running test or start the spring boot server
 
 ## Features added
-### event driven
+### event sourcing
 
 events are sent on create/update/delete operations.
 We used Aspect annotation in infrastructure/configuration/eventdriven/aspect
+
+see below an example for League object. Whenever the fr.arnaud.cleanarchitecture.core.service.league.DomainLeagueService.createLeague() method is called, eventAfterCreateLeague() is triggered and a message with the dto is sent.
+~~~~
+package fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.aspect;
+...
+@Aspect
+@Component
+public class LeagueAspect {
+    
+	private final LeagueEventPublisher leagueEventPublisher;
+	
+	@Autowired
+	public LeagueAspect(final LeagueEventPublisher leagueEventPublisher) {
+		this.leagueEventPublisher = leagueEventPublisher;
+	}
+	
+    @After("execution(* fr.arnaud.cleanarchitecture.core.service.league.DomainLeagueService.createLeague(..)) && args(league)")
+    public void eventAfterCreateLeague(final JoinPoint joinPoint, final League league) {
+
+    	Event<LeagueDto> event = 
+    			new Event<>(
+    					Event.StandardStatus.CREATED.name(), 
+    					LeagueDto.fromEntity(league));
+
+    	this.leagueEventPublisher.createLeagueEvent(event);
+    }
+...
+}
+~~~~
+Publisher are located in fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/publisher/v1
+~~~~
+package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1;
+...
+@MessagingGateway
+public interface LeagueEventPublisher {
+
+    @Gateway(requestChannel = "createLeagueEventV1OutboundChannel")
+    void createLeagueEvent(Event<LeagueDto> event);
+    
+    @Gateway(requestChannel = "updateLeagueEventV1OutboundChannel")
+    void updateLeagueEvent(Event<LeagueDto> event);
+
+    @Gateway(requestChannel = "deleteLeagueEventV1OutboundChannel")
+    void deleteLeagueEvent(Event<UUID> event);
+}
+~~~~
 
 ### persistence
 
