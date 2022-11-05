@@ -71,7 +71,7 @@ admin interface is available at http://localhost:8080/
 ## coming soon
 ### Code coverage
 
-add a code test code coverage report
+add a test code coverage report
 
 ### resilience
 
