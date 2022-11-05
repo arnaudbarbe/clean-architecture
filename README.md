@@ -9,9 +9,7 @@ Personal implementation of a clean architecture
   * model (Entities, Values object and aggregate)
   * repository (interfaces to storage, should be implemented by infrastructure)
   * service (Business rules)
-  * use case (Business rules too but use case oriented)
 * infrastructure (technical part)
-  * client (client like codegen generated code)
   * configuration (configuration for each framework/persistence/etc...)
     * advice (Exception processor)
     * cassandra 
@@ -20,7 +18,8 @@ Personal implementation of a clean architecture
     * mongo
     * postgres
     * rabbitmq (event and service exchange/queue configurations)
-    * service
+    * security
+    * service 
     * swagger
   * delivery (entry point from other system)
     * consumer (MOM consumers/handlers)
@@ -30,6 +29,8 @@ Personal implementation of a clean architecture
   * gateway (entry point to other system)
   * persistence (repositories for each storage system)
   * publisher (MOM client to create/update/delete entities)
+  * service (only technical service)
+
 
 ## event driven
 
@@ -70,6 +71,10 @@ add Rate Limit on controller
 add exponential back off on consumer
 
 use resillience4j
+
+## Grafana & prometheus
+
+https://piotrminkowski.com/2022/11/03/spring-boot-3-observability-with-grafana/
 
 ## SAGA or LRA support 
 
