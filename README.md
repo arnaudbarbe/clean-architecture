@@ -30,28 +30,32 @@ Personal implementation of a clean architecture
   * persistence (repositories for each storage system)
   * publisher (MOM client to create/update/delete entities)
   * service (only technical service)
+## Running tests
 
+You need to start containers in src/main/resources/dockercompose/docker-compose.yml
+before running test or start the spring boot server
 
-## event driven
+## Features added
+### event driven
 
 events are sent on create/update/delete operations.
 We used Aspect annotation in infrastructure/configuration/eventdriven/aspect
 
-## persistence
+### persistence
 
 I'm using postgres, mongodb and cassandra to persist data.
 This is just for fun, don't try this at home.
 
-## Swagger
+### Swagger
 
 Swagger is available under
 http://localhost:8090/swagger-ui/index.html
 
-## HATEOAS
+### HATEOAS
 
 HATEOAS return link to delete, update, get and getAll on getOne and getAll operations
 
-## security 
+### security 
 
 An instance of Keycloak was added in docker compose file
 
@@ -64,7 +68,8 @@ admin interface is available at http://localhost:8080/
 - user: user1, password: user1, role: USER
 - user: admin1, password: admin1, role: ADMIN
 
-## resilience
+##coming soon
+### resilience
 
 add Circuit Breaker, Bulk Head, Cache on gateway
 add Rate Limit on controller
@@ -72,17 +77,16 @@ add exponential back off on consumer
 
 use resillience4j
 
-## Grafana & prometheus
+### Grafana & prometheus
 
 https://piotrminkowski.com/2022/11/03/spring-boot-3-observability-with-grafana/
 
-## SAGA or LRA support 
+### SAGA or LRA support 
 
 add SEATA support ?
 
-## Running tests
+### Minikube
 
-You need to start containers in src/main/resources/dockercompose/docker-compose.yml
-before running test or start the spring boot server
+add minikube deployment files
 
 https://wordpress.com/support/markdown-quick-reference/
