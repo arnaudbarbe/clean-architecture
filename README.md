@@ -63,7 +63,7 @@ XXXModel extends RepresentationModel<ChampionshipModel> that provided HATEOAS fe
     public ResponseEntity<UUID> createChampionship(@RequestBody final ChampionshipDto championship)
 ~~~~
 
-
+JSON return on a getSeason method with id 515c419a-f59e-4814-a05a-cab9c09a20b9.
 ~~~~
 {
   "id":"515c419a-f59e-4814-a05a-cab9c09a20b9",
