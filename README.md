@@ -3,7 +3,7 @@
 Personal implementation of a clean architecture
 
 ## folders organization
-
+* client (
 * core (business part)
   * exception 
   * model (Entities, Values object and aggregate)
@@ -69,6 +69,10 @@ admin interface is available at http://localhost:8080/
 - user: admin1, password: admin1, role: ADMIN
 
 ## coming soon
+### Code coverage
+
+add a code test code coverage report
+
 ### resilience
 
 add Circuit Breaker, Bulk Head, Cache on gateway
