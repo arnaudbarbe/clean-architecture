@@ -56,20 +56,34 @@ http://localhost:8090/swagger-ui/index.html
 HATEOAS return link to delete, update, get and getAll on getOne and getAll operations
 
 Each controller return XXXModel object whereas XXXDto are used as input object.
-XXXModel extends RepresentationModel<ChampionshipModel> that provided HATEOAS features 
+XXXModel extends RepresentationModel<ChampionshipModel> that provided HATEOAS features.
+ 
+XXXModel are enrich in Controller
 ~~~~
-    public ResponseEntity<ChampionshipModel> getChampionship(@PathVariable final UUID championshipId)
-    ...
-    public ResponseEntity<UUID> createChampionship(@RequestBody final ChampionshipDto championship)
+public ResponseEntity<List<ChampionshipModel>> getChampionships() {
+		List<ChampionshipModel> models = this.championshipService.getChampionships().stream()
+        		.map(ChampionshipModel::fromEntity)
+        		.map(model -> model.add(getSelfLink(model.getId())))
+        		.map(model -> model.add(getCreateLink()))
+        		.map(model -> model.add(getUpdateLink(model.getId())))
+        		.map(model -> model.add(getDeleteLink(model.getId())))
+        		.map(model -> model.add(getGetAllLink()))
+        		.toList();
+
+		return ResponseEntity
+	    	      .status(HttpStatus.OK)
+	    	      .body(models);
+}
 ~~~~
 
-JSON return on a getSeason method with id 515c419a-f59e-4814-a05a-cab9c09a20b9.
+JSON return on a getLeague method with id 515c419a-f59e-4814-a05a-cab9c09a20b9.
 ~~~~
 {
   "id":"515c419a-f59e-4814-a05a-cab9c09a20b9",
   "name":"FFB",
   "_links":{
-    "self":{"href":"http://localhost/v1/leagues/515c419a-f59e-4814-a05a-cab9c09a20b9"},"create":{"href":"http://localhost/v1/leagues"},
+    "self":{"href":"http://localhost/v1/leagues/515c419a-f59e-4814-a05a-cab9c09a20b9"},
+    "create":{"href":"http://localhost/v1/leagues"},
     "update":{"href":"http://localhost/v1/leagues/515c419a-f59e-4814-a05a-cab9c09a20b9"},
     "delete":{"href":"http://localhost/v1/leagues/515c419a-f59e-4814-a05a-cab9c09a20b9"},
     "getAll":{"href":"http://localhost/v1/leagues"}
