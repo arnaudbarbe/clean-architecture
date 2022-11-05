@@ -67,12 +67,12 @@ package fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.asp
 @Component
 public class LeagueAspect {
     
-	private final LeagueEventPublisher leagueEventPublisher;
+    private final LeagueEventPublisher leagueEventPublisher;
 	
-	@Autowired
-	public LeagueAspect(final LeagueEventPublisher leagueEventPublisher) {
-		this.leagueEventPublisher = leagueEventPublisher;
-	}
+    @Autowired
+    public LeagueAspect(final LeagueEventPublisher leagueEventPublisher) {
+        this.leagueEventPublisher = leagueEventPublisher;
+    }
 	
     @After("execution(* fr.arnaud.cleanarchitecture.core.service.league.DomainLeagueService.createLeague(..)) && args(league)")
     public void eventAfterCreateLeague(final JoinPoint joinPoint, final League league) {
