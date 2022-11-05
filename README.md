@@ -220,7 +220,8 @@ curl --location --request GET 'http://localhost:8090/v1/teams/123e4567-e89b-12d3
 
 Tests are coverage via jacoco and eclEmma sts plugin.
 
-![image](https://user-images.githubusercontent.com/7325301/200140713-5ebf64b2-4fb0-426c-a57a-2076c41c8239.png)
+![image](https://user-images.githubusercontent.com/7325301/200142500-6c78859f-8812-4d23-abba-0d4397175180.png)
+
 
 ## coming soon
 
