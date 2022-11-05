@@ -50,8 +50,17 @@ Table of contents
   * service (only technical service)
 ## Running tests
 
-You need to start containers in src/main/resources/dockercompose/docker-compose.yml
-before running test or start the spring boot server
+You need to start containers in src/main/resources/dockercompose/docker-compose.yml before running test or start the spring boot server
+
+start docker instances
+~~~~
+docker-compose -f docker-compose.yml up -d
+~~~~
+
+remove docker instances **AND VOLUME (destroy datas)**
+~~~~
+docker-compose -f docker-compose.yml down -v
+~~~~
 
 ## Features added
 ### event sourcing
