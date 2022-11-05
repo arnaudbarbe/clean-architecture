@@ -68,11 +68,21 @@ admin interface is available at http://localhost:8080/
 - user: user1, password: user1, role: USER
 - user: admin1, password: admin1, role: ADMIN
 
-## coming soon
+Keycloack is used in a different way that we could see in example.
+I don't want to use keycloak login screen.
+
+login and logout methods are in fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.auth.AuthController
+after a regular login, you have to call each web services with a bearer token in headers
+
+`curl --location --request GET 'http://localhost:8090/v1/teams/123e4567-e89b-12d3-a456-426614174000' --header 'Authorization: Bearer eyJh...ERBu_KzA'`
+
+
 ### Code coverage
 
-add a test code coverage report
-https://openclover.org/index
+Tests are coverage via jacoco and eclEmma sts plugin.
+
+## coming soon
+
 
 ### resilience
 
