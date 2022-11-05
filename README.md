@@ -3,20 +3,22 @@
 Personal implementation of a clean architecture
 
 Table of contents
-1.1. [folders organization](#folders organization)
-1.2. [Running tests](Running tests)
-## Features added
-### event sourcing
-### persistence
-### Swagger
-### HATEOAS
-### security 
-### Code coverage
-## coming soon
-### resilience
-### Grafana & prometheus
-### SAGA or LRA support 
-### Minikube
+
+1.1. [folders organization](#folders-organization)  
+1.2. [Running tests](#running-tests)  
+2. [Features added](#features-added)  
+2.1. [event sourcing](#event-sourcing)  
+2.2.[persistence](#persistence)  
+2.3.[Swagger](#swagger)  
+2.4.[HATEOAS](#hateoas)  
+2.5.[security](#security)  
+2.6.[Code coverage](#code-coverage)  
+3.[coming soon](#coming-soon)  
+3.1.[resilience](#resilience)  
+3.2.[Grafana & prometheus](#grafana--prometheus)  
+3.3.[SAGA or LRA support](#saga-or-lra-support)  
+3.4.[Minikube](#minikube)  
+
 
 ## folders organization
 * client (
