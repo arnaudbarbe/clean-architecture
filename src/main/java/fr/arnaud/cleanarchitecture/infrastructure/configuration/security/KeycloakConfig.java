@@ -66,12 +66,6 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         
 	        .antMatchers(HttpMethod.GET, "/v1/**").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
 	        
-	        
-/*            .and()
-            .exceptionHandling()
-                .accessDeniedHandler(restAccessDeniedHandler)
-                .authenticationEntryPoint(restAuthenticationEntryPoint)*/
-
 	        .and()
 	        .httpBasic().disable()
 	        .oauth2Login().disable()

@@ -174,7 +174,6 @@ public class ChampionshipControllerTest extends AbstractTest {
     		.andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
             .andExpect(MockMvcResultMatchers.status().isOk());
         
-        
         this.mockMvc.perform(MockMvcRequestBuilders
         	.delete("/v1/championships/" + championship1.id().toString())
 	        .headers(getHeaders(adminToken)));
@@ -192,6 +191,8 @@ public class ChampionshipControllerTest extends AbstractTest {
     		.andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(0)))
             .andExpect(MockMvcResultMatchers.status().isOk());
 
+        logoutAdmin(adminToken);
+        logoutUser(userToken);
    }
 }
 

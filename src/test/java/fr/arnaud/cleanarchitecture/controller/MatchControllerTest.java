@@ -225,6 +225,9 @@ public class MatchControllerTest extends AbstractTest {
     		.andExpect(jsonPath("$", Matchers.hasSize(0)))
             .andExpect(MockMvcResultMatchers.status().isOk());
 
+        logoutAdmin(adminToken);
+        logoutUser(userToken);
+
     }
 }
 

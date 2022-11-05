@@ -208,6 +208,9 @@ public class TeamControllerTest extends AbstractTest {
     		.andExpect(jsonPath("$", Matchers.hasSize(0)))
             .andExpect(MockMvcResultMatchers.status().isOk());
 
+        logoutAdmin(adminToken);
+        logoutUser(userToken);
+
     }
 }
 

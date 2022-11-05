@@ -15,7 +15,7 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @EqualsAndHashCode(of= {"status", "content"})
 @ToString(of= {"status", "content"})
-public class Event<C> implements Serializable {
+public class Event<C extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

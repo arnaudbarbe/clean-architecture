@@ -151,6 +151,10 @@ public class LeagueControllerTest extends AbstractTest {
         		.headers(getHeaders(adminToken)))
         		.andExpect(jsonPath("$", Matchers.hasSize(0)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+        
+        logoutAdmin(adminToken);
+        logoutUser(userToken);
+
     }
 }
 

@@ -47,11 +47,6 @@ public class AuthService {
 
 	}
 
-	public TokenDto refresh(String refreshToken) {
-
-		return null;
-	}
-
 	/**
 	 * {authServerUrl}/realms/{realmId}/protocol/openid-connect/logout
 	 * 

@@ -152,6 +152,22 @@ public abstract class AbstractTest {
     	return token;
 	}
 	
+	protected void logoutUser(TokenDto token) throws Exception {
+    	ObjectNode node = mapper.createObjectNode();
+    	node.put("username", username);
+    	node.put("password", userpassword);
+    	
+    	this.mockMvc.perform(MockMvcRequestBuilders.post("/auth/logout").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(token)));
+	}
+	
+	protected void logoutAdmin(TokenDto token) throws Exception {
+    	ObjectNode node = mapper.createObjectNode();
+    	node.put("username", adminname);
+    	node.put("password", adminpassword);
+    	
+    	this.mockMvc.perform(MockMvcRequestBuilders.post("/auth/logout").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(token)));
+	}
+	
 	private void cleanDatabases() throws SQLException {
 
 		// sql

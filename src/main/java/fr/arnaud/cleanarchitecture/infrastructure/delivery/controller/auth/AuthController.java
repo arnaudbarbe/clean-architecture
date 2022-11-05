@@ -1,8 +1,5 @@
 package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.auth;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -103,45 +100,6 @@ public class AuthController {
 		this.authService.logout(token);
 
 	    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@PostMapping(
-			value = "/refresh",
-			produces = MediaType.APPLICATION_JSON_VALUE)
-
-	@ResponseStatus(code = HttpStatus.CREATED)
-
-    @Operation(
-    		summary = "refresh the Token",
-    		description = "use this method with your refresh token when your token has expired.")
-
-    @ApiResponses(
-    		value = {@ApiResponse(
-    				responseCode = "201", 
-    				description = "created")})
-
-	@Tags({ 
-		@Tag(name="Authorization")})
-
-	public ResponseEntity<TokenDto> refreshToken(
-			final HttpServletResponse response,
-			final HttpServletRequest request,
-			@Parameter(description="The refresh token", required=true, schema=@Schema(implementation = TokenDto.class))
-			@RequestBody(required = true)
-			final TokenDto refreshToken) throws Exception {
-
-		TokenDto token = this.authService.refresh(refreshToken.refreshToken());
-
-	    return new ResponseEntity<>(token, HttpStatus.CREATED);
 	}
 
 }
