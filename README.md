@@ -71,7 +71,7 @@ admin interface is available at http://localhost:8080/
 Keycloack is used in a different way that we could see in example.
 I don't want to use keycloak login screen.
 
-login and logout methods are in fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.auth.AuthController
+login and logout methods are located in fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.auth.AuthController
 after a regular login that return a valid token
 
 ~~~~
@@ -89,10 +89,11 @@ you have to call each web services with a bearer token in headers
 curl --location --request GET 'http://localhost:8090/v1/teams/123e4567-e89b-12d3-a456-426614174000' --header 'Authorization: Bearer eyJh...ERBu_KzA'
 ~~~~
 
-
 ### Code coverage
 
 Tests are coverage via jacoco and eclEmma sts plugin.
+
+![image](https://user-images.githubusercontent.com/7325301/200140713-5ebf64b2-4fb0-426c-a57a-2076c41c8239.png)
 
 ## coming soon
 
