@@ -55,6 +55,27 @@ http://localhost:8090/swagger-ui/index.html
 
 HATEOAS return link to delete, update, get and getAll on getOne and getAll operations
 
+Each controller return XXXModel object whereas XXXDto are used as input object.
+XXXModel extends RepresentationModel<ChampionshipModel> that provided HATEOAS features 
+~~~~
+    public ResponseEntity<ChampionshipModel> getChampionship(@PathVariable final UUID championshipId)
+    ...
+    public ResponseEntity<UUID> createChampionship(@RequestBody final ChampionshipDto championship)
+~~~~
+
+
+~~~~
+{
+  "id":"515c419a-f59e-4814-a05a-cab9c09a20b9",
+  "name":"FFB",
+  "_links":{
+    "self":{"href":"http://localhost/v1/leagues/515c419a-f59e-4814-a05a-cab9c09a20b9"},"create":{"href":"http://localhost/v1/leagues"},
+    "update":{"href":"http://localhost/v1/leagues/515c419a-f59e-4814-a05a-cab9c09a20b9"},
+    "delete":{"href":"http://localhost/v1/leagues/515c419a-f59e-4814-a05a-cab9c09a20b9"},
+    "getAll":{"href":"http://localhost/v1/leagues"}
+  }
+}
+~~~~
 ### security 
 
 An instance of Keycloak was added in docker compose file
