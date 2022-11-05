@@ -97,6 +97,25 @@ This is just for fun, don't try this at home.
 Swagger is available under
 http://localhost:8090/swagger-ui/index.html
 
+Swagger configuration
+~~~~
+package fr.arnaud.cleanarchitecture.infrastructure.configuration.swagger;
+...
+@Configuration
+public class SwaggerConfiguration {
+
+	@Bean
+	public OpenAPI api() {
+		return new OpenAPI()
+			.components(new Components().addSecuritySchemes("accessToken",
+				new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").in(SecurityScheme.In.HEADER).name("Authorization")))
+				.info(new Info().title("Test Server").description("This is the API description to the server").version("1.0")
+						.license(new License().name("Apache 2.0").url("http://springdoc.org")));
+	}
+}
+~~~~
+
+
 ### HATEOAS
 
 HATEOAS return link to delete, update, get and getAll on getOne and getAll operations
