@@ -138,6 +138,15 @@ Channel declaration in [RabbitMQLeagueEventConfiguration.java](../main/src/main/
 I'm using postgres, mongodb and cassandra to persist data.
 This is just for fun, don't try this at home.
 
+In core fr/arnaud/cleanarchitecture/core/repository contains interfaces implemented in infrastructure part.
+Example 
+
+[LeagueRepository.java](../main/src/main/java/fr/arnaud/cleanarchitecture/core/repository/LeagueRepository.java)
+
+
+
+[PostgresDbLeagueRepository.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/persistence/postgres/league/PostgresDbLeagueRepository.java)
+
 ### Swagger
 
 Swagger is available under
