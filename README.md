@@ -140,7 +140,7 @@ public interface LeagueEventPublisher {
     void deleteLeagueEvent(Event<UUID> event);
 }
 ~~~~
-Channel declaration in [RabbitMQLeagueEventConfiguration.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/v1/channel/RabbitMQLeagueEventChannel.java)
+Channel declaration in [RabbitMQLeagueEventChannel.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/v1/channel/RabbitMQLeagueEventChannel.java)
 
 ~~~~
     @Bean
