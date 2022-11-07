@@ -135,7 +135,7 @@ Channel declaration in [RabbitMQLeagueEventConfiguration.java](../main/src/main/
 ~~~~
 ### persistence
 
-I'm using postgres, mongodb and cassandra to persist data.
+I'm using postgres, mongodb and cassandra to persist data.  
 This is just for fun, don't try this at home.
 
 In core fr/arnaud/cleanarchitecture/core/repository contains interfaces implemented in infrastructure part.
