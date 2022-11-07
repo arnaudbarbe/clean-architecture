@@ -98,6 +98,8 @@ public class LeagueAspect {
 ...
 }
 ~~~~
+Publisher
+[LeagueEventPublisher.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/eventdriven/aspect/LeagueAspect.java)
 Publisher are located in fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/publisher/v1
 ~~~~
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1;
@@ -115,7 +117,8 @@ public interface LeagueEventPublisher {
     void deleteLeagueEvent(Event<UUID> event);
 }
 ~~~~
-Channel declaration in RabbitMQLeagueEventConfiguration
+Channel declaration in [RabbitMQLeagueEventConfiguration.java](../main/src/main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/event/v1/RabbitMQLeagueEventConfiguration.java)
+
 ~~~~
     @Bean
     public MessageChannel createLeagueEventV1OutboundChannel() {
