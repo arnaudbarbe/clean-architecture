@@ -70,7 +70,7 @@ We used Aspect annotation in infrastructure/configuration/eventdriven/aspect
 
 see below an example for League object. Whenever the fr.arnaud.cleanarchitecture.core.service.league.DomainLeagueService.createLeague() method is called, eventAfterCreateLeague() is triggered and a message with the dto is sent.
 
-A [LeagueAspect](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/eventdriven/aspect/LeagueAspect.java)
+[LeagueAspect.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/eventdriven/aspect/LeagueAspect.java)
 ~~~~
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.aspect;
 ...
