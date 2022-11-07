@@ -147,6 +147,9 @@ League repository interface
 The repository implementation
 [PostgresDbLeagueRepository.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/persistence/postgres/league/PostgresDbLeagueRepository.java)
 
+The postgres configuration  
+[PostgresConfiguration.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/postgres/PostgresConfiguration.java)
+
 ### Swagger
 
 Swagger is available under
