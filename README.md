@@ -287,7 +287,7 @@ https://piotrminkowski.com/2022/11/03/spring-boot-3-observability-with-grafana/
 
 ### SAGA or LRA support 
 
-add SEATA support ?
+add SEATA or AXION IQ support ?
 
 ### Minikube
 
