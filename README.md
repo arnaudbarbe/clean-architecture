@@ -179,7 +179,15 @@ XXXModel extends RepresentationModel<ChampionshipModel> that provided HATEOAS fe
 
 Example with League object  
 [LeagueModel](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/controller/v1/model/LeagueModel.java) are enrich in Controller and contains link to to delete, update, get and getAll methods  
-[LeagueDto](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/dto/v1/model/LeagueDto.java)
+[LeagueDto](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/dto/v1/LeagueDto.java) is used as input record
+
+~~~~
+public ResponseEntity<Void> updateLeague(@PathVariable final UUID leagueId, @RequestBody final LeagueDto league) {
+this.leagueService.updateLeague(leagueId, league.toEntity());
+	return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+}
+~~~~
+
 ~~~~
 public ResponseEntity<LeagueModel> getLeague(@PathVariable final UUID leagueId) {
 	League entity = this.leagueService.getLeague(leagueId);
