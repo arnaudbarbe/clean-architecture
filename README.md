@@ -69,7 +69,8 @@ docker-compose -f docker-compose.yml down -v
 2 options are available to create/update/delete object.
 - REST API access via http requests (see [swagger](#swagger) )
 - Async (RabbitMQ) via Publishers  
-Example [LeaguePublisher.java](../main/src/main/java/fr/arnaud/cleanarchitecture/client/configuration/rabbitmq/v1/publisher/LeaguePublisher.java)
+Example 
+[LeaguePublisher.java](../main/src/main/java/fr/arnaud/cleanarchitecture/client/configuration/rabbitmq/v1/publisher/LeaguePublisher.java)
 ~~~~
 package fr.arnaud.cleanarchitecture.client.configuration.rabbitmq.v1.publisher;
 ...
@@ -86,6 +87,8 @@ public interface LeaguePublisher {
     void deleteLeague(UUID id);
 }
 ~~~~
+Channel declaration in 
+
 ### event sourcing
 
 events are sent on create/update/delete operations.
