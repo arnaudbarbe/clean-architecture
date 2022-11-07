@@ -178,6 +178,8 @@ Each controller return XXXModel object whereas XXXDto are used as input object.
 XXXModel extends RepresentationModel<ChampionshipModel> that provided HATEOAS features.
 
 Example with League object  
+
+Entity [League](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/dto/v1/LeagueDto.java) is used in core part
 	
 [LeagueDto](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/dto/v1/LeagueDto.java) is used as input record
 ~~~~
