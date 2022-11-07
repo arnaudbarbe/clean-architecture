@@ -191,7 +191,7 @@ this.leagueService.updateLeague(leagueId, league.toEntity());
 	return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 }
 ~~~~
-[LeagueModel](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/controller/v1/model/LeagueModel.java) are enrich in Controller and contains link to to delete, update, get and getAll methods  
+[LeagueModel](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/controller/v1/model/LeagueModel.java) are enrich in Controller and contains link to delete, update, get and getAll methods  
 ~~~~
 public ResponseEntity<LeagueModel> getLeague(@PathVariable final UUID leagueId) {
 	League entity = this.leagueService.getLeague(leagueId);
@@ -213,7 +213,7 @@ public ResponseEntity<LeagueModel> getLeague(@PathVariable final UUID leagueId) 
 }
 ~~~~
 
-JSON return on a getLeague method with id 515c419a-f59e-4814-a05a-cab9c09a20b9.
+JSON return content on a getLeague method with id 515c419a-f59e-4814-a05a-cab9c09a20b9.
 ~~~~
 {
   "id":"515c419a-f59e-4814-a05a-cab9c09a20b9",
