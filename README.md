@@ -21,7 +21,7 @@ Table of contents
 
 
 ## folders organization
-* client (
+* client (codegen client based on Swagger json api descriptor)
 * core (business part)
   * exception 
   * model (Entities, Values object and aggregate)
