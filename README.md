@@ -100,7 +100,6 @@ public class LeagueAspect {
 ~~~~
 Publisher
 [LeagueEventPublisher.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/eventdriven/aspect/LeagueAspect.java)
-Publisher are located in fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/publisher/v1
 ~~~~
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1;
 ...
