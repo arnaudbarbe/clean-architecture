@@ -269,10 +269,13 @@ Tests are coverage via jacoco and eclEmma sts plugin.
 
 ## coming soon
 
+### Domain Driven Design
+
+core services need to be more "DDD compliant" :-)
+need non anemic entities object and more business oriented service
 
 ### resilience
 
-add Circuit Breaker, Bulk Head, Cache on gateway
 add Rate Limit on controller
 add exponential back off on consumer
 
