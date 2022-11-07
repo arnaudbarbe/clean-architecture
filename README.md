@@ -243,7 +243,7 @@ admin interface is available at http://localhost:8080/
 Keycloack is used in a different way that we could see in some examples.
 First I don't want to use keycloak login screen, so a method to get JWT token is provide
 
-login and logout methods are located in [AuthController](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/controller/auth/AuthController.java) with login method  
+login and logout methods are located in [AuthController](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/controller/auth/AuthController.java)  
 after a regular login a valid token is returned
 ~~~~
 {
