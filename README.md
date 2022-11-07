@@ -151,8 +151,7 @@ The repository implementation
 
 Swagger is available under
 http://localhost:8090/swagger-ui/index.html
-
-Swagger configuration
+[SwaggerConfiguration.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/swagger/SwaggerConfiguration.java)
 ~~~~
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.swagger;
 ...
