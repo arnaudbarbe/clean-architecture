@@ -69,6 +69,8 @@ events are sent on create/update/delete operations.
 We used Aspect annotation in infrastructure/configuration/eventdriven/aspect
 
 see below an example for League object. Whenever the fr.arnaud.cleanarchitecture.core.service.league.DomainLeagueService.createLeague() method is called, eventAfterCreateLeague() is triggered and a message with the dto is sent.
+
+[LeagueAspect](#[folders-organization](https://github.com/arnaudbarbe/clean-architecture/blob/2a464a0d81f4d10f1d46af6ce8ee9f6aa2a1bb1f/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/eventdriven/aspect/LeagueAspect.java#L19))  
 ~~~~
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.aspect;
 ...
@@ -113,7 +115,22 @@ public interface LeagueEventPublisher {
     void deleteLeagueEvent(Event<UUID> event);
 }
 ~~~~
+Channel declaration in RabbitMQLeagueEventConfiguration
+~~~~
+    @Bean
+    public MessageChannel createLeagueEventV1OutboundChannel() {
+        return new DirectChannel();
+    }
 
+    @Bean
+    @ServiceActivator(inputChannel = "createLeagueEventV1OutboundChannel")
+    public AmqpOutboundEndpoint createLeagueEventV1Outbound(final AmqpTemplate amqpTemplate) {
+        AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
+        outbound.setExchangeName(CREATE_LEAGUE_EVENT_EXCHANGE_NAME);
+        outbound.setRoutingKey("#");
+        return outbound;
+    }
+~~~~
 ### persistence
 
 I'm using postgres, mongodb and cassandra to persist data.
