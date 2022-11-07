@@ -28,7 +28,7 @@ public class LeagueControllerTest extends AbstractTest {
     private ObjectMapper mapper = new Jackson2ObjectMapperBuilder()
             .serializers(LOCAL_DATETIME_SERIALIZER)
             .serializationInclusion(JsonInclude.Include.NON_NULL).build();
-    
+  
     @Test
     public void crudLeague() throws Exception {
     	

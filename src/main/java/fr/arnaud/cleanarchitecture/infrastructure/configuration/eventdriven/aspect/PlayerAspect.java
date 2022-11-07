@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import fr.arnaud.cleanarchitecture.core.model.Player;
 import fr.arnaud.cleanarchitecture.infrastructure.configuration.eventdriven.Event;
-import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1.PlayerEventPublisher;
+import fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.v1.publisher.PlayerEventPublisher;
 import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
 
 
