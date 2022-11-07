@@ -112,16 +112,16 @@ Publisher
 package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1;
 ...
 @MessagingGateway
-public interface LeagueEventPublisher {
+public interface LeagueEventPublisherService {
 
     @Gateway(requestChannel = "createLeagueEventV1OutboundChannel")
-    void createLeagueEvent(Event<LeagueDto> event);
+    void createLeagueEvent(LeagueDto league);
     
     @Gateway(requestChannel = "updateLeagueEventV1OutboundChannel")
-    void updateLeagueEvent(Event<LeagueDto> event);
+    void updateLeagueEvent(LeagueDto league);
 
     @Gateway(requestChannel = "deleteLeagueEventV1OutboundChannel")
-    void deleteLeagueEvent(Event<UUID> event);
+    void deleteLeagueEvent(UUID id);
 }
 ~~~~
 Channel declaration in [RabbitMQLeagueEventConfiguration.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/event/v1/RabbitMQLeagueEventConfiguration.java)
