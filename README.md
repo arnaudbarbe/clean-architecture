@@ -176,22 +176,28 @@ HATEOAS return link to delete, update, get and getAll on getOne and getAll opera
 
 Each controller return XXXModel object whereas XXXDto are used as input object.
 XXXModel extends RepresentationModel<ChampionshipModel> that provided HATEOAS features.
- 
-XXXModel are enrich in Controller
+
+Example with League object  
+[LeagueModel](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/controller/v1/model/LeagueModel.java) are enrich in Controller and contains link to to delete, update, get and getAll methods  
+[LeagueDto](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/delivery/dto/v1/model/LeagueDto.java)
 ~~~~
-public ResponseEntity<List<ChampionshipModel>> getChampionships() {
-		List<ChampionshipModel> models = this.championshipService.getChampionships().stream()
-        		.map(ChampionshipModel::fromEntity)
-        		.map(model -> model.add(getSelfLink(model.getId())))
-        		.map(model -> model.add(getCreateLink()))
-        		.map(model -> model.add(getUpdateLink(model.getId())))
-        		.map(model -> model.add(getDeleteLink(model.getId())))
-        		.map(model -> model.add(getGetAllLink()))
-        		.toList();
+public ResponseEntity<LeagueModel> getLeague(@PathVariable final UUID leagueId) {
+	League entity = this.leagueService.getLeague(leagueId);
+	if (entity == null) {
+		return null;
+	} else {
+
+		LeagueModel model = LeagueModel.fromEntity(entity)
+				.add(getSelfLink(entity.getId()))
+				.add(getCreateLink())
+				.add(getUpdateLink(entity.getId()))
+				.add(getDeleteLink(entity.getId()))
+				.add(getGetAllLink());
 
 		return ResponseEntity
-	    	      .status(HttpStatus.OK)
-	    	      .body(models);
+		      .status(HttpStatus.OK)
+		      .body(model);
+	}
 }
 ~~~~
 
