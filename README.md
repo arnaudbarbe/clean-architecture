@@ -125,24 +125,22 @@ public class LeagueAspect {
 }
 ~~~~
 Publisher
-[LeagueEventPublisherService.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/publisher/event/v1/LeagueEventPublisherService.java)
+[LeagueEventPublisher.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/v1/publisher/LeagueEventPublisher.java)
 ~~~~
-package fr.arnaud.cleanarchitecture.infrastructure.configuration.rabbitmq.publisher.v1;
-...
 @MessagingGateway
-public interface LeagueEventPublisherService {
+public interface LeagueEventPublisher {
 
     @Gateway(requestChannel = "createLeagueEventV1OutboundChannel")
-    void createLeagueEvent(LeagueDto league);
+    void createLeagueEvent(Event<LeagueDto> event);
     
     @Gateway(requestChannel = "updateLeagueEventV1OutboundChannel")
-    void updateLeagueEvent(LeagueDto league);
+    void updateLeagueEvent(Event<LeagueDto> event);
 
     @Gateway(requestChannel = "deleteLeagueEventV1OutboundChannel")
-    void deleteLeagueEvent(UUID id);
+    void deleteLeagueEvent(Event<UUID> event);
 }
 ~~~~
-Channel declaration in [RabbitMQLeagueEventConfiguration.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/event/v1/RabbitMQLeagueEventConfiguration.java)
+Channel declaration in [RabbitMQLeagueEventChannel.java](../main/src/main/java/fr/arnaud/cleanarchitecture/infrastructure/configuration/rabbitmq/v1/channel/RabbitMQLeagueEventChannel.java)
 
 ~~~~
     @Bean
