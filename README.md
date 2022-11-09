@@ -292,6 +292,16 @@ Tests are coverage via jacoco and eclEmma sts plugin.
 
 ![image](https://user-images.githubusercontent.com/7325301/200142500-6c78859f-8812-4d23-abba-0d4397175180.png)
 
+### Grafana & prometheus
+
+a prometheus docker and a grafana docker is provided in docker-comppose file.  
+prometheus interface is available at http://localhost:9090/graph.  
+grafana interface is available at http://localhost:3000.  
+- user:admin
+- password: admin
+
+Spring boot dashboard will appear
+
 
 ## coming soon
 
@@ -307,9 +317,6 @@ add exponential back off on consumer
 
 use resillience4j
 
-### Grafana & prometheus
-
-https://piotrminkowski.com/2022/11/03/spring-boot-3-observability-with-grafana/
 
 ### SAGA or LRA support 
 

@@ -32,8 +32,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.integration:spring-integration-amqp'
-    
+	    
 	implementation 'org.keycloak:keycloak-spring-boot-starter:20.0.0'
 	implementation 'org.keycloak:keycloak-admin-client:20.0.0'
 	
@@ -49,6 +50,7 @@ dependencies {
 	implementation 'org.apache.commons:commons-dbcp2:2.9.0'
 
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'	
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.platform:junit-platform-suite-api:1.9.0'

@@ -75,10 +75,40 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin   
       KEYCLOAK_IMPORT: /tmp/realm.json
-       
+      
+  prometheus:
+    container_name: prometheus_clean
+    image: prom/prometheus:v2.37.2
+    networks:
+      - clean
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'      
+
+  grafana:
+    container_name: grafana_clean
+    image: grafana/grafana:9.2.3
+    networks:
+      - clean
+    links:
+      - prometheus:prometheus
+    ports:
+      - 3000:3000
+    volumes:  
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_DOMAIN=localhost       
 networks:
   clean:
-
+       
 volumes:
     postgres:
     cassandra:
@@ -86,4 +116,5 @@ volumes:
     rabbitmq-etc:
     rabbitmq-data:
     rabbitmq-log:
+    grafana-data:
     
