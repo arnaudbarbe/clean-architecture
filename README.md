@@ -298,7 +298,7 @@ grafana interface is available [here](http://localhost:3000/d/MTI1b0v4k/spring-b
 - user:admin
 - password: admin
 
-Spring boot dashboard will appear
+Spring dashboard will appear
 
 
 ## coming soon
