@@ -26,11 +26,8 @@ import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.config.DefaultDriverOption;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 
-import fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra.player.SpringDataCassandraPlayerRepository;
-
 @EnableCassandraRepositories(
-		basePackageClasses = { 
-				SpringDataCassandraPlayerRepository.class})
+		basePackages = {"fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra"})
 @Component
 public class CassandraConfiguration extends AbstractCassandraConfiguration {
 
