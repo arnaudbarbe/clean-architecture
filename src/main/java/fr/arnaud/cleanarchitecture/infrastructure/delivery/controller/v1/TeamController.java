@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.player;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.Player;
-import fr.arnaud.cleanarchitecture.core.service.player.PlayerService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.PlayerModel;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
+import fr.arnaud.cleanarchitecture.core.model.Team;
+import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.TeamModel;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.TeamDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,15 +30,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/v1/players")
-@Tag(name = "Player", description = "The Player API")
-public class PlayerController extends ToolsController {
+@RequestMapping("/v1/teams")
+@Tag(name = "Team", description = "The Team API")
+public class TeamController extends ToolsController {
 
-    private final PlayerService playerService;
+    private final TeamService teamService;
 
     @Autowired
-    public PlayerController(final PlayerService playerService) {
-        this.playerService = playerService;
+    public TeamController(final TeamService teamService) {
+        this.teamService = teamService;
     }
 
     
@@ -56,8 +55,8 @@ public class PlayerController extends ToolsController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 
 	@Operation(
-			summary = "Create a player", 
-			description = "Create an player bla bla")
+			summary = "Create a team", 
+			description = "Create an team bla bla")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -70,14 +69,14 @@ public class PlayerController extends ToolsController {
     		)
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public ResponseEntity<UUID> createPlayer(@RequestBody final PlayerDto player) {
-		
-		UUID id = this.playerService.createPlayer(player.toEntity());
+		@Tag(name="Team")})
+    public ResponseEntity<UUID> createTeam( @RequestBody final TeamDto team) {
+
+		UUID id = this.teamService.createTeam(team.toEntity());
 		
 		return ResponseEntity
 	    	      .status(HttpStatus.CREATED)
-	    	      .headers(getLocationHeader("/v1/players" + id))
+	    	      .headers(getLocationHeader("/v1/teams" + id))
 	    	      .body(id);
     }
 
@@ -90,14 +89,14 @@ public class PlayerController extends ToolsController {
 	
 	
 	@PutMapping(
-			value = "/{playerId}", 
+			value = "/{teamId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "update a Player", 
-			description = "update a Player")
+			summary = "update a Team", 
+			description = "update a Team")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -105,9 +104,9 @@ public class PlayerController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public ResponseEntity<Void> updatePlayer(@PathVariable final UUID playerId, @RequestBody final PlayerDto player) {
-        this.playerService.updatePlayer(playerId, player.toEntity());
+		@Tag(name="Team")})
+    public ResponseEntity<Void> updateTeam(@PathVariable final UUID teamId, @RequestBody final TeamDto team) {
+        this.teamService.updateTeam(teamId, team.toEntity());
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -119,13 +118,13 @@ public class PlayerController extends ToolsController {
 	
 	
 	@DeleteMapping(
-			value = "/{playerId}")
+			value = "/{teamId}")
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "Delete a player", 
-			description = "Delete a player by its identifier")
+			summary = "Delete a team", 
+			description = "Delete a team by its identifier")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -133,11 +132,11 @@ public class PlayerController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public ResponseEntity<Void> deletePlayer(@PathVariable final UUID playerId) {
-        this.playerService.deletePlayer(playerId);
+		@Tag(name="Team")})
+    public ResponseEntity<Void> deleteTeam(@PathVariable final UUID teamId) {
+        this.teamService.deleteTeam(teamId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
+   }
 
   
 	
@@ -148,14 +147,14 @@ public class PlayerController extends ToolsController {
 	
 	
 	@GetMapping(
-			value = "/{playerId}", 
+			value = "/{teamId}", 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.OK)
 
 	@Operation(
-			summary = "Get a Player", 
-			description = "Get a Player")
+			summary = "Get a Team", 
+			description = "Get a Team")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -163,14 +162,14 @@ public class PlayerController extends ToolsController {
 					description = "successful operation") })
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public ResponseEntity<PlayerModel> getPlayer(@PathVariable final UUID playerId) {
-        Player entity = this.playerService.getPlayer(playerId);
+		@Tag(name="Team")})
+    public ResponseEntity<TeamModel> getTeam(@PathVariable final UUID teamId) {
+        Team entity = this.teamService.getTeam(teamId);
 		if (entity == null) {
 			return null;
 		} else {
 			
-			PlayerModel model = PlayerModel.fromEntity(entity)
+			TeamModel model = TeamModel.fromEntity(entity)
 					.add(getSelfLink(entity.getId()))
 					.add(getCreateLink())
 					.add(getUpdateLink(entity.getId()))
@@ -181,7 +180,7 @@ public class PlayerController extends ToolsController {
 		    	      .status(HttpStatus.OK)
 		    	      .body(model);
 		}
-   }	
+    }	
 	
 	
 	
@@ -195,8 +194,8 @@ public class PlayerController extends ToolsController {
 	@ResponseStatus(code = HttpStatus.OK)
 
     @Operation(
-    		summary = "Get all Player",
-    		description = "Get all Player")
+    		summary = "Get all Team",
+    		description = "Get all Team")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -204,10 +203,10 @@ public class PlayerController extends ToolsController {
     				description = "successful operation")})
 
 	@Tags({ 
-		@Tag(name="Player")})
-    public ResponseEntity<List<PlayerModel>> getPlayers() {
-		List<PlayerModel> models = this.playerService.getPlayers().stream()
-        		.map(PlayerModel::fromEntity)
+		@Tag(name="Team")})
+    public ResponseEntity<List<TeamModel>> getTeams() {
+		List<TeamModel> models = this.teamService.getTeams().stream()
+        		.map(TeamModel::fromEntity)
         		.map(model -> model.add(getSelfLink(model.getId())))
         		.map(model -> model.add(getCreateLink()))
         		.map(model -> model.add(getUpdateLink(model.getId())))

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableJpaRepositories(
-		basePackages = {"fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres"})
+		basePackages = {"fr.arnaud.cleanarchitecture.infrastructure.persistence"})
 @EntityScan(
-		basePackages = {"fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres"})
+		basePackages = {"fr.arnaud.cleanarchitecture.infrastructure.persistence"})
 
 @EnableTransactionManagement
 @Component

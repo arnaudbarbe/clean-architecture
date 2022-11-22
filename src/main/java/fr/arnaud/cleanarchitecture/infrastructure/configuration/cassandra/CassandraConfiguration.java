@@ -27,7 +27,7 @@ import com.datastax.oss.driver.api.core.config.DefaultDriverOption;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 
 @EnableCassandraRepositories(
-		basePackages = {"fr.arnaud.cleanarchitecture.infrastructure.persistence.cassandra"})
+		basePackages = {"fr.arnaud.cleanarchitecture.infrastructure.persistence"})
 @Component
 public class CassandraConfiguration extends AbstractCassandraConfiguration {
 

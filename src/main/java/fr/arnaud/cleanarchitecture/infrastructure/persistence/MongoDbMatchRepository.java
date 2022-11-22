@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.mongo.match;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence;
 
 import java.util.List;
 import java.util.Optional;

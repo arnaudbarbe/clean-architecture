@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.team;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence;
 
 import java.util.UUID;
 
@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import fr.arnaud.cleanarchitecture.core.model.Championship;
 import fr.arnaud.cleanarchitecture.core.model.Team;
-import fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.championship.ChampionshipEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

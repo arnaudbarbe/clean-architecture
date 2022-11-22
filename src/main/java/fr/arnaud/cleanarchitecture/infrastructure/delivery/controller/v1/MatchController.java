@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.season;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.Season;
-import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.SeasonModel;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
+import fr.arnaud.cleanarchitecture.core.model.Match;
+import fr.arnaud.cleanarchitecture.core.service.match.MatchService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.MatchModel;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.MatchDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,15 +30,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/v1/seasons")
-@Tag(name = "Season", description = "The Season API")
-public class SeasonController extends ToolsController {
+@RequestMapping("/v1/matchs")
+@Tag(name = "Match", description = "The Match API")
+public class MatchController extends ToolsController {
 
-    private final SeasonService seasonService;
+    private final MatchService matchService;
 
     @Autowired
-    public SeasonController(final SeasonService seasonService) {
-        this.seasonService = seasonService;
+    public MatchController(final MatchService matchService) {
+        this.matchService = matchService;
     }
 
     
@@ -56,8 +55,8 @@ public class SeasonController extends ToolsController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 
 	@Operation(
-			summary = "Create a season", 
-			description = "Create an season bla bla")
+			summary = "Create a match", 
+			description = "Create an match bla bla")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -70,14 +69,14 @@ public class SeasonController extends ToolsController {
     		)
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public ResponseEntity<UUID> createSeason(@RequestBody final SeasonDto season) {
+		@Tag(name="Match")})
+    public ResponseEntity<UUID> createMatch(@RequestBody final MatchDto match) {
 		
-		UUID id = this.seasonService.createSeason(season.toEntity());
+		UUID id = this.matchService.createMatch(match.toEntity());
 		
 		return ResponseEntity
 	    	      .status(HttpStatus.CREATED)
-	    	      .headers(getLocationHeader("/v1/seasons" + id))
+	    	      .headers(getLocationHeader("/v1/matchs" + id))
 	    	      .body(id);
     }
 
@@ -90,14 +89,14 @@ public class SeasonController extends ToolsController {
 	
 	
 	@PutMapping(
-			value = "/{seasonId}", 
+			value = "/{matchId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "update a Season", 
-			description = "update a Season")
+			summary = "update a Match", 
+			description = "update a Match")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -105,9 +104,9 @@ public class SeasonController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public ResponseEntity<Void> updateSeason(@PathVariable final UUID seasonId, @RequestBody final SeasonDto season) {
-        this.seasonService.updateSeason(seasonId, season.toEntity());
+		@Tag(name="Match")})
+    public ResponseEntity<Void> updateMatch(@PathVariable final UUID matchId, @RequestBody final MatchDto match) {
+        this.matchService.updateMatch(matchId, match.toEntity());
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -119,13 +118,13 @@ public class SeasonController extends ToolsController {
 	
 	
 	@DeleteMapping(
-			value = "/{seasonId}")
+			value = "/{matchId}")
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "Delete a season", 
-			description = "Delete a season by its identifier")
+			summary = "Delete a match", 
+			description = "Delete a match by its identifier")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -133,9 +132,9 @@ public class SeasonController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public ResponseEntity<Void> deleteSeason(@PathVariable final UUID seasonId) {
-        this.seasonService.deleteSeason(seasonId);
+		@Tag(name="Match")})
+    public ResponseEntity<Void> deleteMatch(@PathVariable final UUID matchId) {
+        this.matchService.deleteMatch(matchId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -148,14 +147,14 @@ public class SeasonController extends ToolsController {
 	
 	
 	@GetMapping(
-			value = "/{seasonId}", 
+			value = "/{matchId}", 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.OK)
 
 	@Operation(
-			summary = "Get a Season", 
-			description = "Get a Season")
+			summary = "Get a Match", 
+			description = "Get a Match")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -163,14 +162,14 @@ public class SeasonController extends ToolsController {
 					description = "successful operation") })
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public ResponseEntity<SeasonModel> getSeason(@PathVariable final UUID seasonId) {
-        Season entity = this.seasonService.getSeason(seasonId);
+		@Tag(name="Match")})
+    public ResponseEntity<MatchModel> getMatch(@PathVariable final UUID matchId) {
+        Match entity = this.matchService.getMatch(matchId);
 		if (entity == null) {
 			return null;
 		} else {
 			
-			SeasonModel model = SeasonModel.fromEntity(entity)
+			MatchModel model = MatchModel.fromEntity(entity)
 					.add(getSelfLink(entity.getId()))
 					.add(getCreateLink())
 					.add(getUpdateLink(entity.getId()))
@@ -195,8 +194,8 @@ public class SeasonController extends ToolsController {
 	@ResponseStatus(code = HttpStatus.OK)
 
     @Operation(
-    		summary = "Get all Season",
-    		description = "Get all Season")
+    		summary = "Get all Match",
+    		description = "Get all Match")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -204,10 +203,10 @@ public class SeasonController extends ToolsController {
     				description = "successful operation")})
 
 	@Tags({ 
-		@Tag(name="Season")})
-    public ResponseEntity<List<SeasonModel>> getSeasons() {
-		List<SeasonModel> models = this.seasonService.getSeasons().stream()
-        		.map(SeasonModel::fromEntity)
+		@Tag(name="Match")})
+    public ResponseEntity<List<MatchModel>> getMatchs() {
+		List<MatchModel> models = this.matchService.getMatchs().stream()
+        		.map(MatchModel::fromEntity)
         		.map(model -> model.add(getSelfLink(model.getId())))
         		.map(model -> model.add(getCreateLink()))
         		.map(model -> model.add(getUpdateLink(model.getId())))

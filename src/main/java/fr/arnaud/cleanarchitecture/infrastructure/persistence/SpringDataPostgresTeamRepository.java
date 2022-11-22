@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.team;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence;
 
 import java.util.UUID;
 

@@ -1,49 +1,59 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.league;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import fr.arnaud.cleanarchitecture.core.model.League;
+import fr.arnaud.cleanarchitecture.core.model.Season;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(of= {"id", "name"})
+@ToString(of= {"id", "name", "startDate", "endDate"})
 @Entity
-@Table(name = "league")
-public class LeagueEntity {
+@Table(name = "season")
+public class SeasonEntity {
 
 	@Id
 	UUID id;
+	
 	String name;
+    
+	LocalDateTime startDate;
 
-	public LeagueEntity() {
+    LocalDateTime endDate;
+
+	public SeasonEntity() {
 		super();
 	}
 
-	public LeagueEntity(final UUID id) {
+	public SeasonEntity(final UUID id) {
 		this.id = id;
 	}
 
-	public LeagueEntity(final League league) {
-		this.id = league.getId();
-		fromEntity(league);
+	public SeasonEntity(final Season season) {
+		this.id = season.getId();
+		fromEntity(season);
 	}
 
-	public League toEntity() {
-		return League.builder()
+	public Season toEntity() {
+		return Season.builder()
 				.id(this.id)
 				.name(this.name)
+				.startDate(this.startDate)
+				.endDate(this.endDate)
 				.build();
 	}
 
-	public void fromEntity(final League league) {
-		this.name = league.getName();
+	public void fromEntity(final Season season) {
+		this.name = season.getName();
+		this.startDate = season.getStartDate();
+		this.endDate = season.getEndDate();
 	}
 
 	@Override
@@ -62,7 +72,7 @@ public class LeagueEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LeagueEntity other = (LeagueEntity) obj;
+		SeasonEntity other = (SeasonEntity) obj;
 		if (this.id == null) {
 			if (other.id != null)
 				return false;

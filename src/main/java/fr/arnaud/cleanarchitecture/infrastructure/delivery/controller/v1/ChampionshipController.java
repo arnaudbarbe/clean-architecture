@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.team;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.Team;
-import fr.arnaud.cleanarchitecture.core.service.team.TeamService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.TeamModel;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.TeamDto;
+import fr.arnaud.cleanarchitecture.core.model.Championship;
+import fr.arnaud.cleanarchitecture.core.service.championship.ChampionshipService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.ChampionshipModel;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.ChampionshipDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,16 +29,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
-@RestController
-@RequestMapping("/v1/teams")
-@Tag(name = "Team", description = "The Team API")
-public class TeamController extends ToolsController {
 
-    private final TeamService teamService;
+@RestController
+@RequestMapping("/v1/championships")
+@Tag(name = "Championship", description = "The Championship API")
+public class ChampionshipController extends ToolsController {
+
+    private final ChampionshipService championshipService;
+    
 
     @Autowired
-    public TeamController(final TeamService teamService) {
-        this.teamService = teamService;
+    public ChampionshipController(final ChampionshipService championshipService) {
+        this.championshipService = championshipService;
     }
 
     
@@ -56,28 +57,28 @@ public class TeamController extends ToolsController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 
 	@Operation(
-			summary = "Create a team", 
-			description = "Create an team bla bla")
+			summary = "Create a championship", 
+			description = "Create an championship bla bla")
 
     @ApiResponses(
-    		value = {@ApiResponse(
-    				responseCode = "201", 
-    				description = "created",
-    						content = @Content(
-    						        schema = @Schema(implementation = UUID.class, example = "f67546f1-5a47-4e86-b7a9-dbae57fbbb57")
-    						)
-    				)}
+    		value = {
+    			@ApiResponse(
+	    			responseCode = "201", 
+	    			description = "created",
+					content = @Content(
+							schema = @Schema(implementation = UUID.class, example = "f67546f1-5a47-4e86-b7a9-dbae57fbbb57")
+					)
+    			)}
     		)
-
 	@Tags({ 
-		@Tag(name="Team")})
-    public ResponseEntity<UUID> createTeam( @RequestBody final TeamDto team) {
-
-		UUID id = this.teamService.createTeam(team.toEntity());
+		@Tag(name="Championship")})
+    public ResponseEntity<UUID> createChampionship(@RequestBody final ChampionshipDto championship) {
+		
+		UUID id = this.championshipService.createChampionship(championship.toEntity());
 		
 		return ResponseEntity
 	    	      .status(HttpStatus.CREATED)
-	    	      .headers(getLocationHeader("/v1/teams" + id))
+	    	      .headers(getLocationHeader("/v1/championships/" + id))
 	    	      .body(id);
     }
 
@@ -89,15 +90,23 @@ public class TeamController extends ToolsController {
 	
 	
 	
+
+
+
+
+
+
+
+
 	@PutMapping(
-			value = "/{teamId}", 
+			value = "/{championshipId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "update a Team", 
-			description = "update a Team")
+			summary = "update a Championship", 
+			description = "update a Championship")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -105,9 +114,9 @@ public class TeamController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Team")})
-    public ResponseEntity<Void> updateTeam(@PathVariable final UUID teamId, @RequestBody final TeamDto team) {
-        this.teamService.updateTeam(teamId, team.toEntity());
+		@Tag(name="Championship")})
+    public ResponseEntity<Void> updateChampionship(@PathVariable final UUID championshipId, @RequestBody final ChampionshipDto championship) {
+        this.championshipService.updateChampionship(championshipId, championship.toEntity());
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -119,13 +128,13 @@ public class TeamController extends ToolsController {
 	
 	
 	@DeleteMapping(
-			value = "/{teamId}")
+			value = "/{championshipId}")
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "Delete a team", 
-			description = "Delete a team by its identifier")
+			summary = "Delete a championship", 
+			description = "Delete a championship by its identifier")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -133,11 +142,11 @@ public class TeamController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Team")})
-    public ResponseEntity<Void> deleteTeam(@PathVariable final UUID teamId) {
-        this.teamService.deleteTeam(teamId);
+		@Tag(name="Championship")})
+    public ResponseEntity<Void> deleteChampionship(@PathVariable final UUID championshipId) {
+        this.championshipService.deleteChampionship(championshipId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-   }
+    }
 
   
 	
@@ -146,16 +155,15 @@ public class TeamController extends ToolsController {
 	
 	
 	
-	
 	@GetMapping(
-			value = "/{teamId}", 
+			value = "/{championshipId}", 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.OK)
 
 	@Operation(
-			summary = "Get a Team", 
-			description = "Get a Team")
+			summary = "Get a Championship", 
+			description = "Get a Championship")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -163,20 +171,21 @@ public class TeamController extends ToolsController {
 					description = "successful operation") })
 
 	@Tags({ 
-		@Tag(name="Team")})
-    public ResponseEntity<TeamModel> getTeam(@PathVariable final UUID teamId) {
-        Team entity = this.teamService.getTeam(teamId);
+		@Tag(name="Championship")})
+    public ResponseEntity<ChampionshipModel> getChampionship(@PathVariable final UUID championshipId) {
+		Championship entity = this.championshipService.getChampionship(championshipId);
 		if (entity == null) {
 			return null;
 		} else {
 			
-			TeamModel model = TeamModel.fromEntity(entity)
-					.add(getSelfLink(entity.getId()))
-					.add(getCreateLink())
-					.add(getUpdateLink(entity.getId()))
-					.add(getDeleteLink(entity.getId()))
-					.add(getGetAllLink());
-
+			
+			ChampionshipModel model = ChampionshipModel.fromEntity(entity)
+			.add(getSelfLink(entity.getId()))
+			.add(getCreateLink())
+			.add(getUpdateLink(entity.getId()))
+			.add(getDeleteLink(entity.getId()))
+			.add(getGetAllLink());
+			
 			return ResponseEntity
 		    	      .status(HttpStatus.OK)
 		    	      .body(model);
@@ -189,14 +198,22 @@ public class TeamController extends ToolsController {
 	
 	
 	
+
+
+
+
+
+
+
+
 	@GetMapping(
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.OK)
 
     @Operation(
-    		summary = "Get all Team",
-    		description = "Get all Team")
+    		summary = "Get all Championships",
+    		description = "Get all Championships")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -204,10 +221,10 @@ public class TeamController extends ToolsController {
     				description = "successful operation")})
 
 	@Tags({ 
-		@Tag(name="Team")})
-    public ResponseEntity<List<TeamModel>> getTeams() {
-		List<TeamModel> models = this.teamService.getTeams().stream()
-        		.map(TeamModel::fromEntity)
+		@Tag(name="Championship")})
+    public ResponseEntity<List<ChampionshipModel>> getChampionships() {
+		List<ChampionshipModel> models = this.championshipService.getChampionships().stream()
+        		.map(ChampionshipModel::fromEntity)
         		.map(model -> model.add(getSelfLink(model.getId())))
         		.map(model -> model.add(getCreateLink()))
         		.map(model -> model.add(getUpdateLink(model.getId())))

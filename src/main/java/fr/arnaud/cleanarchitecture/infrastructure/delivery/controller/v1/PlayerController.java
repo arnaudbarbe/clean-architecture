@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.match;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.Match;
-import fr.arnaud.cleanarchitecture.core.service.match.MatchService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.MatchModel;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.MatchDto;
+import fr.arnaud.cleanarchitecture.core.model.Player;
+import fr.arnaud.cleanarchitecture.core.service.player.PlayerService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.PlayerModel;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.PlayerDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,15 +30,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/v1/matchs")
-@Tag(name = "Match", description = "The Match API")
-public class MatchController extends ToolsController {
+@RequestMapping("/v1/players")
+@Tag(name = "Player", description = "The Player API")
+public class PlayerController extends ToolsController {
 
-    private final MatchService matchService;
+    private final PlayerService playerService;
 
     @Autowired
-    public MatchController(final MatchService matchService) {
-        this.matchService = matchService;
+    public PlayerController(final PlayerService playerService) {
+        this.playerService = playerService;
     }
 
     
@@ -56,8 +55,8 @@ public class MatchController extends ToolsController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 
 	@Operation(
-			summary = "Create a match", 
-			description = "Create an match bla bla")
+			summary = "Create a player", 
+			description = "Create an player bla bla")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -70,14 +69,14 @@ public class MatchController extends ToolsController {
     		)
 
 	@Tags({ 
-		@Tag(name="Match")})
-    public ResponseEntity<UUID> createMatch(@RequestBody final MatchDto match) {
+		@Tag(name="Player")})
+    public ResponseEntity<UUID> createPlayer(@RequestBody final PlayerDto player) {
 		
-		UUID id = this.matchService.createMatch(match.toEntity());
+		UUID id = this.playerService.createPlayer(player.toEntity());
 		
 		return ResponseEntity
 	    	      .status(HttpStatus.CREATED)
-	    	      .headers(getLocationHeader("/v1/matchs" + id))
+	    	      .headers(getLocationHeader("/v1/players" + id))
 	    	      .body(id);
     }
 
@@ -90,14 +89,14 @@ public class MatchController extends ToolsController {
 	
 	
 	@PutMapping(
-			value = "/{matchId}", 
+			value = "/{playerId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "update a Match", 
-			description = "update a Match")
+			summary = "update a Player", 
+			description = "update a Player")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -105,9 +104,9 @@ public class MatchController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Match")})
-    public ResponseEntity<Void> updateMatch(@PathVariable final UUID matchId, @RequestBody final MatchDto match) {
-        this.matchService.updateMatch(matchId, match.toEntity());
+		@Tag(name="Player")})
+    public ResponseEntity<Void> updatePlayer(@PathVariable final UUID playerId, @RequestBody final PlayerDto player) {
+        this.playerService.updatePlayer(playerId, player.toEntity());
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -119,13 +118,13 @@ public class MatchController extends ToolsController {
 	
 	
 	@DeleteMapping(
-			value = "/{matchId}")
+			value = "/{playerId}")
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "Delete a match", 
-			description = "Delete a match by its identifier")
+			summary = "Delete a player", 
+			description = "Delete a player by its identifier")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -133,9 +132,9 @@ public class MatchController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="Match")})
-    public ResponseEntity<Void> deleteMatch(@PathVariable final UUID matchId) {
-        this.matchService.deleteMatch(matchId);
+		@Tag(name="Player")})
+    public ResponseEntity<Void> deletePlayer(@PathVariable final UUID playerId) {
+        this.playerService.deletePlayer(playerId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -148,14 +147,14 @@ public class MatchController extends ToolsController {
 	
 	
 	@GetMapping(
-			value = "/{matchId}", 
+			value = "/{playerId}", 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.OK)
 
 	@Operation(
-			summary = "Get a Match", 
-			description = "Get a Match")
+			summary = "Get a Player", 
+			description = "Get a Player")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -163,14 +162,14 @@ public class MatchController extends ToolsController {
 					description = "successful operation") })
 
 	@Tags({ 
-		@Tag(name="Match")})
-    public ResponseEntity<MatchModel> getMatch(@PathVariable final UUID matchId) {
-        Match entity = this.matchService.getMatch(matchId);
+		@Tag(name="Player")})
+    public ResponseEntity<PlayerModel> getPlayer(@PathVariable final UUID playerId) {
+        Player entity = this.playerService.getPlayer(playerId);
 		if (entity == null) {
 			return null;
 		} else {
 			
-			MatchModel model = MatchModel.fromEntity(entity)
+			PlayerModel model = PlayerModel.fromEntity(entity)
 					.add(getSelfLink(entity.getId()))
 					.add(getCreateLink())
 					.add(getUpdateLink(entity.getId()))
@@ -181,7 +180,7 @@ public class MatchController extends ToolsController {
 		    	      .status(HttpStatus.OK)
 		    	      .body(model);
 		}
-    }	
+   }	
 	
 	
 	
@@ -195,8 +194,8 @@ public class MatchController extends ToolsController {
 	@ResponseStatus(code = HttpStatus.OK)
 
     @Operation(
-    		summary = "Get all Match",
-    		description = "Get all Match")
+    		summary = "Get all Player",
+    		description = "Get all Player")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -204,10 +203,10 @@ public class MatchController extends ToolsController {
     				description = "successful operation")})
 
 	@Tags({ 
-		@Tag(name="Match")})
-    public ResponseEntity<List<MatchModel>> getMatchs() {
-		List<MatchModel> models = this.matchService.getMatchs().stream()
-        		.map(MatchModel::fromEntity)
+		@Tag(name="Player")})
+    public ResponseEntity<List<PlayerModel>> getPlayers() {
+		List<PlayerModel> models = this.playerService.getPlayers().stream()
+        		.map(PlayerModel::fromEntity)
         		.map(model -> model.add(getSelfLink(model.getId())))
         		.map(model -> model.add(getCreateLink()))
         		.map(model -> model.add(getUpdateLink(model.getId())))

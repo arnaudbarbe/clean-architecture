@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.persistence.postgres.championship;
+package fr.arnaud.cleanarchitecture.infrastructure.persistence;
 
 import java.util.List;
 import java.util.Optional;

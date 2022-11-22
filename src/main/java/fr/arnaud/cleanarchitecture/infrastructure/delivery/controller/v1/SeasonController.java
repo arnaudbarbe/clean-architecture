@@ -1,4 +1,4 @@
-package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.league;
+package fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.arnaud.cleanarchitecture.core.model.League;
-import fr.arnaud.cleanarchitecture.core.service.league.LeagueService;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.ToolsController;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.LeagueModel;
-import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.LeagueDto;
+import fr.arnaud.cleanarchitecture.core.model.Season;
+import fr.arnaud.cleanarchitecture.core.service.season.SeasonService;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.controller.v1.model.SeasonModel;
+import fr.arnaud.cleanarchitecture.infrastructure.delivery.dto.v1.SeasonDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,15 +30,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 @RestController
-@RequestMapping("/v1/leagues")
-@Tag(name = "League", description = "The League API")
-public class LeagueController extends ToolsController {
+@RequestMapping("/v1/seasons")
+@Tag(name = "Season", description = "The Season API")
+public class SeasonController extends ToolsController {
 
-    private final LeagueService leagueService;
+    private final SeasonService seasonService;
 
     @Autowired
-    public LeagueController(final LeagueService leagueService) {
-        this.leagueService = leagueService;
+    public SeasonController(final SeasonService seasonService) {
+        this.seasonService = seasonService;
     }
 
     
@@ -56,8 +55,8 @@ public class LeagueController extends ToolsController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 
 	@Operation(
-			summary = "Create a league", 
-			description = "Create an league bla bla")
+			summary = "Create a season", 
+			description = "Create an season bla bla")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -70,14 +69,14 @@ public class LeagueController extends ToolsController {
     		)
 
 	@Tags({ 
-		@Tag(name="League")})
-    public ResponseEntity<UUID> createLeague(@RequestBody final LeagueDto league) {
+		@Tag(name="Season")})
+    public ResponseEntity<UUID> createSeason(@RequestBody final SeasonDto season) {
 		
-		UUID id = this.leagueService.createLeague(league.toEntity());
+		UUID id = this.seasonService.createSeason(season.toEntity());
 		
 		return ResponseEntity
 	    	      .status(HttpStatus.CREATED)
-	    	      .headers(getLocationHeader("/v1/leagues" + id))
+	    	      .headers(getLocationHeader("/v1/seasons" + id))
 	    	      .body(id);
     }
 
@@ -90,14 +89,14 @@ public class LeagueController extends ToolsController {
 	
 	
 	@PutMapping(
-			value = "/{leagueId}", 
+			value = "/{seasonId}", 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "update a League", 
-			description = "update a League")
+			summary = "update a Season", 
+			description = "update a Season")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -105,9 +104,9 @@ public class LeagueController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="League")})
-    public ResponseEntity<Void> updateLeague(@PathVariable final UUID leagueId, @RequestBody final LeagueDto league) {
-        this.leagueService.updateLeague(leagueId, league.toEntity());
+		@Tag(name="Season")})
+    public ResponseEntity<Void> updateSeason(@PathVariable final UUID seasonId, @RequestBody final SeasonDto season) {
+        this.seasonService.updateSeason(seasonId, season.toEntity());
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -119,13 +118,13 @@ public class LeagueController extends ToolsController {
 	
 	
 	@DeleteMapping(
-			value = "/{leagueId}")
+			value = "/{seasonId}")
 
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 
 	@Operation(
-			summary = "Delete a league", 
-			description = "Delete a league by its identifier")
+			summary = "Delete a season", 
+			description = "Delete a season by its identifier")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -133,9 +132,9 @@ public class LeagueController extends ToolsController {
 					description = "no content") })
 
 	@Tags({ 
-		@Tag(name="League")})
-    public ResponseEntity<Void> deleteLeague(@PathVariable final UUID leagueId) {
-        this.leagueService.deleteLeague(leagueId);
+		@Tag(name="Season")})
+    public ResponseEntity<Void> deleteSeason(@PathVariable final UUID seasonId) {
+        this.seasonService.deleteSeason(seasonId);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -148,14 +147,14 @@ public class LeagueController extends ToolsController {
 	
 	
 	@GetMapping(
-			value = "/{leagueId}", 
+			value = "/{seasonId}", 
 			produces = MediaType.APPLICATION_JSON_VALUE)
 
 	@ResponseStatus(code = HttpStatus.OK)
 
 	@Operation(
-			summary = "Get a League", 
-			description = "Get a League")
+			summary = "Get a Season", 
+			description = "Get a Season")
 
 	@ApiResponses(
 			value = { @ApiResponse(
@@ -163,20 +162,20 @@ public class LeagueController extends ToolsController {
 					description = "successful operation") })
 
 	@Tags({ 
-		@Tag(name="League")})
-    public ResponseEntity<LeagueModel> getLeague(@PathVariable final UUID leagueId) {
-		League entity = this.leagueService.getLeague(leagueId);
+		@Tag(name="Season")})
+    public ResponseEntity<SeasonModel> getSeason(@PathVariable final UUID seasonId) {
+        Season entity = this.seasonService.getSeason(seasonId);
 		if (entity == null) {
 			return null;
 		} else {
 			
-			LeagueModel model = LeagueModel.fromEntity(entity)
+			SeasonModel model = SeasonModel.fromEntity(entity)
 					.add(getSelfLink(entity.getId()))
 					.add(getCreateLink())
 					.add(getUpdateLink(entity.getId()))
 					.add(getDeleteLink(entity.getId()))
 					.add(getGetAllLink());
-			
+
 			return ResponseEntity
 		    	      .status(HttpStatus.OK)
 		    	      .body(model);
@@ -195,8 +194,8 @@ public class LeagueController extends ToolsController {
 	@ResponseStatus(code = HttpStatus.OK)
 
     @Operation(
-    		summary = "Get all League",
-    		description = "Get all League")
+    		summary = "Get all Season",
+    		description = "Get all Season")
 
     @ApiResponses(
     		value = {@ApiResponse(
@@ -204,10 +203,10 @@ public class LeagueController extends ToolsController {
     				description = "successful operation")})
 
 	@Tags({ 
-		@Tag(name="League")})
-    public ResponseEntity<List<LeagueModel>> getLeagues() {
-		List<LeagueModel> models = this.leagueService.getLeagues().stream()
-        		.map(LeagueModel::fromEntity)
+		@Tag(name="Season")})
+    public ResponseEntity<List<SeasonModel>> getSeasons() {
+		List<SeasonModel> models = this.seasonService.getSeasons().stream()
+        		.map(SeasonModel::fromEntity)
         		.map(model -> model.add(getSelfLink(model.getId())))
         		.map(model -> model.add(getCreateLink()))
         		.map(model -> model.add(getUpdateLink(model.getId())))

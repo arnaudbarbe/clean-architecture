@@ -14,7 +14,8 @@ public record TeamDto(
 		return fr.arnaud.cleanarchitecture.core.model.Team.builder()
 				.id(this.id)
 				.name(this.name)
-				.championship(this.championship.toEntity()).build();
+				.championship(this.championship.toEntity())
+				.build();
 	}
 	
 	public static TeamDto fromEntity(final fr.arnaud.cleanarchitecture.core.model.Team team) {
@@ -24,7 +25,8 @@ public record TeamDto(
 			return new TeamDto(
 					team.getId(), 
 					team.getName(), 
-					ChampionshipDto.fromEntity(team.getChampionship()));
+					ChampionshipDto.fromEntity(team.getChampionship())
+					);
 		}
 	}
 }
