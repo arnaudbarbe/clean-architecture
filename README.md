@@ -294,11 +294,11 @@ Tests are coverage via jacoco and eclEmma sts plugin.
 
 a prometheus docker and a grafana docker is provided in docker-comppose file.  
 prometheus interface is available at http://localhost:9090/graph.  
-grafana interface is available at http://localhost:3000.  
+grafana interface is available [here](http://localhost:3000/d/MTI1b0v4k/spring-boot-statistics?orgId=1&var-instance=host.docker.internal:8090&var-application=springbootapp&var-hikaricp=HikariPool-1&var-memory_pool_heap=All&var-memory_pool_nonheap=All&refresh=5s).  
 - user:admin
 - password: admin
 
-Spring boot dashboard will appear
+Spring dashboard will appear
 
 
 ## coming soon
